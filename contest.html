@@ -396,13 +396,27 @@
             <label>대학교 / 학과 <span class="req">REQUIRED</span></label>
             <input type="text" name="university" placeholder="예) ○○대 경영학과 3학년" required />
           </div>
-          <div class="field">
+          <div class="field" style="grid-column: 1 / -1;">
             <label>거주지 <span class="req">REQUIRED</span></label>
-            <select name="region" required>
-              <option value="">선택해주세요</option>
-              <option>서울</option>
-              <option>경기 / 인천</option>
-            </select>
+            <p class="hint" style="margin-top:0; margin-bottom:10px;">// 지역 선택 후 세부 동까지 입력해주세요.</p>
+            <div class="options" style="margin-bottom:10px;">
+              <div class="option">
+                <input type="radio" id="region-seoul" name="region" value="서울" required />
+                <label for="region-seoul"><strong>서울</strong></label>
+              </div>
+              <div class="option">
+                <input type="radio" id="region-incheon" name="region" value="인천" />
+                <label for="region-incheon"><strong>인천</strong></label>
+              </div>
+              <div class="option">
+                <input type="radio" id="region-gg" name="region" value="경기" />
+                <label for="region-gg"><strong>경기</strong></label>
+              </div>
+            </div>
+            <input type="text" name="residence_detail" id="residence_detail"
+              placeholder="먼저 위에서 지역을 선택해 주세요"
+              disabled style="opacity:0.5; cursor:not-allowed;" />
+            <p class="hint" id="residence_hint" style="display:none;">// 세부 시·구·동을 적어주세요. 예) 마포구 연남동 / 부천시 중동</p>
           </div>
         </div>
 
@@ -557,6 +571,29 @@
 <script>
   var GAS_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
 
+  // 거주지 세부 입력 활성화
+  (function () {
+    var regionInputs = document.querySelectorAll('input[name="region"]');
+    var detail = document.getElementById('residence_detail');
+    var hint = document.getElementById('residence_hint');
+    var placeholders = {
+      '서울': '예) 마포구 연남동 / 강남구 역삼동',
+      '인천': '예) 연수구 송도동 / 부평구 부평동',
+      '경기': '예) 성남시 분당구 / 수원시 영통구 / 부천시 중동'
+    };
+    regionInputs.forEach(function (r) {
+      r.addEventListener('change', function () {
+        detail.disabled = false;
+        detail.required = true;
+        detail.style.opacity = '1';
+        detail.style.cursor = 'text';
+        detail.placeholder = placeholders[r.value] || '세부 시·구·동을 적어주세요';
+        hint.style.display = 'block';
+        detail.focus();
+      });
+    });
+  })();
+
   [['q1','q1Count',500],['q2','q2Count',500],['idea','ideaCount',800]].forEach(function(cfg) {
     var ta = document.querySelector('textarea[name="' + cfg[0] + '"]');
     var counter = document.getElementById(cfg[1]);
@@ -580,6 +617,7 @@
       birth:      form.birth.value.trim(),
       university: form.university.value.trim(),
       region:     form.region.value,
+      residence_detail: form.residence_detail.value.trim(),
       phone:      form.phone.value.trim(),
       email:      form.email.value.trim(),
       category:   form.category.value,
