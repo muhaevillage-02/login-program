@@ -685,10 +685,12 @@
       q2:              form.q2.value.trim(),
       idea:            form.idea.value.trim(),
       portfolio_link:  (form.portfolio_link ? form.portfolio_link.value.trim() : ''),
-      agree_privacy:   form.agree_privacy.checked,
-      agree_use:       form.agree_use.checked,
-      agree_marketing: form.agree_marketing.checked,
-      timestamp: new Date().toISOString()
+      status:          form.status ? form.status.value : '',
+      agree_privacy:   form.agree_privacy ? form.agree_privacy.checked : false,
+      agree_use:       form.agree_use ? form.agree_use.checked : false,
+      agree_marketing: form.agree_marketing ? form.agree_marketing.checked : false,
+      userAgent:       navigator.userAgent,
+      timestamp:       new Date().toISOString()
     };
 
     var btn = document.getElementById('submitBtn');
