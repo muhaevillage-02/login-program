@@ -471,23 +471,44 @@
         </div>
 
         <div class="field" style="margin-top:20px;">
-          <label>Q2. 어떤 도움이 있으면 달라질 것 같나요? <span class="req">REQUIRED</span></label>
+          <label>Q2. [핵심 솔루션] 그 문제를 해결할 당신만의 '아이디어'나 '메시지'는 무엇인가요? <span class="req">REQUIRED</span></label>
           <textarea name="q2" maxlength="500" rows="5"
-            placeholder="그 문제를 해결하려면 어떤 지원이나 서비스가 필요할까요?
+            placeholder="기획하고 싶은 서비스, 만들고 싶은 영상의 주제, 혹은 마케팅 캠페인의 핵심 메시지를 편하게 적어주세요.
 
-예) '현직자가 직접 내 상황에 맞게 1:1로 로드맵을 잡아줬으면 좋겠어요.' '같은 고민을 가진 사람들끼리 모여서 정보를 나눌 수 있는 커뮤니티가 있으면 좋겠어요.'" required></textarea>
+예) '현직자와 취준생을 연결하는 월정액 커피챗 앱' / '취준 현실을 담은 공감형 숏폼 시리즈' / '청년 고민을 해시태그로 모으는 SNS 캠페인'" required></textarea>
           <div class="char-counter"><span id="q2Count">0</span> / 500자</div>
           <div class="guide">정답이 없어요. 지금 당장 떠오르는 아이디어를 편하게 적어주세요.</div>
         </div>
 
         <div class="field" style="margin-top:20px;">
-          <label>Q3. 그 아이디어를 어떤 서비스·비즈니스로 만들 수 있을까요? <span class="req">REQUIRED</span></label>
+          <label>Q3. [실행 방안] 이 아이디어를 어떻게 구체화하고 표현할 수 있을까요? <span class="req">REQUIRED</span></label>
           <textarea name="idea" maxlength="800" rows="6"
-            placeholder="앱, 플랫폼, 오프라인 모임, 콘텐츠, 구독 서비스 등 형태는 자유예요.
+            placeholder="지원한 부문에 맞게 적어주세요.
 
-예) '현직자와 취준생을 매칭해주는 월정액 커피챗 플랫폼을 만들면 어떨까요? 직무별로 멘토를 검색하고 30분 단위로 예약할 수 있게요.'" required></textarea>
+예) 어떤 앱을 만들겠다 / 어떤 스토리의 숏폼을 찍겠다 / 인스타그램에서 어떤 이벤트를 열겠다 등" required></textarea>
           <div class="char-counter"><span id="ideaCount">0</span> / 800자</div>
-          <div class="guide">완성된 기획서가 아니어도 됩니다. 핵심 아이디어 한 줄이면 충분해요.</div>
+          <div class="guide">완성된 기획서가 아니어도 됩니다. 핵심 방향 한 줄이면 충분해요.</div>
+        </div>
+
+        <!-- 콘텐츠·마케팅 부문 파일 첨부 (조건부 표시) -->
+        <div id="fileUploadSection" style="display:none; margin-top:20px;">
+          <div style="background:var(--bg-warm); border:1px solid var(--line); border-left:3px solid var(--lime); border-radius:0 4px 4px 0; padding:12px 14px; margin-bottom:14px; font-size:14px; color:var(--ink-mid);">
+            <strong style="color:var(--ink); font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; display:block; margin-bottom:6px;">// Portfolio Upload</strong>
+            콘텐츠·마케팅 부문은 포트폴리오나 참고 파일을 첨부할 수 있습니다. <strong>이미지, PDF, 영상 링크</strong> 등 자유롭게 제출해주세요.
+          </div>
+          <div class="field">
+            <label>파일 첨부 <span class="opt">OPTIONAL</span></label>
+            <input type="file" id="portfolioFile" name="portfolio_file"
+              accept=".pdf,.jpg,.jpeg,.png,.pptx,.ppt,.zip"
+              style="padding:10px 14px; font-size:13px; cursor:pointer;" />
+            <p class="hint">// PDF, 이미지(JPG·PNG), PPT, ZIP — 최대 10MB</p>
+          </div>
+          <div class="field">
+            <label>또는 링크로 공유 <span class="opt">OPTIONAL</span></label>
+            <input type="text" name="portfolio_link" id="portfolioLink"
+              placeholder="예) https://drive.google.com/... 또는 유튜브·인스타 링크" />
+            <p class="hint">// Google Drive, YouTube, Instagram 등 공유 링크</p>
+          </div>
         </div>
       </div>
     </section>
@@ -506,7 +527,7 @@
 
         <div class="consent">
           <strong>// Data Collection Notice</strong>
-          수집 항목: 이름, 생년월일, 대학교, 거주지, 연락처, 이메일, 제출 아이디어.<br>
+          수집 항목: 이름, 생년월일, 대학교, 거주지, 연락처, 제출 아이디어.<br>
           이용 목적: 공모전 심사, 결과 안내, 시상금 지급, 향후 LOGIN LAB 프로그램 연계.<br>
           보유 기간: 공모전 종료 후 6개월 이내 파기 (수상자는 1년).
         </div>
@@ -571,6 +592,24 @@
 <script>
   var GAS_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
 
+  // 부문 선택 시 파일 첨부 섹션 조건부 표시
+  (function () {
+    var catInputs = document.querySelectorAll('input[name="category"]');
+    var fileSection = document.getElementById('fileUploadSection');
+    catInputs.forEach(function (r) {
+      r.addEventListener('change', function () {
+        var val = r.value;
+        if (val === '콘텐츠 제작 부문' || val === '마케팅/브랜딩 전략 부문') {
+          fileSection.style.display = 'block';
+        } else {
+          fileSection.style.display = 'none';
+          document.getElementById('portfolioFile').value = '';
+          document.getElementById('portfolioLink').value = '';
+        }
+      });
+    });
+  })();
+
   // 거주지 세부 입력 활성화
   (function () {
     var regionInputs = document.querySelectorAll('input[name="region"]');
@@ -620,10 +659,11 @@
       residence_detail: form.residence_detail.value.trim(),
       phone:      form.phone.value.trim(),
       email:      form.email.value.trim(),
-      category:   form.category.value,
-      q1:         form.q1.value.trim(),
-      q2:         form.q2.value.trim(),
-      idea:       form.idea.value.trim(),
+      category:        form.category.value,
+      q1:              form.q1.value.trim(),
+      q2:              form.q2.value.trim(),
+      idea:            form.idea.value.trim(),
+      portfolio_link:  (form.portfolio_link ? form.portfolio_link.value.trim() : ''),
       agree_privacy:   form.agree_privacy.checked,
       agree_use:       form.agree_use.checked,
       agree_marketing: form.agree_marketing.checked,
