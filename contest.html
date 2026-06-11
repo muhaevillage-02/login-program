@@ -426,6 +426,11 @@
             <input type="tel" name="phone" placeholder="01012345678" required />
             <p class="hint">// 1차 심사 후 개별 연락</p>
           </div>
+          <div class="field">
+            <label>이메일 <span class="req">REQUIRED</span></label>
+            <input type="email" name="email" placeholder="example@email.com" required />
+            <p class="hint">// 심사 결과 안내에 사용됩니다.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -477,17 +482,17 @@
 
 예) '현직자와 취준생을 연결하는 월정액 커피챗 앱' / '취준 현실을 담은 공감형 숏폼 시리즈' / '청년 고민을 해시태그로 모으는 SNS 캠페인'" required></textarea>
           <div class="char-counter"><span id="q2Count">0</span> / 500자</div>
-          <div class="guide">정답이 없어요. 지금 당장 떠오르는 아이디어를 편하게 적어주세요.</div>
+          <div class="guide">정답이 없어요. 기획하고 싶은 서비스, 만들고 싶은 영상의 주제, 혹은 마케팅 캠페인의 핵심 메시지를 편하게 적어주세요.</div>
         </div>
 
         <div class="field" style="margin-top:20px;">
           <label>Q3. [실행 방안] 이 아이디어를 어떻게 구체화하고 표현할 수 있을까요? <span class="req">REQUIRED</span></label>
-          <textarea name="idea" maxlength="800" rows="6"
+          <textarea name="idea" id="q3Textarea" maxlength="800" rows="6"
             placeholder="지원한 부문에 맞게 적어주세요.
 
 예) 어떤 앱을 만들겠다 / 어떤 스토리의 숏폼을 찍겠다 / 인스타그램에서 어떤 이벤트를 열겠다 등" required></textarea>
           <div class="char-counter"><span id="ideaCount">0</span> / 800자</div>
-          <div class="guide">완성된 기획서가 아니어도 됩니다. 핵심 방향 한 줄이면 충분해요.</div>
+          <div class="guide">지원한 부문에 맞게 적어주세요. (예: 어떤 앱을 만들겠다 / 어떤 스토리의 숏폼을 찍겠다 / 인스타그램에서 어떤 이벤트를 열겠다 등)</div>
         </div>
 
         <!-- 콘텐츠·마케팅 부문 파일 첨부 (조건부 표시) -->
@@ -527,7 +532,7 @@
 
         <div class="consent">
           <strong>// Data Collection Notice</strong>
-          수집 항목: 이름, 생년월일, 대학교, 거주지, 연락처, 제출 아이디어.<br>
+          수집 항목: 이름, 생년월일, 대학교, 거주지, 연락처, 이메일, 제출 아이디어.<br>
           이용 목적: 공모전 심사, 결과 안내, 시상금 지급, 향후 LOGIN LAB 프로그램 연계.<br>
           보유 기간: 공모전 종료 후 6개월 이내 파기 (수상자는 1년).
         </div>
@@ -592,13 +597,29 @@
 <script>
   var GAS_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
 
-  // 부문 선택 시 파일 첨부 섹션 조건부 표시
+  // 부문 선택 시 파일 첨부 + placeholder 동적 변경
   (function () {
     var catInputs = document.querySelectorAll('input[name="category"]');
     var fileSection = document.getElementById('fileUploadSection');
+    var q2 = document.querySelector('textarea[name="q2"]');
+    var q3 = document.getElementById('q3Textarea');
+
+    var q2ph = {
+      '기획/아이디어 부문':     '기획하고 싶은 서비스나 비즈니스 아이디어를 적어주세요.\n\n예) 현직자와 취준생을 연결하는 월정액 커피챗 앱 — 직무별로 멘토를 검색하고 30분 단위로 예약할 수 있어요.',
+      '콘텐츠 제작 부문':       '만들고 싶은 영상·콘텐츠의 주제나 아이디어를 적어주세요.\n\n예) 취준생의 현실을 담은 공감형 숏폼 시리즈 — 면접 탈락 후의 솔직한 감정을 5편짜리 영상으로 담고 싶어요.',
+      '마케팅/브랜딩 전략 부문': '캠페인의 핵심 메시지나 브랜딩 아이디어를 적어주세요.\n\n예) 청년 고민을 해시태그로 모으는 SNS 캠페인 — #나만_겪는_게_아니잖아 로 공감을 끌어내고 싶어요.'
+    };
+    var q3ph = {
+      '기획/아이디어 부문':     '어떤 서비스나 앱으로 구체화할지 적어주세요.\n\n예) 어떤 기능을 가진 앱을 만들겠다 / 어떤 구조의 플랫폼으로 운영하겠다 등',
+      '콘텐츠 제작 부문':       '어떤 형식·채널로 콘텐츠를 만들지 적어주세요.\n\n예) 유튜브 숏폼 5편 시리즈 / 인스타 카드뉴스 10장 / 릴스 3편 + 자막 편집 등\n\n포트폴리오가 있다면 아래 파일 첨부 또는 링크로 제출해주세요!',
+      '마케팅/브랜딩 전략 부문': '어떤 채널에서 어떤 방식으로 실행할지 적어주세요.\n\n예) 인스타그램 챌린지 이벤트 / X(트위터) 해시태그 캠페인 / 오프라인 팝업 + SNS 연계 등\n\n포트폴리오가 있다면 아래 파일 첨부 또는 링크로 제출해주세요!'
+    };
+
     catInputs.forEach(function (r) {
       r.addEventListener('change', function () {
         var val = r.value;
+        if (q2 && q2ph[val]) q2.placeholder = q2ph[val];
+        if (q3 && q3ph[val]) q3.placeholder = q3ph[val];
         if (val === '콘텐츠 제작 부문' || val === '마케팅/브랜딩 전략 부문') {
           fileSection.style.display = 'block';
         } else {
