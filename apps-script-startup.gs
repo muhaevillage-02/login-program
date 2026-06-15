@@ -13,7 +13,7 @@
 //  5. 웹앱 URL 복사 → startup.html 의 GAS_URL 변수에 붙여넣기
 // ============================================================
 
-var SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID_HERE';
+var SPREADSHEET_ID = '1IRMS6GsptRtC_gQ42RJ_X1AcJlOX7rxBTLdyrGuUHVo';
 var SHEET_NAME     = 'LL_창업지원신청';
 
 function doPost(e) {
