@@ -19,9 +19,9 @@
     --ink-light: #8A8A8A;
     --line: #E5E2D7;
     --line-strong: #2A2A2A;
-    --lime: #CCFF00;
-    --lime-deep: #7A9900;
-    --lime-soft: #F5FFD1;
+    --lime: #00CCFA;
+    --lime-deep: #0077A3;
+    --lime-soft: #E0F7FF;
     --navy: #0E0E0E;
     --on-lime: #0E0E0E;
     --shadow-sm: 0 2px 8px rgba(20,20,20,0.04);
@@ -75,7 +75,7 @@
   .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
   @media(max-width:540px){ .info-grid{ grid-template-columns:1fr; } }
   .info-card { background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; }
-  .info-card-label { font-family: 'IBM Plex Mono',monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lime-deep); margin-bottom: 6px; background: var(--chip); display: inline-block; padding: 2px 6px; border-radius: 2px; }
+  .info-card-label { font-family: 'IBM Plex Mono',monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--on-lime); font-weight: 700; margin-bottom: 6px; background: var(--lime); display: inline-block; padding: 2px 6px; border-radius: 2px; }
   .info-card-body { font-size: 13.5px; color: var(--ink-soft); line-height: 1.7; margin-top: 6px; }
   .info-card-body strong { color: var(--ink); }
   .info-card-body ul { margin: 4px 0 0; padding-left: 16px; }
@@ -106,7 +106,7 @@
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media(max-width:540px){ .row{grid-template-columns:1fr} }
   label { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
-  label .req { color: var(--lime-deep); background: var(--chip); padding: 2px 6px; border-radius: 2px; font-family: 'IBM Plex Mono',monospace; font-size: 10px; letter-spacing: 0.05em; }
+  label .req { color: var(--on-lime); background: var(--lime); font-weight: 700; padding: 2px 6px; border-radius: 2px; font-family: 'IBM Plex Mono',monospace; font-size: 10px; letter-spacing: 0.05em; }
   label .opt { color: var(--ink-soft); background: var(--bg-warm); border: 1px solid var(--line-strong); padding: 1px 6px; border-radius: 2px; font-family: 'IBM Plex Mono',monospace; font-size: 10px; }
   .hint { font-size: 12.5px; color: var(--ink-light); margin-top: 6px; font-family: 'IBM Plex Mono',monospace; letter-spacing: 0.02em; }
   .guide { background: var(--bg-warm); border: 1px dashed var(--line-strong); padding: 10px 14px; border-radius: 4px; font-size: 13px; color: var(--ink-mid); margin-top: 8px; line-height: 1.6; }
@@ -208,7 +208,7 @@
     <div class="eyebrow">Youth Employment Support Project</div>
     <div class="logo">
       <svg class="logo-svg" width="220" height="72" viewBox="0 0 340 110" xmlns="http://www.w3.org/2000/svg">
-        <defs><style>.lf{fill:#CCFF00}.ls{fill:#7A9900}</style></defs>
+        <defs><style>.lf{fill:#00CCFA}.ls{fill:#0077A3}</style></defs>
         <g class="ls" transform="translate(8,8)"><text x="0" y="80" font-family="'Noto Sans KR',sans-serif" font-size="96" font-weight="900" letter-spacing="-4">LOGin</text></g>
         <g class="lf"><text x="0" y="80" font-family="'Noto Sans KR',sans-serif" font-size="96" font-weight="900" letter-spacing="-4">LOGin</text></g>
       </svg>
@@ -220,8 +220,8 @@
 
     <div class="header-meta">
       <span>PERIOD · <strong>26.07.08 ~ 26.08.12</strong></span>
-      <span>AGE · <strong>만 20~27세</strong></span>
-      <span>SEATS · <strong>10명</strong></span>
+      <span>AGE · <strong>만 19~25세</strong></span>
+      <span>SEATS · <strong>총 26명</strong></span>
     </div>
   </div>
 </header>
@@ -231,10 +231,8 @@
   <!-- WHY NOW -->
   <section class="welcome" style="background: var(--lime-soft); border-color: var(--lime-deep); border-top: 4px solid var(--chip);">
     <div class="welcome-label" style="color: var(--lime-deep); font-weight:700;">// Why Now · 신청 전 꼭 확인해주세요</div>
-    <h2 class="welcome-q" style="font-weight:900;">합격을 가르는 건, 이제 <span class="mark">'나만의 경험'</span>입니다.</h2>
-    <p>AI가 자소서를 작성해주고 면접까지 준비해주는 시대입니다. 이미 많은 취업 준비생들이 AI를 활용하고 있으며, <span class="mark">채용 담당자 역시 AI를 통해 지원서를 빠르게 검토합니다.</span> 그래서 누구나 비슷하게 작성할 수 있는 내용은 쉽게 묻히고, 나만의 실전 경험과 차별화된 스토리를 담아내는 것이 더욱 중요해졌습니다.</p>
-    <p>AI가 발전할수록 오히려 경쟁력이 되는 것은 직접 경험한 이야기와 나만의 강점입니다. 어떤 경험을 했고, 어떤 문제를 해결했으며, 무엇을 배우고 성장했는지를 자신만의 키워드로 표현할 수 있어야 합니다. 이를 위해서는 자소서를 쓰기 전에 <span class="highlight">'나는 어떤 사람인지, 무엇을 잘하고 무엇을 보완해야 하는지'</span>를 먼저 명확히 이해하는 과정이 필요합니다.</p>
-    <p>저희는 단순히 자소서를 고쳐주는 것이 아니라 <strong>[역량검사, 1:1 전문가 코칭, 자소서 첨삭]</strong>을 통해 <span class="mark">자신의 강점과 경험을 효과적으로 전달할 수 있도록</span> 함께합니다. AI가 누구나 사용할 수 있는 도구가 된 지금, 결국 합격을 만드는 것은 나만의 경험과 이를 제대로 보여주는 <span class="highlight">"전략"</span>입니다.</p>
+    <h2 class="welcome-q" style="font-weight:900;">합격을 가르는 건 <span class="mark">나의 경험</span>입니다.</h2>
+    <p>이제는 면접관도 AI로 자소서를 분별하는 시대, AI가 발전할수록 오히려 경쟁력이 되는 것은 <span class="highlight">직접 경험한 이야기와 나만의 강점</span>입니다. 어떤 경험을 했고, 어떤 문제를 해결했으며, 무엇을 배우고 성장했는지를 자신만의 키워드로 표현할 수 있어야 합니다. 저희는 단순히 자소서를 고쳐주는 것이 아니라 <strong>[역량검사, 1:1 전문가 코칭, 자소서 첨삭]</strong>을 통해 <span class="mark">자신의 강점과 경험을 효과적으로 전달할 수 있도록</span> 함께합니다.</p>
   </section>
 
   <!-- WELCOME -->
@@ -246,22 +244,23 @@
     <div class="info-grid">
       <div class="info-card">
         <div class="info-card-label">모집대상</div>
-        <div class="info-card-body">서울 / 경기 거주 청년<br><strong>만 20~27세</strong> (취준생 · 구직자 · 대학생 포함)</div>
+        <div class="info-card-body">서울 / 경기 거주 청년<br><strong>만 19~25세</strong> (대학생 · 취준생 · 구직자 · 직장인 포함)</div>
       </div>
       <div class="info-card">
         <div class="info-card-label">모집인원</div>
-        <div class="info-card-body"><strong>10명</strong><br>선정 후 개별 안내</div>
+        <div class="info-card-body"><strong>총 26명</strong><br>선정 후 개별 안내</div>
       </div>
       <div class="info-card" style="grid-column: 1 / -1;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
-          <div class="info-card-label" style="margin-bottom:0;">지원내용</div>
-          <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-mid); letter-spacing:0.03em;">※ 이 중 1개 제공</div>
+          <div class="info-card-label" style="margin-bottom:0;">지원내용 · 리워드</div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-mid); letter-spacing:0.03em;">※ 항목별 선발 인원 상이</div>
         </div>
         <div class="info-card-body">
           <ul>
-            <li>AI 적성 검사 / 직무 설정</li>
-            <li>자소서 &amp; 포트폴리오 첨삭</li>
-            <li>1:1 직무 프리미엄 코칭</li>
+            <li><strong>청년 레벨업 지원금 100만원 (1명)</strong></li>
+            <li><strong>AI 적성 검사 / 직무 설정 (10명)</strong></li>
+            <li><strong>자소서 &amp; 포트폴리오 첨삭 (10명)</strong></li>
+            <li><strong>1:1 프리미엄 코칭권 (5명)</strong></li>
           </ul>
         </div>
       </div>
@@ -279,7 +278,7 @@
       </div>
       <div class="schedule-row">
         <div class="schedule-label">// Selection</div>
-        <div class="schedule-value">접수 마감 후 · <strong>10명 선정</strong> 및 개별 안내</div>
+        <div class="schedule-value">접수 마감 후 · <strong>총 26명 선정</strong>(리워드 항목별 상이) 및 개별 안내</div>
       </div>
       <div class="schedule-row">
         <div class="schedule-label">// How to Apply</div>
@@ -309,8 +308,8 @@
           </div>
           <div class="field">
             <label>만 나이 <span class="req">REQUIRED</span></label>
-            <input type="number" name="age" min="20" max="27" placeholder="예) 24" required />
-            <p class="hint">// 만 20~27세 청년 우선 선발</p>
+            <input type="number" name="age" min="19" max="25" placeholder="예) 24" required />
+            <p class="hint">// 만 19~25세 청년 우선 선발</p>
           </div>
         </div>
 
@@ -322,6 +321,7 @@
             <option value="대학생 (휴학 중)">대학생 (휴학 중)</option>
             <option value="취업 준비생">취업 준비생</option>
             <option value="구직 중">구직 중</option>
+            <option value="직장인">직장인</option>
             <option value="기타">기타</option>
           </select>
         </div>
@@ -488,13 +488,19 @@
         </div>
       </header>
       <div class="section-body">
-        <p class="section-desc">3가지 지원 내용 중 지금 본인에게 가장 필요한 것 하나를 선택해주세요.</p>
+        <p class="section-desc">4가지 지원 내용 중 지금 본인에게 가장 필요한 것 하나를 선택해주세요.</p>
 
         <div class="field">
           <label>필요한 지원 항목 <span class="req">REQUIRED</span></label>
           <div class="options options-vertical">
             <div class="option">
-              <input type="radio" id="support-1" name="support" value="AI 적성 검사 / 직무 설정" required />
+              <input type="radio" id="support-0" name="support" value="청년 레벨업 지원금 100만원" required />
+              <label for="support-0">
+                <span><span class="opt-tag">00</span><strong>청년 레벨업 지원금 100만원</strong><div class="opt-desc">현금 지원이 필요할 때 — 청년 레벨업 지원금 100만원 (1명 선발)</div></span>
+              </label>
+            </div>
+            <div class="option">
+              <input type="radio" id="support-1" name="support" value="AI 적성 검사 / 직무 설정" />
               <label for="support-1">
                 <span><span class="opt-tag">01</span><strong>AI 적성 검사 / 직무 설정</strong><div class="opt-desc">나에게 맞는 직무가 뭔지부터 알고 싶을 때 — AI 기반 적성 진단 + 방향 설정</div></span>
               </label>
@@ -506,9 +512,9 @@
               </label>
             </div>
             <div class="option">
-              <input type="radio" id="support-3" name="support" value="1:1 직무 프리미엄 코칭" />
+              <input type="radio" id="support-3" name="support" value="1:1 프리미엄 코칭권" />
               <label for="support-3">
-                <span><span class="opt-tag">03</span><strong>1:1 직무 프리미엄 코칭</strong><div class="opt-desc">실전 준비를 제대로 코칭받고 싶을 때 — 직무별 심화 1:1 코칭</div></span>
+                <span><span class="opt-tag">03</span><strong>1:1 프리미엄 코칭권</strong><div class="opt-desc">실전 준비를 제대로 코칭받고 싶을 때 — 직무별 심화 1:1 코칭</div></span>
               </label>
             </div>
           </div>
@@ -555,11 +561,11 @@
     <h3 class="tips-title">신청 전 확인사항</h3>
     <div class="tip-item">
       <div class="tip-num">01</div>
-      <div><strong>지원 자격</strong> · 서울·경기 거주 만 20~27세 청년. 재학·휴학·취준·구직 모두 가능.</div>
+      <div><strong>지원 자격</strong> · 서울·경기 거주 만 19~25세 청년. 재학·휴학·취준·구직·직장인 모두 가능.</div>
     </div>
     <div class="tip-item">
       <div class="tip-num">02</div>
-      <div><strong>선정 방식</strong> · 접수 마감 후 심사를 거쳐 10명 선정, 개별 문자·이메일로 안내드립니다.</div>
+      <div><strong>선정 방식</strong> · 접수 마감 후 심사를 거쳐 총 26명(리워드 항목별 상이) 선정, 개별 문자·이메일로 안내드립니다.</div>
     </div>
     <div class="tip-item">
       <div class="tip-num">03</div>
@@ -594,7 +600,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  var GAS_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbxDAQ6bUJWsiAbcz0DyF3hE4jPYjvSOts32aJhW7AojtIZ-KZDSHrMcCvc3T44X-Jh-/exec';
 
   // ===== Supabase 연동 =====
   var _sb = supabase.createClient(
@@ -693,6 +699,8 @@
     ['name','residence_detail','phone','email','job_target','edu','history','motivation','status_other'].forEach(function(k) {
       if (typeof data[k] === 'string') data[k] = data[k].trim();
     });
+    data.userAgent = navigator.userAgent;
+    data.timestamp = new Date().toISOString();
 
     var btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = '제출 중...';

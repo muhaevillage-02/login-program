@@ -13,7 +13,7 @@
 //  5. 웹앱 URL 복사 → levelup.html 의 GAS_URL 변수에 붙여넣기
 // ============================================================
 
-var SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID_HERE';
+var SPREADSHEET_ID = '1054PSBS0-wxBPydMqiykXk6IUjrCmh5QqPxbf9vzaTU';
 var SHEET_NAME     = 'LL_레벨업신청';
 
 function doPost(e) {
@@ -38,7 +38,7 @@ function doPost(e) {
       sheet.appendRow(headers);
       sheet.getRange(1, 1, 1, headers.length)
            .setFontWeight('bold')
-           .setBackground('#CCFF00');
+           .setBackground('#00CCFA');
       sheet.setFrozenRows(1);
       sheet.setColumnWidth(1, 150);
       sheet.setColumnWidth(13, 280);
