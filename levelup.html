@@ -701,6 +701,7 @@
     });
     data.userAgent = navigator.userAgent;
     data.timestamp = new Date().toISOString();
+    data.form_type = 'levelup';
 
     var btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = '제출 중...';

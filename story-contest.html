@@ -482,7 +482,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  var GAS_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbxDAQ6bUJWsiAbcz0DyF3hE4jPYjvSOts32aJhW7AojtIZ-KZDSHrMcCvc3T44X-Jh-/exec';
 
   // ===== Supabase 연동 =====
   var _sb = supabase.createClient(
@@ -557,6 +557,7 @@
     });
     data.userAgent = navigator.userAgent;
     data.timestamp = new Date().toISOString();
+    data.form_type = 'story_contest';
 
     var btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = '제출 중...';

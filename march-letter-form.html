@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3월의 나에게 ✉️</title>
+<title>대학생 에세이 공모전 ✉️</title>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap");
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --blue:#0EA5E9;--blue-d:#0284C7;--blue-l:#E0F2FE;--blue-m:#BAE6FD;
+  --blue:#1C7FEB;--blue-d:#125FC0;--blue-l:#E3EFFE;--blue-m:#B9D5FC;--lime:#CCFF00;
   --cyan:#06B6D4;--green:#10B981;--green-l:#D1FAE5;
   --bg:#fff;--bg-s:#F8FAFC;--bg-b:#F0F9FF;
   --bdr:#E2E8F0;--tt:#0F172A;--tb:#334155;--ts:#64748B;--th:#94A3B8;
@@ -287,8 +287,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
             style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
           <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.08),rgba(0,0,0,0.52))"></div>
           <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 12px">
-            <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">🌸 3월의 나</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.75)">설렘과 긴장 사이</div>
+            <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">🌸 작년의 나</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.75)">설렘과 다짐 사이</div>
           </div>
         </div>
         <!-- divider badge -->
@@ -302,15 +302,15 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
             style="width:100%;height:100%;object-fit:cover;object-position:center 40%">
           <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.05),rgba(0,0,0,0.48))"></div>
           <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 12px">
-            <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">☀️ 6월의 나</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.75)">불태웠던 여름</div>
+            <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">☀️ 지금의 나</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.75)">한 학기를 통과한 지금</div>
           </div>
         </div>
       </div>
       <div class="sec">
         <div class="page-tag">👋 시작하기</div>
-        <div class="page-title">안녕,<br>3월의 나에게 ✉️</div>
-        <div class="page-desc">거창한 글이 아니어도 괜찮으니, 1학기 동안 버텨낸<br>솔직한 마음을 남겨주면 됩니다.</div>
+        <div class="page-title">안녕,<br>작년의 나에게 ✉️</div>
+        <div class="page-desc">거창한 글이 아니어도 괜찮으니, 한 해 동안 버텨낸<br>솔직한 마음을 종강 편지로 남겨주면 됩니다.</div>
 
         <!-- 마감 배너 -->
         <div style="background:linear-gradient(135deg,#FFF7ED,#FEF3C7);border:1.5px solid #FCD34D;
@@ -318,7 +318,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
           display:flex;align-items:center;gap:12px">
           <span style="font-size:22px">⏰</span>
           <div>
-            <div style="font-size:13px;font-weight:800;color:#B45309;margin-bottom:2px">마감 D-<span id="dday">?</span> · 6월 29일까지</div>
+            <div style="font-size:13px;font-weight:800;color:#B45309;margin-bottom:2px">마감 D-<span id="dday">?</span> · 2026.07.01 ~ 08.03</div>
             <div style="font-size:12px;color:#92400E;line-height:1.5">마감이 얼마 남지 않았어요. 부담 없이 솔직하게,<br>지금 이 순간의 마음을 남겨주세요 🌿</div>
           </div>
         </div>
@@ -342,6 +342,10 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
           <input class="field-input" id="f_name" type="text" placeholder="예: 김민준, 이서연" autocomplete="off">
         </div>
         <div class="field-block">
+          <label class="field-lbl">나이 (만)</label>
+          <input class="field-input" id="f_age" type="number" placeholder="만 19~25세만 지원 가능해요" autocomplete="off">
+        </div>
+        <div class="field-block">
           <label class="field-lbl">학교 · 학년</label>
           <input class="field-input" id="f_school" type="text" placeholder="예: 연세대학교 2학년" autocomplete="off">
         </div>
@@ -355,6 +359,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
         </div>
         <div class="field-block">
           <label class="field-lbl">거주 시/도</label>
+          <div style="font-size:12px;color:var(--th);margin-bottom:8px">※ 서울권 대학생 (만 19~25세) 지원 가능</div>
           <div class="field-select-wrap">
             <select class="field-select placeholder" id="f_region" onchange="this.classList.remove('placeholder')">
               <option value="" disabled selected>시/도 선택</option>
@@ -389,7 +394,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
     <div class="page" id="p2">
       <div class="sec" style="padding-top:20px">
         <div class="page-tag">🫀 지금 상태</div>
-        <div class="page-title">3월의 너,<br>어디서 버티고 있어?</div>
+        <div class="page-title">요즘 너,<br>어디서 버티고 있어?</div>
         <div class="page-desc">마음에 걸리는 것들을 골라봐.<br>여러 개 선택해도 돼.</div>
         <div class="chip-grid">
           <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">📚</span><div class="chip-name">학점 · 공부</div><div class="chip-desc">강의실 첫날의 긴장</div></div>
@@ -408,7 +413,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
     <div class="page" id="p3">
       <div class="sec" style="padding-top:20px">
         <div class="page-tag">📸 갓생 기록</div>
-        <div class="page-title">6월의 흔적을<br>담아봐</div>
+        <div class="page-title">한 학기의 흔적을<br>담아봐</div>
       </div>
       <div class="photo-intro">
         <div class="photo-intro-icon">🗂️</div>
@@ -459,8 +464,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
     <div class="page" id="p4">
       <div class="sec" style="padding-top:20px">
         <div class="page-tag">✒️ 편지 쓰기</div>
-        <div class="page-title">3월의 나에게<br>진짜 편지를 써줘</div>
-        <div class="page-desc">벚꽃 피던 3월, 꽉 찬 시간표 앞에서<br>벌써부터 아득하고 막막해하던 나에게.</div>
+        <div class="page-title">작년의 나에게<br>진짜 편지를 써줘</div>
+        <div class="page-desc">새 학기를 앞두고 설레거나 막막했던,<br>작년 이맘때의 나에게.</div>
         <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--r-md);
           padding:12px 14px;margin-bottom:20px;font-size:13px;color:#065F46;line-height:1.65">
           💬 <b>완성도보다 솔직함이 더 중요해요.</b><br>
@@ -470,10 +475,10 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
       </div>
       <div class="ink-row"><span class="ink-icon">🖊️</span><div class="ink-bar"><div class="ink-fill" id="ink1"></div></div><span class="ink-num" id="cnt1">0 / 200자</span></div>
       <div class="letter-box">
-        <div class="letter-hdr">✉️ <span>3월의 나에게</span></div>
+        <div class="letter-hdr">✉️ <span>작년의 나에게</span></div>
         <div class="letter-body">
           <div class="letter-rules" id="rules1"></div>
-          <textarea class="letter-ta" id="ta1" placeholder="6월에 이 편지를 읽을 나에게, 무엇을 느끼게 해주고 싶어?&#10;&#10;나는 지금..." oninput="syncInk(&apos;ta1&apos;,&apos;ink1&apos;,&apos;cnt1&apos;,200,&apos;mt1&apos;)"></textarea>
+          <textarea class="letter-ta" id="ta1" placeholder="이 편지를 읽을 작년의 나에게, 한 학기 동안 무엇을 배우고 성장했는지 들려줘.&#10;&#10;나는 지금..." oninput="syncInk(&apos;ta1&apos;,&apos;ink1&apos;,&apos;cnt1&apos;,200,&apos;mt1&apos;)"></textarea>
         </div>
       </div>
       <div class="milestone" id="mt1">✨ 200자 달성! 잉크가 채워졌어.</div>
@@ -525,7 +530,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
             <g id="envGroup">
               <rect x="32" y="16" width="56" height="40" rx="6" fill="#FFF8EE" stroke="#E8D8B0" stroke-width="1.5"/>
               <path d="M32 22 L60 38 L88 22" stroke="#F5C842" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <text x="60" y="36" text-anchor="middle" font-family="sans-serif" font-size="6" fill="#B8986A">수신인: 3월의 나에게</text>
+              <text x="60" y="36" text-anchor="middle" font-family="sans-serif" font-size="6" fill="#B8986A">수신인: 작년의 나에게</text>
             </g>
           </svg>
         </div>
@@ -540,8 +545,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
         </div>
       </div>
 
-      <div class="p6-title">3월의 나에게<br>편지가 출발했습니다.</div>
-      <div class="p6-sub">1학기라는 긴 터널을 무사히 완주한 서울/경기 대학생 여러분, 정말 고생 많았습니다. 당신이 꾹꾹 눌러 담은 소중한 성장 기록과 솔직한 고민은 커뮤니티 심사위원단과 대기업·스타트업 OB 선배들에게 전달됩니다.</div>
+      <div class="p6-title">작년의 나에게<br>편지가 출발했습니다.</div>
+      <div class="p6-sub">한 학기라는 긴 터널을 무사히 완주한 서울권 대학생 여러분, 정말 고생 많았습니다. 당신이 꾹꾹 눌러 담은 종강 편지는 심사위원단과 대기업 현직자 선배들에게 전달됩니다.</div>
 
       <!-- 2-step process ticket -->
       <div class="proc-ticket">
@@ -561,8 +566,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
             <div class="proc-step-num step-2">2</div>
             <div class="proc-step-body">
               <div class="proc-step-t">📢 최종 결과 발표</div>
-              <div class="proc-step-d">심사 완료 후 선정자에게 입력하신 연락처로 개별 상세 안내가 예정되어 있습니다.</div>
-              <div class="proc-tag">연락처로 개별 안내 예정</div>
+              <div class="proc-step-d">선정자에게 입력하신 연락처로 개별 상세 안내가 예정되어 있습니다.</div>
+              <div class="proc-tag">선정자 개별 연락 07.13 ~ 08.03</div>
             </div>
           </div>
         </div>
@@ -575,40 +580,22 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
       </div>
       <div class="reward-grid">
         <div class="reward-card">
-          <span class="reward-card-icon">✏️</span>
-          <div class="reward-card-tag">영혼 탈곡 첨삭권</div>
-          <div class="reward-card-title">1:1 포트폴리오·자소서 끝장 멘토링</div>
-          <div class="reward-card-desc">대기업·스타트업 현직자 OB 선배와 직접 연결</div>
-          <div style="margin-top:10px;display:flex;align-items:center;gap:6px">
-            <span style="font-size:11px;font-weight:800;color:var(--blue)">👥 5명 선발</span>
-          </div>
-        </div>
-        <div class="reward-card">
-          <span class="reward-card-icon">📖</span>
-          <div class="reward-card-tag">스펙 박제권</div>
-          <div class="reward-card-title">2026 1학기 성장 리포트 정식 작가 등록</div>
-          <div class="reward-card-desc">내 이름으로 출판되는 진짜 책</div>
-          <div style="margin-top:10px;display:flex;align-items:center;gap:6px">
-            <span style="font-size:11px;font-weight:800;color:var(--blue)">👥 1명 선발</span>
-          </div>
+          <span class="reward-card-icon">💼</span>
+          <div class="reward-card-tag">취업 스펙</div>
+          <div class="reward-card-title">대기업 현직자 선배의 포트폴리오 밀착 피드백</div>
+          <div class="reward-card-desc">1:1로 받는 진짜 현직자 피드백</div>
         </div>
         <div class="reward-card">
           <span class="reward-card-icon">🛡️</span>
-          <div class="reward-card-tag">방학 수호권</div>
-          <div class="reward-card-title">갓생 서바이벌 챌린지 무료 체험 2주</div>
-          <div class="reward-card-desc">방학 고장 방지용 특급 루틴 프로그램</div>
-          <div style="margin-top:10px;display:flex;align-items:center;gap:6px">
-            <span style="font-size:11px;font-weight:800;color:var(--blue)">👥 7명 선발</span>
-          </div>
+          <div class="reward-card-tag">방학 갓생 케어</div>
+          <div class="reward-card-title">무기력증·번아웃 완벽 탈출</div>
+          <div class="reward-card-desc">'제일 잘 사는 법' 챌린지 무료 체험권</div>
         </div>
-        <div class="reward-card gold">
+        <div class="reward-card gold" style="grid-column:1/-1">
           <span class="reward-card-icon">💰</span>
-          <div class="reward-card-tag">갓생 지원금</div>
-          <div class="reward-card-title">방학 서포트 장학금 100만원</div>
-          <div class="reward-card-desc">상위 수상 팀을 위한 특별 시상</div>
-          <div style="margin-top:10px;display:flex;align-items:center;gap:6px">
-            <span style="font-size:11px;font-weight:800;color:#B45309">👥 2명 선발</span>
-          </div>
+          <div class="reward-card-tag">장학금</div>
+          <div class="reward-card-title">자기계발 지원금 총 100만원</div>
+          <div class="reward-card-desc">선정자 대상 특별 지급</div>
         </div>
       </div>
 
@@ -621,12 +608,12 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
 
   </div>
   <div class="bottom-cta" id="bottomCta">
-    <button class="cta-btn" id="ctaBtn" onclick="goNext(event)">3월의 나에게 편지 쓰기 ✉️</button>
+    <button class="cta-btn" id="ctaBtn" onclick="goNext(event)">작년의 나에게 편지 쓰기 ✉️</button>
   </div>
 </div>
 <script>
 var cur=1,TOTAL=6,anonOn=false,photoSlotIdx=0;
-var btnLabels=["3월의 나에게 편지 쓰기 ✉️","고민 키워드 선택 완료 →","다음 단계로 →","나의 진짜 고민 털어놓기 →","편지 봉투에 넣어 보내기 📮",""];
+var btnLabels=["작년의 나에게 편지 쓰기 ✉️","고민 키워드 선택 완료 →","다음 단계로 →","나의 진짜 고민 털어놓기 →","편지 봉투에 넣어 보내기 📮",""];
 function refreshUI(){
   document.getElementById("stepLbl").textContent=cur+" / "+TOTAL;
   document.getElementById("pFill").style.width=(cur/TOTAL*100)+"%";
@@ -642,6 +629,7 @@ function goNext(e){
   if(cur===1){
     var fields=[
       {id:'f_name',label:'이름'},
+      {id:'f_age',label:'나이'},
       {id:'f_school',label:'학교 · 학년'},
       {id:'f_major',label:'전공'},
       {id:'f_phone',label:'연락처'},
@@ -703,6 +691,7 @@ function submitToSheet(){
 
   var data={
     name:     v('f_name'),
+    age:      v('f_age'),
     school:   v('f_school'),
     major:    v('f_major'),
     phone:    v('f_phone'),
@@ -823,7 +812,7 @@ refreshUI();
 
 // D-day 계산
 (function(){
-  var deadline=new Date('2026-06-29T23:59:59');
+  var deadline=new Date('2026-08-03T23:59:59');
   var diff=Math.ceil((deadline-new Date())/(1000*60*60*24));
   var el=document.getElementById('dday');
   if(el) el.textContent=diff>0?diff:'당일';

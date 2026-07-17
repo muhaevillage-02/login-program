@@ -1,75 +1,117 @@
 // ============================================================
-//  LOG.in — 청년 레벨업 지원 사업 신청서
-//  시트명: LL_레벨업신청
+//  LOG.in — 공용 신청서 접수 스크립트
+//  하나의 웹앱 배포로 여러 폼을 처리, data.form_type 값에 따라
+//  같은 스프레드시트 내 서로 다른 탭에 저장합니다.
+//
+//  - levelup.html        → form_type 없음 또는 'levelup'  → 시트 'LL_레벨업신청'
+//  - story-contest.html  → form_type: 'story_contest'     → 시트 '도전 스토리'
 // ============================================================
 //
-//  [배포 방법]
-//  1. Google Sheet 새로 만들기 → URL에서 ID 복사
-//     https://docs.google.com/spreadsheets/d/【ID】/edit
-//  2. script.google.com → 새 프로젝트 → Code.gs에 이 파일 전체 붙여넣기
-//  3. SPREADSHEET_ID 에 복사한 ID 입력 후 저장
-//  4. 배포 > 새 배포 > 웹앱
-//     실행 계정: 나 / 액세스: 모든 사용자(익명 포함)
-//  5. 웹앱 URL 복사 → levelup.html 의 GAS_URL 변수에 붙여넣기
+//  [배포 방법 — 기존에 levelup용으로 배포한 프로젝트를 그대로 사용]
+//  1. script.google.com 에서 levelup 배포에 쓰던 그 프로젝트를 엽니다.
+//  2. Code.gs 내용을 이 파일 전체로 교체 후 저장.
+//  3. 배포 > 배포 관리 > 기존 배포 옆 연필(✏) 아이콘 클릭
+//     → 버전: 새 버전 → 배포
+//     (※ '새 배포'가 아니라 '기존 배포 수정'이어야 웹앱 URL이 그대로 유지됩니다)
+//  4. 웹앱 URL은 기존과 동일하므로 story-contest.html 쪽 GAS_URL도
+//     levelup.html과 같은 값으로 맞추면 됩니다 (이미 반영되어 있음).
 // ============================================================
 
 var SPREADSHEET_ID = '1054PSBS0-wxBPydMqiykXk6IUjrCmh5QqPxbf9vzaTU';
-var SHEET_NAME     = 'LL_레벨업신청';
+
+var FORMS = {
+  levelup: {
+    sheetName: 'LL_레벨업신청',
+    headers: [
+      '제출 일시',
+      '이름', '만 나이', '신분',
+      '거주지 (시/도)', '거주지 상세', '전화번호', '이메일',
+      '현재 상태', '기타 상태 입력',
+      '희망 직무 / 관심 분야', '전공',
+      '준비 이력',
+      '참여 동기',
+      '필요한 지원 항목',
+      '개인정보 동의',
+      'User-Agent', '타임스탬프'
+    ],
+    toRow: function (data) {
+      var statusVal = data.status || '';
+      if (statusVal === 'E: 기타' && data.status_other) {
+        statusVal = '기타: ' + data.status_other;
+      }
+      return [
+        new Date(),
+        data.name             || '',
+        data.age              || '',
+        data.student_status   || '',
+        data.region           || '',
+        data.residence_detail || '',
+        data.phone            || '',
+        data.email            || '',
+        statusVal,
+        data.status_other     || '',
+        data.job_target       || '',
+        data.edu              || '',
+        data.history          || '',
+        data.motivation       || '',
+        data.support           || '',
+        data.agree_privacy ? 'O' : 'X',
+        data.userAgent        || '',
+        data.timestamp        || ''
+      ];
+    }
+  },
+
+  story_contest: {
+    sheetName: '도전 스토리',
+    headers: [
+      '제출 일시',
+      '이름', '만 나이', '신분',
+      '거주지 (시/도)', '거주지 상세', '전화번호', '이메일',
+      '도전 분야',
+      '도전 스토리',
+      '개인정보 동의',
+      'User-Agent', '타임스탬프'
+    ],
+    toRow: function (data) {
+      return [
+        new Date(),
+        data.name             || '',
+        data.age              || '',
+        data.student_status   || '',
+        data.region           || '',
+        data.residence_detail || '',
+        data.phone            || '',
+        data.email            || '',
+        data.story_category   || '',
+        data.story            || '',
+        data.agree_privacy ? 'O' : 'X',
+        data.userAgent        || '',
+        data.timestamp        || ''
+      ];
+    }
+  }
+};
 
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
+    var formKey = FORMS[data.form_type] ? data.form_type : 'levelup';
+    var form = FORMS[formKey];
+
     var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
-    var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+    var sheet = ss.getSheetByName(form.sheetName) || ss.insertSheet(form.sheetName);
 
     if (sheet.getLastRow() === 0) {
-      var headers = [
-        '제출 일시',
-        '이름', '만 나이', '신분',
-        '거주지 (시/도)', '거주지 상세', '전화번호', '이메일',
-        '현재 상태', '기타 상태 입력',
-        '희망 직무 / 관심 분야', '전공',
-        '준비 이력',
-        '참여 동기',
-        '필요한 지원 항목',
-        '개인정보 동의',
-        'User-Agent', '타임스탬프'
-      ];
-      sheet.appendRow(headers);
-      sheet.getRange(1, 1, 1, headers.length)
+      sheet.appendRow(form.headers);
+      sheet.getRange(1, 1, 1, form.headers.length)
            .setFontWeight('bold')
            .setBackground('#00CCFA');
       sheet.setFrozenRows(1);
       sheet.setColumnWidth(1, 150);
-      sheet.setColumnWidth(13, 280);
-      sheet.setColumnWidth(14, 280);
     }
 
-    var statusVal = data.status || '';
-    if (statusVal === 'E: 기타' && data.status_other) {
-      statusVal = '기타: ' + data.status_other;
-    }
-
-    sheet.appendRow([
-      new Date(),
-      data.name             || '',
-      data.age              || '',
-      data.student_status   || '',
-      data.region           || '',
-      data.residence_detail || '',
-      data.phone            || '',
-      data.email            || '',
-      statusVal,
-      data.status_other     || '',
-      data.job_target       || '',
-      data.edu              || '',
-      data.history           || '',
-      data.motivation        || '',
-      data.support            || '',
-      data.agree_privacy ? 'O' : 'X',
-      data.userAgent        || '',
-      data.timestamp        || ''
-    ]);
+    sheet.appendRow(form.toRow(data));
 
     return ContentService
       .createTextOutput(JSON.stringify({ result: 'success' }))
@@ -84,12 +126,15 @@ function doPost(e) {
 
 function doGet() {
   return ContentService
-    .createTextOutput('LOG.in 청년 레벨업 지원 사업 신청서 엔드포인트 정상 동작 중.')
+    .createTextOutput('LOG.in 공용 신청서 접수 엔드포인트 정상 동작 중.')
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
 function testConnection() {
-  var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
-  var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
-  Logger.log('연결 성공: ' + sheet.getName() + ' / 현재 행 수: ' + sheet.getLastRow());
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  Object.keys(FORMS).forEach(function (key) {
+    var form = FORMS[key];
+    var sheet = ss.getSheetByName(form.sheetName) || ss.insertSheet(form.sheetName);
+    Logger.log(key + ' 연결 성공: ' + sheet.getName() + ' / 현재 행 수: ' + sheet.getLastRow());
+  });
 }
