@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LOGIN LAB · 2026 대학생 지원 프로젝트 신청</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF5;
+    --bg-warm: #F4F1E8;
+    --card: #FFFFFF;
+    --ink: #0E0E0E;
+    --ink-soft: #2A2A2A;
+    --ink-mid: #555555;
+    --ink-light: #8A8A8A;
+    --line: #E5E2D7;
+    --line-strong: #2A2A2A;
+    --lime: #C8E600;
+    --lime-deep: #A8C400;
+    --lime-soft: #EEF7B5;
+    --shadow-sm: 0 2px 8px rgba(20,20,20,0.04);
+    --shadow-md: 0 6px 20px rgba(20,20,20,0.08);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    background-image:
+      linear-gradient(rgba(20,20,20,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20,20,20,0.025) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-attachment: fixed;
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    color: var(--ink);
+    line-height: 1.65;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--ink); color: #fff;
+    padding: 10px 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-dot {
+    display: inline-block; width: 8px; height: 8px;
+    background: var(--lime); border-radius: 50%;
+    box-shadow: 0 0 8px var(--lime); animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  /* HEADER */
+  .header {
+    background: var(--ink); color: #fff;
+    padding: 56px 24px 80px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .header-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+
+  .logo { display: flex; justify-content: center; margin-bottom: 24px; }
+  .logo-svg { display: block; margin: 0 auto; }
+  .lab-tag {
+    display: inline-block; padding: 5px 14px;
+    border: 1px solid var(--lime); color: var(--lime);
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase; border-radius: 999px;
+  }
+  .header-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45); margin: 20px 0 10px;
+  }
+  .header-title {
+    font-size: 32px; font-weight: 900; color: #fff;
+    margin: 0 0 12px; letter-spacing: -0.5px; line-height: 1.3;
+  }
+  .header-title .accent { color: var(--lime); }
+  .header-sub { font-size: 15px; color: rgba(255,255,255,0.7); margin: 0; line-height: 1.7; }
+  .header-meta {
+    display: flex; justify-content: center; gap: 24px;
+    margin-top: 28px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase;
+    flex-wrap: wrap;
+  }
+  .header-meta span strong { color: var(--lime); font-weight: 500; }
+
+  /* CONTAINER */
+  .container { max-width: 760px; margin: -44px auto 0; padding: 0 20px 80px; position: relative; z-index: 2; }
+
+  /* REWARD HERO */
+  .reward-hero {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 4px; margin-bottom: 20px;
+    box-shadow: var(--shadow-md); overflow: hidden;
+  }
+  .reward-hero-top {
+    background: var(--ink); padding: 32px 32px 28px;
+    position: relative; overflow: hidden;
+  }
+  .reward-hero-top::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,230,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,230,0,0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .rh-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--lime); margin-bottom: 12px; position: relative;
+  }
+  .rh-title {
+    font-size: 26px; font-weight: 900; color: #fff;
+    margin: 0 0 6px; letter-spacing: -0.5px; line-height: 1.3;
+    position: relative;
+  }
+  .rh-sub { font-size: 14px; color: rgba(255,255,255,0.6); position: relative; margin: 0; }
+
+  /* 지원 혜택 카드 그리드 */
+  .reward-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative;
+  }
+  .reward-card {
+    padding: 22px 24px;
+    border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .reward-card:nth-child(2n) { border-right: none; }
+  .reward-card:nth-last-child(-n+2) { border-bottom: none; }
+  .reward-card.full { grid-column: 1 / -1; border-right: none; }
+  .reward-num {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; color: var(--ink-light); margin-bottom: 10px;
+  }
+  .reward-main {
+    font-size: 21px; font-weight: 900; color: var(--ink);
+    letter-spacing: -0.5px; line-height: 1.25; margin-bottom: 6px;
+  }
+  .reward-main .sub-amount {
+    font-size: 13px; font-weight: 500; color: var(--ink-light);
+    margin-top: 2px; display: block;
+  }
+  .reward-desc { font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+  .reward-badge {
+    display: inline-block; background: var(--ink); color: var(--lime);
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    padding: 3px 8px; border-radius: 2px; letter-spacing: 0.1em;
+    font-weight: 600; margin-bottom: 8px;
+  }
+
+  /* 지원 자격 요약 */
+  .qualify-bar {
+    background: var(--lime); padding: 14px 32px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .qualify-bar-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; font-weight: 700; color: var(--ink); flex-shrink: 0;
+  }
+  .qualify-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .qualify-tag {
+    background: rgba(0,0,0,0.1); border-radius: 999px;
+    padding: 4px 12px; font-size: 13px; font-weight: 600; color: var(--ink);
+  }
+
+  /* SCHEDULE */
+  .schedule-card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 4px; margin-bottom: 20px;
+    box-shadow: var(--shadow-sm); overflow: hidden;
+  }
+  .schedule-head {
+    padding: 18px 28px; background: var(--bg-warm);
+    border-bottom: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light);
+  }
+  .schedule-row {
+    display: grid; grid-template-columns: 140px 1fr;
+    border-bottom: 1px solid var(--line);
+  }
+  .schedule-row:last-child { border-bottom: none; }
+  .schedule-label {
+    background: var(--bg-warm); padding: 14px 18px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.08em; color: var(--ink); font-weight: 600;
+    border-right: 1px solid var(--line);
+  }
+  .schedule-value { padding: 14px 20px; font-size: 14px; color: var(--ink-soft); }
+  .schedule-value strong { color: var(--ink); font-weight: 700; }
+
+  /* SECTIONS */
+  .section {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 4px; margin-bottom: 20px; box-shadow: var(--shadow-sm);
+  }
+  .section-head {
+    border-bottom: 1px solid var(--line); padding: 22px 32px;
+    background: var(--bg-warm); display: flex; align-items: center; gap: 16px;
+  }
+  .section-num {
+    flex-shrink: 0; width: 38px; height: 38px;
+    background: var(--ink); color: var(--lime);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Mono', monospace; font-weight: 600;
+    font-size: 13px; letter-spacing: 0.05em;
+  }
+  .section-titles { flex: 1; min-width: 0; }
+  .section-meta {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 4px;
+  }
+  .section-title { font-size: 19px; font-weight: 700; color: var(--ink); margin: 0; letter-spacing: -0.2px; }
+  .section-body { padding: 28px 32px; }
+  .section-desc {
+    font-size: 14px; color: var(--ink-mid); margin: 0 0 24px;
+    padding: 12px 14px; background: var(--bg);
+    border-left: 3px solid var(--lime); border-radius: 0 4px 4px 0;
+  }
+
+  /* FIELDS */
+  .field { margin-bottom: 22px; }
+  .field:last-child { margin-bottom: 0; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 540px) { .row { grid-template-columns: 1fr; } }
+
+  label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px;
+  }
+  label .req {
+    color: var(--lime-deep); background: var(--ink);
+    padding: 2px 6px; border-radius: 2px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.05em;
+  }
+  label .opt {
+    color: var(--ink-soft); background: var(--bg-warm);
+    border: 1px solid var(--line-strong);
+    padding: 1px 6px; border-radius: 2px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  }
+  .hint { font-size: 12.5px; color: var(--ink-light); margin-top: 6px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.02em; }
+  .guide {
+    background: var(--bg-warm); border: 1px dashed var(--line-strong);
+    padding: 10px 14px; border-radius: 4px;
+    font-size: 13px; color: var(--ink-mid); margin-top: 8px; line-height: 1.6;
+  }
+  .guide::before {
+    content: "// TIP";
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; color: var(--ink); background: var(--lime);
+    padding: 2px 6px; border-radius: 2px; margin-right: 8px; font-weight: 600;
+  }
+
+  input[type="text"], input[type="tel"], input[type="email"], input[type="number"], textarea, select {
+    width: 100%; padding: 12px 14px;
+    border: 1.5px solid var(--line); border-radius: 4px;
+    font-family: inherit; font-size: 14.5px; color: var(--ink);
+    background: #fff; transition: all 0.15s ease; outline: none; -webkit-appearance: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--ink); box-shadow: 0 0 0 3px var(--lime-soft);
+  }
+  textarea { min-height: 100px; resize: vertical; font-family: inherit; }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%238A8A8A' d='M5 7l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center;
+    background-size: 20px; padding-right: 36px; cursor: pointer;
+  }
+  .char-counter { font-size: 11px; color: var(--ink-light); text-align: right; margin-top: 6px; font-family: 'IBM Plex Mono', monospace; }
+  .char-counter.warn { color: var(--lime-deep); font-weight: 600; }
+
+  /* OPTIONS */
+  .options { display: flex; flex-wrap: wrap; gap: 8px; }
+  .option { flex: 1 1 auto; min-width: 140px; position: relative; }
+  .option input { position: absolute; opacity: 0; pointer-events: none; }
+  .option label {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; background: #fff;
+    border: 1.5px solid var(--line); border-radius: 4px;
+    cursor: pointer; font-size: 14px; font-weight: 500;
+    margin: 0; transition: all 0.15s ease; color: var(--ink-soft);
+  }
+  .option label::before {
+    content: ""; width: 16px; height: 16px;
+    border-radius: 50%; border: 2px solid var(--line-strong);
+    flex-shrink: 0; transition: all 0.15s ease;
+  }
+  .option.checkbox label::before { border-radius: 3px; }
+  .option label:hover { border-color: var(--ink); background: var(--bg-warm); }
+  .option input:checked + label { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .option input:checked + label::before {
+    background: var(--lime); border-color: var(--lime); box-shadow: inset 0 0 0 3px var(--ink);
+  }
+  .option.checkbox input:checked + label::before {
+    background: var(--lime) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E0E0E' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center / 11px no-repeat;
+    box-shadow: none;
+  }
+  .options-vertical .option { flex: 1 1 100%; min-width: 100%; }
+  .options-vertical .option label { align-items: flex-start; line-height: 1.5; }
+  .options-vertical .option label::before { margin-top: 3px; }
+  .opt-tag {
+    display: inline-block; background: var(--lime); color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    padding: 2px 6px; border-radius: 2px; margin-right: 4px;
+    letter-spacing: 0.05em; font-weight: 600;
+  }
+  .opt-desc { font-size: 12.5px; font-weight: 400; color: var(--ink-light); margin-top: 2px; }
+  .option input:checked + label .opt-desc { color: rgba(255,255,255,0.6); }
+  .option input:checked + label .opt-tag { background: var(--lime); color: var(--ink); }
+
+  /* CONSENT */
+  .consent {
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: 4px; padding: 16px 18px;
+    font-size: 13px; color: var(--ink-mid); margin-bottom: 16px; line-height: 1.8;
+  }
+  .consent strong {
+    color: var(--ink); display: block; margin-bottom: 8px;
+    font-weight: 700; font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* SUBMIT */
+  .submit-area {
+    text-align: center; margin-top: 36px; padding: 36px 32px;
+    background: var(--ink); border-radius: 4px;
+    position: relative; overflow: hidden;
+  }
+  .submit-area::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .submit-deadline {
+    position: relative; color: rgba(255,255,255,0.5);
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .submit-reward-line {
+    position: relative; margin-bottom: 20px;
+    color: rgba(255,255,255,0.85); font-size: 14px; line-height: 1.7;
+  }
+  .submit-reward-line strong { color: var(--lime); }
+  .submit-btn {
+    background: var(--lime); color: var(--ink); border: none;
+    padding: 16px 56px; font-size: 16px; font-weight: 800;
+    border-radius: 4px; cursor: pointer; font-family: inherit;
+    transition: all 0.15s ease; letter-spacing: 0.5px;
+    position: relative; box-shadow: 4px 4px 0 var(--lime-deep);
+  }
+  .submit-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--lime-deep); }
+  .submit-btn:active { transform: translate(0, 0); box-shadow: 2px 2px 0 var(--lime-deep); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* FOOTER */
+  .footer {
+    background: var(--ink); color: rgba(255,255,255,0.7);
+    padding: 40px 24px; text-align: center; margin-top: 60px;
+  }
+  .footer-msg { font-size: 16px; color: #fff; margin-bottom: 12px; font-weight: 500; }
+  .footer-msg .accent { color: var(--lime); }
+  .footer-sub { font-size: 13px; line-height: 1.7; margin-bottom: 24px; }
+  .footer-contact { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; font-size: 13px; margin-bottom: 24px; }
+  .footer-contact a { color: var(--lime); text-decoration: none; }
+  .footer-contact a:hover { text-decoration: underline; }
+  .footer-meta {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px; margin-top: 20px;
+    display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+  }
+
+  /* MOBILE */
+  @media (max-width: 640px) {
+    .container { padding: 0 14px 60px; }
+    .header { padding: 40px 20px 68px; }
+    .header-title { font-size: 26px; }
+    .section-head, .section-body { padding-left: 20px; padding-right: 20px; }
+    .reward-hero-top { padding: 24px 20px 20px; }
+    .reward-grid { grid-template-columns: 1fr; }
+    .reward-card:nth-child(2n) { border-right: 1px solid var(--line); }
+    .reward-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .reward-card:last-child { border-bottom: none; }
+    .qualify-bar { padding: 14px 20px; }
+    .schedule-row { grid-template-columns: 1fr; }
+    .schedule-label { border-right: none; border-bottom: 1px solid var(--line); }
+    .submit-btn { padding: 14px 36px; font-size: 14px; }
+    .header-meta { gap: 12px; font-size: 10px; }
+    .schedule-head, .schedule-value, .schedule-label { padding-left: 20px; padding-right: 20px; }
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(14,14,14,0.85);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100; padding: 20px; backdrop-filter: blur(4px);
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: #fff; border: 1px solid var(--line);
+    border-top: 4px solid var(--lime); border-radius: 4px;
+    padding: 36px 32px; text-align: center;
+    max-width: 440px; width: 100%; box-shadow: var(--shadow-md);
+  }
+  .modal-tag {
+    display: inline-block; background: var(--lime); color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    padding: 4px 10px; border-radius: 2px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 16px;
+  }
+  .modal h3 { font-size: 22px; margin: 0 0 12px; font-weight: 700; }
+  .modal p { font-size: 14px; color: var(--ink-mid); line-height: 1.75; margin: 0 0 20px; }
+  .modal-btn {
+    background: var(--ink); color: var(--lime); border: none;
+    padding: 12px 32px; border-radius: 4px; font-weight: 600;
+    cursor: pointer; font-family: inherit; font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-dot"></span>
+    <span>LOGIN LAB · 2026 대학생 지원 프로젝트 접수 중</span>
+  </div>
+  <div>DEADLINE · 2026.08.13</div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <svg class="logo-svg" width="240" height="84" viewBox="0 0 280 110" xmlns="http://www.w3.org/2000/svg">
+        <defs><style>.lf{fill:#C8E600}.ls{fill:#8DA200}</style></defs>
+        <g class="ls" transform="translate(7,7)"><text x="0" y="80" font-family="'Noto Sans KR',sans-serif" font-size="84" font-weight="900" letter-spacing="-3">Login</text></g>
+        <g class="lf"><text x="0" y="80" font-family="'Noto Sans KR',sans-serif" font-size="84" font-weight="900" letter-spacing="-3">Login</text></g>
+      </svg>
+    </div>
+    <div><span class="lab-tag">2026 대학생 지원 프로젝트</span></div>
+
+    <div class="header-eyebrow">// 내 전공, 이대로 괜찮을까?</div>
+    <h1 class="header-title">전공도, 진로도 <span class="accent">고민되는 당신에게.</span></h1>
+    <p class="header-sub">내가 가는 길이 맞는지 고민되는 누구나!<br>실전 커리어 코칭 + 진로적성 코칭 + 나만의 리포트까지</p>
+
+    <div class="header-meta">
+      <span>PERIOD · <strong>07.13 ~ 08.13</strong></span>
+      <span>WHO · <strong>대학생 누구나</strong></span>
+      <span>SEATS · <strong>총 35명</strong></span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- 지원 혜택 강조 -->
+  <section class="reward-hero">
+    <div class="reward-hero-top">
+      <div class="rh-label">// Benefits · 지원 내용</div>
+      <h2 class="rh-title">신청만 해도 가능성이 열립니다.</h2>
+      <p class="rh-sub">항목별 선발 · 대상자 선별 후 유선 개별 안내</p>
+    </div>
+
+    <div class="reward-grid">
+      <div class="reward-card">
+        <div class="reward-badge">REWARD 01 · 10명</div>
+        <div class="reward-main">실전 대기업 인사팀<span class="sub-amount">커리어 코칭</span></div>
+        <div class="reward-desc">현직 대기업 인사팀이 직접 봐주는 실전 커리어 코칭. 막연한 취업 고민을 구체적인 방향으로.</div>
+      </div>
+      <div class="reward-card">
+        <div class="reward-badge">REWARD 02 · 10명</div>
+        <div class="reward-main">1:1 멘탈<span class="sub-amount">&amp; 진로적성 코칭</span></div>
+        <div class="reward-desc">마음의 방향과 적성의 방향을 함께 짚어주는 1:1 코칭. 흔들리는 마음까지 함께 살펴봐요.</div>
+      </div>
+      <div class="reward-card full">
+        <div class="reward-badge">REWARD 03 · 15명</div>
+        <div class="reward-main">개인 소장용<span class="sub-amount">진로적성 리포트 제작</span></div>
+        <div class="reward-desc">나에게 맞는 방향을 데이터로 확인하는 개인 맞춤 리포트. 두고두고 참고할 수 있게 제작해 드립니다.</div>
+      </div>
+    </div>
+
+    <div class="qualify-bar">
+      <span class="qualify-bar-label">// 지원 자격</span>
+      <div class="qualify-tags">
+        <span class="qualify-tag">서울·경기 거주</span>
+        <span class="qualify-tag">대학생 누구나</span>
+        <span class="qualify-tag">졸업예정·취준·직장인 가능</span>
+        <span class="qualify-tag">만 19~25세</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 일정 -->
+  <section class="schedule-card">
+    <div class="schedule-head">// Schedule · 모집기간</div>
+    <div class="schedule-table">
+      <div class="schedule-row">
+        <div class="schedule-label">신청 접수</div>
+        <div class="schedule-value"><strong>2026. 07. 13 (월) ~ 08. 13 (목)</strong></div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-label">대상자 선별</div>
+        <div class="schedule-value">접수 마감 후 <strong>대상자 선별</strong> · 유선 개별 안내</div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-label">신청 방법</div>
+        <div class="schedule-value">본 페이지 하단 <strong>고민 작성 후 제출</strong>로 접수 완료</div>
+      </div>
+    </div>
+  </section>
+
+  <form id="applyForm" onsubmit="return handleSubmit(event)">
+
+    <!-- 01. 기본 정보 -->
+    <section class="section">
+      <header class="section-head">
+        <div class="section-num">01</div>
+        <div class="section-titles">
+          <div class="section-meta">BASIC INFO</div>
+          <h3 class="section-title">기본 정보를 알려주세요</h3>
+        </div>
+      </header>
+      <div class="section-body">
+        <p class="section-desc">대상자 선별 및 결과 안내에만 사용됩니다. 외부 공유 없음.</p>
+
+        <div class="row">
+          <div class="field">
+            <label>이름 <span class="req">REQUIRED</span></label>
+            <input type="text" name="name" placeholder="예) 홍길동" required />
+          </div>
+          <div class="field">
+            <label>만 나이 <span class="req">REQUIRED</span></label>
+            <input type="number" name="age" placeholder="예) 22" required />
+            <p class="hint">// 만 19~25세 우대 · 그 외 연령도 지원 가능</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>현재 신분 <span class="req">REQUIRED</span></label>
+          <select name="student_status" required>
+            <option value="">선택해주세요</option>
+            <option value="대학생 (재학 중)">대학생 (재학 중)</option>
+            <option value="대학생 (휴학 중)">대학생 (휴학 중)</option>
+            <option value="졸업예정">졸업예정</option>
+            <option value="취업 준비생">취업 준비생</option>
+            <option value="직장인">직장인</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>거주지 <span class="req">REQUIRED</span></label>
+          <p class="hint" style="margin-top:0; margin-bottom:10px;">// 서울·경기 거주 대학생만 지원 가능합니다.</p>
+          <div class="options" style="margin-bottom: 10px;">
+            <div class="option">
+              <input type="radio" id="region-seoul" name="region" value="서울" required />
+              <label for="region-seoul"><strong>서울</strong></label>
+            </div>
+            <div class="option">
+              <input type="radio" id="region-gg" name="region" value="경기" />
+              <label for="region-gg"><strong>경기</strong></label>
+            </div>
+          </div>
+          <input type="text" name="residence_detail" id="residence_detail"
+            placeholder="지역을 먼저 선택해 주세요"
+            disabled style="opacity:0.5; cursor:not-allowed;" />
+          <p class="hint" id="residence_hint" style="display:none;">// 세부 시·구·동까지 적어주세요</p>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>연락처 <span class="req">REQUIRED</span></label>
+            <input type="tel" name="phone" placeholder="01012345678" required />
+            <p class="hint">// 선정 후 개별 연락</p>
+          </div>
+          <div class="field">
+            <label>이메일 <span class="opt">OPTIONAL</span></label>
+            <input type="email" name="email" placeholder="example@email.com" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02. 학교 · 전공 -->
+    <section class="section">
+      <header class="section-head">
+        <div class="section-num">02</div>
+        <div class="section-titles">
+          <div class="section-meta">SCHOOL &amp; MAJOR</div>
+          <h3 class="section-title">학교 · 전공</h3>
+        </div>
+      </header>
+      <div class="section-body">
+        <p class="section-desc">코칭·리포트 매칭 정확도를 높이기 위한 정보입니다.</p>
+
+        <div class="row">
+          <div class="field">
+            <label>학교 · 학년 <span class="req">REQUIRED</span></label>
+            <input type="text" name="school" placeholder="예) ○○대학교 3학년 (휴학 중 가능)" required />
+          </div>
+          <div class="field">
+            <label>전공 <span class="req">REQUIRED</span></label>
+            <input type="text" name="major" placeholder="예) 경영학과 / 시각디자인과" required />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. 전공에 대해 막막했던 고민 -->
+    <section class="section">
+      <header class="section-head">
+        <div class="section-num">03</div>
+        <div class="section-titles">
+          <div class="section-meta">YOUR WORRY</div>
+          <h3 class="section-title">전공에 대해 막막했던 고민을 적어봐!</h3>
+        </div>
+      </header>
+      <div class="section-body">
+        <p class="section-desc">가장 가까운 상황을 하나 고르고, 솔직하게 적어주세요. 완성된 글이 아니어도 괜찮습니다.</p>
+
+        <div class="field">
+          <label>지금 나와 가장 가까운 상황 <span class="req">REQUIRED</span></label>
+          <div class="options options-vertical">
+            <div class="option">
+              <input type="radio" id="worry-a" name="worry_type" value="A: 대학생활 하며 고민됐던 상황들" required />
+              <label for="worry-a">
+                <span><span class="opt-tag">A</span><strong>대학생활 하며 고민됐던 상황들</strong>
+                <div class="opt-desc">전공 수업, 동기들과의 비교 속에서 흔들렸던 순간이 있어요.</div></span>
+              </label>
+            </div>
+            <div class="option">
+              <input type="radio" id="worry-b" name="worry_type" value="B: 현재 전공은 있지만, 미래 진로가 고민인 경우" />
+              <label for="worry-b">
+                <span><span class="opt-tag">B</span><strong>현재 전공은 있지만, 미래 진로가 고민인 경우</strong>
+                <div class="opt-desc">전공은 있는데 이 길로 계속 가야 할지 확신이 없어요.</div></span>
+              </label>
+            </div>
+            <div class="option">
+              <input type="radio" id="worry-c" name="worry_type" value="C: 내가 하는 것이 맞는지, 잘 모르겠는 경우" />
+              <label for="worry-c">
+                <span><span class="opt-tag">C</span><strong>내가 하는 것이 맞는지, 잘 모르겠는 경우</strong>
+                <div class="opt-desc">지금 준비하고 있는 것이 나한테 맞는 방향인지 확신이 안 서요.</div></span>
+              </label>
+            </div>
+            <div class="option">
+              <input type="radio" id="worry-d" name="worry_type" value="D: 기타" />
+              <label for="worry-d">
+                <span><span class="opt-tag">D</span><strong>기타</strong>
+                <div class="opt-desc">위 항목에 해당하지 않는다면 아래에 자유롭게 적어주세요.</div></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>고민 내용 <span class="req">REQUIRED</span></label>
+          <textarea name="worry_detail" id="worry_detail" maxlength="500"
+            placeholder="예) 전공 수업을 들을수록 흥미가 사라지는 것 같아서 불안해요. 이 길이 맞는 건지, 진로를 다시 생각해봐야 하는 건 아닌지 계속 고민이 돼요..." required></textarea>
+          <div class="char-counter"><span id="detailCount">0</span> / 500자</div>
+          <div class="guide">언제부터, 어떤 계기로 이런 생각이 들었는지 구체적인 순간을 떠올리며 적어주세요.</div>
+        </div>
+
+        <div class="field" style="margin-top: 20px;">
+          <label>지금 가장 기대되는 지원 항목 <span class="req">REQUIRED</span></label>
+          <div class="options options-vertical">
+            <div class="option">
+              <input type="radio" id="hope-1" name="hope" value="실전 대기업 인사팀 커리어 코칭" required />
+              <label for="hope-1"><span><span class="opt-tag">1</span><strong>실전 대기업 인사팀 커리어 코칭</strong></span></label>
+            </div>
+            <div class="option">
+              <input type="radio" id="hope-2" name="hope" value="1:1 멘탈&amp;진로적성 코칭" />
+              <label for="hope-2"><span><span class="opt-tag">2</span><strong>1:1 멘탈&amp;진로적성 코칭</strong></span></label>
+            </div>
+            <div class="option">
+              <input type="radio" id="hope-3" name="hope" value="개인 소장용 진로적성 리포트 제작" />
+              <label for="hope-3"><span><span class="opt-tag">3</span><strong>개인 소장용 진로적성 리포트 제작</strong></span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. 동의 -->
+    <section class="section">
+      <header class="section-head">
+        <div class="section-num">04</div>
+        <div class="section-titles">
+          <div class="section-meta">CONSENT</div>
+          <h3 class="section-title">개인정보 수집 및 이용 동의</h3>
+        </div>
+      </header>
+      <div class="section-body">
+        <div class="consent">
+          <strong>// Personal Data Collection Notice</strong>
+          수집 항목: 이름, 만 나이, 신분, 거주지, 연락처, 이메일(선택), 학교, 전공, 고민 유형, 고민 내용, 기대 항목.<br>
+          이용 목적: 대상자 선별, 결과 안내, 프로그램 운영.<br>
+          보유 기간: 사업 종료 후 6개월 이내 파기 (선발자는 1년). 제3자 제공 없음.
+        </div>
+        <div class="options options-vertical">
+          <div class="option checkbox">
+            <input type="checkbox" id="agree-1" name="agree_privacy" required />
+            <label for="agree-1">[필수] 개인정보 수집 및 이용에 동의합니다.</label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUBMIT -->
+    <div class="submit-area">
+      <div class="submit-deadline">// Application Deadline · 2026.08.13 (목)</div>
+      <div class="submit-reward-line">
+        신청해주시면 담당자가 직접 연락드립니다.<br>
+        <span style="font-size:13px; color:rgba(255,255,255,0.5);">항목별 총 35명 선발 · 대상자 선별 후 유선 개별 안내</span>
+      </div>
+      <button type="submit" class="submit-btn" id="submitBtn">막막했던 고민 적고 리워드 받기 →</button>
+    </div>
+  </form>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-msg">내 전공, 이대로 괜찮을지 — <span class="accent">함께 답을 찾아요.</span></div>
+  <div class="footer-sub">2030 청년들을 위한 연구소 LOGIN LAB<br>내가 가는 길이 맞는지 고민되는 누구나 환영합니다.</div>
+  <div class="footer-contact">
+    <span>🌐 사이트 · <a href="https://theloginlab.co.kr/" target="_blank" rel="noopener">theloginlab.co.kr</a></span>
+    <span>✉ E-mail · <a href="mailto:program@login.kr">program@login.kr</a></span>
+  </div>
+  <div class="footer-meta">
+    <span>© 2026 LOGIN LAB</span>
+    <span>대학생 지원 프로젝트</span>
+    <span>FORM v1.0</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-tag">SUBMITTED · 접수 완료</div>
+    <h3>신청해 주셔서 감사합니다!</h3>
+    <p>꼼꼼히 검토한 뒤,<br><strong>대상자 선별</strong> 결과를<br>입력하신 연락처로 개별 안내드립니다.<br><br>당신의 고민을 진심으로 응원합니다.</p>
+    <button class="modal-btn" onclick="closeModal()">확인</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycby3S-RCP0Z7Ku9QiuDlbFSoit4wsZLwy4vosDRehgiRC44yLJxKdf6aOF8DgIz-2Tgb/exec';
+
+  // ===== Supabase 연동 =====
+  var _sb = supabase.createClient(
+    'https://atzyvbifvrlhwploqmpr.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0enl2YmlmdnJsaHdwbG9xbXByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMjQzNTEsImV4cCI6MjA5MzgwMDM1MX0.6ap0rxCQXVsShJXTFb5UIKN4ykog32BLL1sBZN6vEMo'
+  );
+
+  async function saveToSupabase(data) {
+    var payload = {
+      name:             data.name || '',
+      age:              data.age || '',
+      student_status:   data.student_status || '',
+      region:           data.region || '',
+      residence_detail: data.residence_detail || '',
+      phone:            data.phone || '',
+      email:            data.email || '',
+      school:           data.school || '',
+      major:            data.major || '',
+      worry_type:       data.worry_type || '',
+      worry_detail:     data.worry_detail || '',
+      hope:             data.hope || '',
+      agree_privacy:    !!data.agree_privacy,
+      user_agent:       navigator.userAgent,
+      submitted_at:     new Date().toISOString()
+    };
+    var res = await _sb.from('AD-muhae-career-coaching').insert([payload]);
+    if (res.error) console.error('[Supabase] 저장 실패:', res.error.message);
+    else console.log('[Supabase] 저장 완료');
+  }
+
+  (function () {
+    var regionInputs = document.querySelectorAll('input[name="region"]');
+    var detail = document.getElementById('residence_detail');
+    var hint = document.getElementById('residence_hint');
+    var placeholders = {
+      '서울': '예) 마포구 연남동 / 강남구 역삼동',
+      '경기': '예) 성남시 분당구 / 수원시 영통구'
+    };
+    regionInputs.forEach(function (r) {
+      r.addEventListener('change', function () {
+        detail.disabled = false;
+        detail.required = true;
+        detail.style.opacity = '1';
+        detail.style.cursor = 'text';
+        detail.placeholder = placeholders[r.value] || '세부 시·구·동을 적어주세요';
+        hint.style.display = 'block';
+        detail.focus();
+      });
+    });
+  })();
+
+  // 고민 유형 선택에 따라 작성 placeholder 변경
+  (function () {
+    var worryInputs = document.querySelectorAll('input[name="worry_type"]');
+    var detailTa = document.getElementById('worry_detail');
+    var placeholders = {
+      'A: 대학생활 하며 고민됐던 상황들': '예) 전공 수업을 들을수록 흥미가 사라지는 것 같아서 불안해요. 동기들은 다 방향을 잡은 것 같은데 저만 계속 헤매는 느낌이에요...',
+      'B: 현재 전공은 있지만, 미래 진로가 고민인 경우': '예) 전공은 있는데 이 길로 취업까지 이어가야 할지 확신이 안 서요. 다른 방향도 있는지 궁금해요...',
+      'C: 내가 하는 것이 맞는지, 잘 모르겠는 경우': '예) 지금 준비하고 있는 게 나한테 맞는 방향인지 계속 의심이 들어요. 객관적으로 점검받고 싶어요...',
+      'D: 기타': '지금 겪고 있는 전공·진로 고민을 편하게 적어주세요.'
+    };
+    worryInputs.forEach(function (w) {
+      w.addEventListener('change', function () {
+        if (w.checked) {
+          detailTa.placeholder = placeholders[w.value] || '지금 겪고 있는 전공·진로 고민을 편하게 적어주세요.';
+        }
+      });
+    });
+  })();
+
+  // 글자수 카운터
+  (function () {
+    var ta = document.getElementById('worry_detail');
+    var counter = document.getElementById('detailCount');
+    ta.addEventListener('input', function () {
+      counter.textContent = ta.value.length.toLocaleString();
+      var el = counter.parentElement;
+      if (ta.value.length > 450) el.classList.add('warn');
+      else el.classList.remove('warn');
+    });
+  })();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    var form = document.getElementById('applyForm');
+    if (!form.checkValidity()) { form.reportValidity(); return false; }
+
+    var data = {
+      name:             form.name.value.trim(),
+      age:              form.age.value.trim(),
+      student_status:   form.student_status.value,
+      region:           form.region.value,
+      residence_detail: form.residence_detail.value.trim(),
+      phone:            form.phone.value.trim(),
+      email:            form.email ? form.email.value.trim() : '',
+      school:           form.school.value.trim(),
+      major:            form.major.value.trim(),
+      worry_type:       form.worry_type.value,
+      worry_detail:     form.worry_detail.value.trim(),
+      hope:             form.hope.value,
+      agree_privacy:    form.agree_privacy ? form.agree_privacy.checked : false,
+      userAgent:        navigator.userAgent,
+      timestamp:        new Date().toISOString(),
+      form_type:        'career_coaching'
+    };
+
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '제출 중...';
+
+    // Supabase 저장 (구글시트와 병행)
+    saveToSupabase(data);
+
+    if (!GAS_URL || GAS_URL.indexOf('YOUR_APPS_SCRIPT') === 0) {
+      setTimeout(function () {
+        document.getElementById('modal').classList.add('show');
+        btn.disabled = false;
+        btn.textContent = '막막했던 고민 적고 리워드 받기 →';
+      }, 800);
+      return false;
+    }
+
+    fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    })
+    .then(function () { document.getElementById('modal').classList.add('show'); })
+    .catch(function () { alert('제출 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'); })
+    .finally(function () {
+      btn.disabled = false;
+      btn.textContent = '막막했던 고민 적고 리워드 받기 →';
+    });
+
+    return false;
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('show');
+    document.getElementById('applyForm').reset();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
