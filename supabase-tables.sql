@@ -188,7 +188,8 @@ create table if not exists "AD-muhae-career-coaching" (
   school           text,          -- 학교/학년
   major            text,          -- 전공
   worry_type       text,          -- 고민 유형
-  worry_detail     text,          -- 고민 내용
+  worry_situation  text,          -- 고민이 시작된 상황
+  worry_difficulty text,          -- 구체적으로 힘든 점
   hope             text,          -- 기대되는 지원 항목
   agree_privacy    boolean,       -- 개인정보 수집 동의
   user_agent       text,          -- 접속 환경

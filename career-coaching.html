@@ -9,20 +9,20 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #FAFAF5;
-    --bg-warm: #F4F1E8;
+    --bg: #F4FAFA;
+    --bg-warm: #E9F6F4;
     --card: #FFFFFF;
-    --ink: #0E0E0E;
-    --ink-soft: #2A2A2A;
-    --ink-mid: #555555;
-    --ink-light: #8A8A8A;
-    --line: #E5E2D7;
-    --line-strong: #2A2A2A;
-    --lime: #C8E600;
-    --lime-deep: #A8C400;
-    --lime-soft: #EEF7B5;
-    --shadow-sm: 0 2px 8px rgba(20,20,20,0.04);
-    --shadow-md: 0 6px 20px rgba(20,20,20,0.08);
+    --ink: #0B2A4A;
+    --ink-soft: #17395A;
+    --ink-mid: #4C6C82;
+    --ink-light: #8CA3B4;
+    --line: #DCE9EA;
+    --line-strong: #17395A;
+    --lime: #1FD1B0;
+    --lime-deep: #12A98C;
+    --lime-soft: #D3F7EF;
+    --shadow-sm: 0 2px 8px rgba(11,42,74,0.05);
+    --shadow-md: 0 6px 20px rgba(11,42,74,0.09);
   }
 
   * { box-sizing: border-box; }
@@ -31,8 +31,8 @@
     margin: 0; padding: 0;
     background: var(--bg);
     background-image:
-      linear-gradient(rgba(20,20,20,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(20,20,20,0.025) 1px, transparent 1px);
+      linear-gradient(rgba(11,42,74,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(11,42,74,0.025) 1px, transparent 1px);
     background-size: 24px 24px;
     background-attachment: fixed;
     font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
@@ -118,8 +118,8 @@
   .reward-hero-top::before {
     content: ""; position: absolute; inset: 0;
     background-image:
-      linear-gradient(rgba(200,230,0,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(200,230,0,0.04) 1px, transparent 1px);
+      linear-gradient(rgba(31,209,176,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(31,209,176,0.06) 1px, transparent 1px);
     background-size: 20px 20px;
   }
   .rh-label {
@@ -237,6 +237,54 @@
     border-left: 3px solid var(--lime); border-radius: 0 4px 4px 0;
   }
 
+  /* SECTION 03 강조 (고민 작성) */
+  .section-highlight {
+    border: 2px solid var(--lime-deep);
+    box-shadow: 0 10px 28px rgba(31,209,176,0.2);
+  }
+  .section-highlight .section-head { background: var(--lime-soft); }
+  .section-highlight .section-num { background: var(--lime-deep); color: #fff; }
+
+  /* 포스터 안내 콜아웃 */
+  .worry-intro {
+    background: var(--lime-soft); border: 1.5px solid var(--lime-deep);
+    border-radius: 6px; padding: 18px 20px; margin-bottom: 24px;
+  }
+  .worry-intro-title {
+    font-size: 16px; font-weight: 800; color: var(--ink); margin: 0 0 10px;
+  }
+  .worry-intro ul { margin: 0; padding-left: 18px; }
+  .worry-intro li { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 4px; line-height: 1.6; }
+  .worry-intro li:last-child { margin-bottom: 0; }
+
+  /* 고민 작성 칸 분리 */
+  .worry-box {
+    background: var(--bg-warm); border: 1.5px solid var(--line-strong);
+    border-radius: 6px; padding: 20px 22px; margin-bottom: 18px;
+  }
+  .worry-box:last-of-type { margin-bottom: 0; }
+  .worry-box-label {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--lime-deep); font-weight: 700; margin-bottom: 10px;
+  }
+  .worry-box-step {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+    background: var(--ink); color: var(--lime);
+    font-size: 10px; font-weight: 700;
+  }
+  .worry-box textarea { background: #fff; }
+
+  /* SECTION 04 무채색 처리 (동의) */
+  .section-plain .section-head { background: #fff; }
+  .section-plain .section-num { background: #E3E3E3; color: #8A8A8A; }
+  .section-plain .consent {
+    background: #FAFAFA; border-color: #E3E3E3;
+  }
+  .section-plain .consent strong { color: #777; }
+
   /* FIELDS */
   .field { margin-bottom: 22px; }
   .field:last-child { margin-bottom: 0; }
@@ -312,7 +360,7 @@
     background: var(--lime); border-color: var(--lime); box-shadow: inset 0 0 0 3px var(--ink);
   }
   .option.checkbox input:checked + label::before {
-    background: var(--lime) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E0E0E' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center / 11px no-repeat;
+    background: var(--lime) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B2A4A' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center / 11px no-repeat;
     box-shadow: none;
   }
   .options-vertical .option { flex: 1 1 100%; min-width: 100%; }
@@ -457,15 +505,15 @@
   <div class="header-inner">
     <div class="logo">
       <svg class="logo-svg" width="240" height="84" viewBox="0 0 280 110" xmlns="http://www.w3.org/2000/svg">
-        <defs><style>.lf{fill:#C8E600}.ls{fill:#8DA200}</style></defs>
+        <defs><style>.lf{fill:#1FD1B0}.ls{fill:#12A98C}</style></defs>
         <g class="ls" transform="translate(7,7)"><text x="0" y="80" font-family="'Noto Sans KR',sans-serif" font-size="84" font-weight="900" letter-spacing="-3">Login</text></g>
         <g class="lf"><text x="0" y="80" font-family="'Noto Sans KR',sans-serif" font-size="84" font-weight="900" letter-spacing="-3">Login</text></g>
       </svg>
     </div>
     <div><span class="lab-tag">2026 대학생 지원 프로젝트</span></div>
 
-    <div class="header-eyebrow">// 내 전공, 이대로 괜찮을까?</div>
-    <h1 class="header-title">전공도, 진로도 <span class="accent">고민되는 당신에게.</span></h1>
+    <div class="header-eyebrow">// 2026 대학생 지원 프로젝트</div>
+    <h1 class="header-title">내 전공, <span class="accent">이대로 괜찮을까?</span></h1>
     <p class="header-sub">내가 가는 길이 맞는지 고민되는 누구나!<br>실전 커리어 코칭 + 진로적성 코칭 + 나만의 리포트까지</p>
 
     <div class="header-meta">
@@ -632,7 +680,7 @@
     </section>
 
     <!-- 03. 전공에 대해 막막했던 고민 -->
-    <section class="section">
+    <section class="section section-highlight">
       <header class="section-head">
         <div class="section-num">03</div>
         <div class="section-titles">
@@ -641,7 +689,14 @@
         </div>
       </header>
       <div class="section-body">
-        <p class="section-desc">가장 가까운 상황을 하나 고르고, 솔직하게 적어주세요. 완성된 글이 아니어도 괜찮습니다.</p>
+        <div class="worry-intro">
+          <p class="worry-intro-title">이런 이야기라면 무엇이든 좋아요</p>
+          <ul>
+            <li>대학생활 하며 고민됐던 상황들</li>
+            <li>현재 전공은 있지만, 미래 진로가 고민인 경우</li>
+            <li>내가 하는 것이 맞는지, 잘 모르겠는 경우</li>
+          </ul>
+        </div>
 
         <div class="field">
           <label>지금 나와 가장 가까운 상황 <span class="req">REQUIRED</span></label>
@@ -677,12 +732,19 @@
           </div>
         </div>
 
-        <div class="field">
-          <label>고민 내용 <span class="req">REQUIRED</span></label>
-          <textarea name="worry_detail" id="worry_detail" maxlength="500"
-            placeholder="예) 전공 수업을 들을수록 흥미가 사라지는 것 같아서 불안해요. 이 길이 맞는 건지, 진로를 다시 생각해봐야 하는 건 아닌지 계속 고민이 돼요..." required></textarea>
-          <div class="char-counter"><span id="detailCount">0</span> / 500자</div>
-          <div class="guide">언제부터, 어떤 계기로 이런 생각이 들었는지 구체적인 순간을 떠올리며 적어주세요.</div>
+        <div class="worry-box">
+          <div class="worry-box-label"><span class="worry-box-step">1</span>고민이 시작된 상황 <span class="req">REQUIRED</span></div>
+          <textarea name="worry_situation" id="worry_situation" maxlength="400"
+            placeholder="예) 전공 수업을 들을수록 흥미가 사라지는 것 같아서 불안해요. 동기들은 다 방향을 잡은 것 같은데 저만 계속 헤매는 느낌이에요..." required></textarea>
+          <div class="char-counter"><span id="situationCount">0</span> / 400자</div>
+        </div>
+
+        <div class="worry-box">
+          <div class="worry-box-label"><span class="worry-box-step">2</span>구체적으로 가장 막막한 부분 <span class="req">REQUIRED</span></div>
+          <textarea name="worry_difficulty" id="worry_difficulty" maxlength="400"
+            placeholder="예) 이 전공으로 실제 어떤 진로가 가능한지 감이 안 와요. 그래서 뭘 준비해야 할지도 못 정하고 있어요." required></textarea>
+          <div class="char-counter"><span id="difficultyCount">0</span> / 400자</div>
+          <div class="guide">막막하다는 감정 자체보다, 무엇이 왜 어려운지를 구체적으로 짚어주시면 코칭·리포트 매칭이 더 정확해져요.</div>
         </div>
 
         <div class="field" style="margin-top: 20px;">
@@ -706,7 +768,7 @@
     </section>
 
     <!-- 04. 동의 -->
-    <section class="section">
+    <section class="section section-plain">
       <header class="section-head">
         <div class="section-num">04</div>
         <div class="section-titles">
@@ -717,7 +779,7 @@
       <div class="section-body">
         <div class="consent">
           <strong>// Personal Data Collection Notice</strong>
-          수집 항목: 이름, 만 나이, 신분, 거주지, 연락처, 이메일(선택), 학교, 전공, 고민 유형, 고민 내용, 기대 항목.<br>
+          수집 항목: 이름, 만 나이, 신분, 거주지, 연락처, 이메일(선택), 학교, 전공, 고민 유형, 고민 상황, 힘든 점, 기대 항목.<br>
           이용 목적: 대상자 선별, 결과 안내, 프로그램 운영.<br>
           보유 기간: 사업 종료 후 6개월 이내 파기 (선발자는 1년). 제3자 제공 없음.
         </div>
@@ -790,7 +852,8 @@
       school:           data.school || '',
       major:            data.major || '',
       worry_type:       data.worry_type || '',
-      worry_detail:     data.worry_detail || '',
+      worry_situation:  data.worry_situation || '',
+      worry_difficulty: data.worry_difficulty || '',
       hope:             data.hope || '',
       agree_privacy:    !!data.agree_privacy,
       user_agent:       navigator.userAgent,
@@ -825,7 +888,7 @@
   // 고민 유형 선택에 따라 작성 placeholder 변경
   (function () {
     var worryInputs = document.querySelectorAll('input[name="worry_type"]');
-    var detailTa = document.getElementById('worry_detail');
+    var situationTa = document.getElementById('worry_situation');
     var placeholders = {
       'A: 대학생활 하며 고민됐던 상황들': '예) 전공 수업을 들을수록 흥미가 사라지는 것 같아서 불안해요. 동기들은 다 방향을 잡은 것 같은데 저만 계속 헤매는 느낌이에요...',
       'B: 현재 전공은 있지만, 미래 진로가 고민인 경우': '예) 전공은 있는데 이 길로 취업까지 이어가야 할지 확신이 안 서요. 다른 방향도 있는지 궁금해요...',
@@ -835,23 +898,23 @@
     worryInputs.forEach(function (w) {
       w.addEventListener('change', function () {
         if (w.checked) {
-          detailTa.placeholder = placeholders[w.value] || '지금 겪고 있는 전공·진로 고민을 편하게 적어주세요.';
+          situationTa.placeholder = placeholders[w.value] || '지금 겪고 있는 전공·진로 고민을 편하게 적어주세요.';
         }
       });
     });
   })();
 
   // 글자수 카운터
-  (function () {
-    var ta = document.getElementById('worry_detail');
-    var counter = document.getElementById('detailCount');
+  [['worry_situation', 'situationCount', 400], ['worry_difficulty', 'difficultyCount', 400]].forEach(function (cfg) {
+    var ta = document.getElementById(cfg[0]);
+    var counter = document.getElementById(cfg[1]);
     ta.addEventListener('input', function () {
       counter.textContent = ta.value.length.toLocaleString();
       var el = counter.parentElement;
-      if (ta.value.length > 450) el.classList.add('warn');
+      if (ta.value.length > cfg[2] * 0.9) el.classList.add('warn');
       else el.classList.remove('warn');
     });
-  })();
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -869,7 +932,8 @@
       school:           form.school.value.trim(),
       major:            form.major.value.trim(),
       worry_type:       form.worry_type.value,
-      worry_detail:     form.worry_detail.value.trim(),
+      worry_situation:  form.worry_situation.value.trim(),
+      worry_difficulty: form.worry_difficulty.value.trim(),
       hope:             form.hope.value,
       agree_privacy:    form.agree_privacy ? form.agree_privacy.checked : false,
       userAgent:        navigator.userAgent,

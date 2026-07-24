@@ -167,7 +167,7 @@ var FORMS = {
       '이름', '만 나이', '신분',
       '거주지 (시/도)', '거주지 상세', '전화번호', '이메일',
       '학교 · 학년', '전공',
-      '고민 유형', '고민 내용', '기대되는 지원 항목',
+      '고민 유형', '고민이 시작된 상황', '구체적으로 힘든 점', '기대되는 지원 항목',
       '개인정보 동의',
       'User-Agent', '타임스탬프'
     ],
@@ -184,7 +184,8 @@ var FORMS = {
         data.school           || '',
         data.major            || '',
         data.worry_type       || '',
-        data.worry_detail     || '',
+        data.worry_situation  || '',
+        data.worry_difficulty || '',
         data.hope             || '',
         data.agree_privacy ? 'O' : 'X',
         data.userAgent        || '',
