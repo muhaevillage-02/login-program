@@ -7,7 +7,6 @@
 //  - story-contest.html    → form_type: 'story_contest'     → 시트 '도전 스토리'
 //  - march-letter-form.html→ form_type: 'essay_contest'     → 시트 '대학생 에세이 공모전'
 //  - major-worry.html      → form_type: 'major_worry'       → 시트 '2026 대학생 지원 프로그램'
-//  - career-coaching.html  → form_type: 'career_coaching'   → 시트 '2026 대학생 지원 프로젝트'
 // ============================================================
 //
 //  [배포 방법 — 기존에 levelup용으로 배포한 프로젝트를 그대로 사용]
@@ -156,40 +155,6 @@ var FORMS = {
         data.agree_privacy ? 'O' : 'X',
         data.userAgent          || '',
         data.timestamp          || ''
-      ];
-    }
-  },
-
-  career_coaching: {
-    sheetName: '2026 대학생 지원 프로젝트',
-    headers: [
-      '제출 일시',
-      '이름', '만 나이', '신분',
-      '거주지 (시/도)', '거주지 상세', '전화번호', '이메일',
-      '학교 · 학년', '전공',
-      '고민 유형', '고민이 시작된 상황', '구체적으로 힘든 점', '기대되는 지원 항목',
-      '개인정보 동의',
-      'User-Agent', '타임스탬프'
-    ],
-    toRow: function (data) {
-      return [
-        new Date(),
-        data.name             || '',
-        data.age              || '',
-        data.student_status   || '',
-        data.region           || '',
-        data.residence_detail || '',
-        data.phone            || '',
-        data.email            || '',
-        data.school           || '',
-        data.major            || '',
-        data.worry_type       || '',
-        data.worry_situation  || '',
-        data.worry_difficulty || '',
-        data.hope             || '',
-        data.agree_privacy ? 'O' : 'X',
-        data.userAgent        || '',
-        data.timestamp        || ''
       ];
     }
   }
