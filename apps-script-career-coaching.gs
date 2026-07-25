@@ -15,7 +15,7 @@
 //  6. 배포 후 뜨는 웹 앱 URL 복사 → career-coaching.html 의 GAS_URL 변수에 붙여넣기
 // ============================================================
 
-var SPREADSHEET_ID = 'YOUR_NEW_SPREADSHEET_ID_HERE';
+var SPREADSHEET_ID = '1SEY01okuRKKgiC1D2muL4W2Y-Ni6sO_n9KdgqGmDTiM';
 var SHEET_NAME     = '2026 대학생 지원 프로젝트';
 
 function doPost(e) {

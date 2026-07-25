@@ -831,7 +831,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  var GAS_URL = 'https://script.google.com/macros/s/AKfycby3S-RCP0Z7Ku9QiuDlbFSoit4wsZLwy4vosDRehgiRC44yLJxKdf6aOF8DgIz-2Tgb/exec';
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbwXlXmnOYxbS1kPlXS_yxn1sCNuQn3TjwO5iTJSQVi7nZmOUrhM_JprH-mPBK3fX2xb/exec';
 
   // ===== Supabase 연동 =====
   var _sb = supabase.createClient(
@@ -936,8 +936,7 @@
       hope:             form.hope.value,
       agree_privacy:    form.agree_privacy ? form.agree_privacy.checked : false,
       userAgent:        navigator.userAgent,
-      timestamp:        new Date().toISOString(),
-      form_type:        'career_coaching'
+      timestamp:        new Date().toISOString()
     };
 
     var btn = document.getElementById('submitBtn');
