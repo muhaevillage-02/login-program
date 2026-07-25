@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대학생 에세이 공모전 📝</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Gowun+Batang:wght@400;700&display=swap");
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1C7FEB;--blue-d:#125FC0;--blue-l:#E3EFFE;--blue-m:#B9D5FC;--lime:#CCFF00;
+  --cyan:#06B6D4;--green:#10B981;--green-l:#D1FAE5;
+  --bg:#fff;--bg-s:#F8FAFC;--bg-b:#F0F9FF;
+  --bdr:#E2E8F0;--tt:#0F172A;--tb:#334155;--ts:#64748B;--th:#94A3B8;
+  --r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:24px;
+}
+html,body{min-height:100%;background:#F1F5F9;color:var(--tt);
+  font-family:"Noto Sans KR",-apple-system,BlinkMacSystemFont,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.shell{max-width:640px;margin:0 auto;background:var(--bg);min-height:100vh;
+  display:flex;flex-direction:column;position:relative}
+@media(min-width:680px){
+  .shell{margin:32px auto;min-height:auto;border-radius:24px;
+    box-shadow:0 8px 40px rgba(0,0,0,.1);overflow:hidden}
+  body{padding-bottom:40px}
+}
+.topbar{position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--bdr)}
+.topbar-inner{padding:14px 20px 0}
+.topbar-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.back-btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+  border:none;background:none;cursor:pointer;color:var(--ts);font-size:18px;
+  border-radius:50%;transition:background .15s;visibility:hidden}
+.back-btn.vis{visibility:visible}
+.back-btn:hover{background:var(--bg-s)}
+.step-lbl{font-size:13px;font-weight:600;color:var(--blue)}
+.progress-track{height:3px;background:var(--bdr);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));
+  border-radius:2px;transition:width .45s cubic-bezier(.4,0,.2,1)}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 140px;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.page{display:none}
+.page.active{display:block;animation:fadeUp .3s cubic-bezier(.4,0,.2,1)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* HERO - single unified campus scene (not split) */
+.hero-campus{margin:20px 20px 0;border-radius:var(--r-xl);overflow:hidden;
+  height:210px;position:relative;background:#BFE3FB}
+.hero-campus svg{width:100%;height:100%;display:block}
+.hero-campus-overlay{position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,.12) 100%)}
+.hero-caption{margin:14px 20px 24px;text-align:center;background:var(--blue-l);
+  color:var(--blue-d);font-size:13px;font-weight:700;padding:10px 16px;
+  border-radius:20px;letter-spacing:.2px}
+
+/* SECTION */
+.sec{padding:0 20px;margin-bottom:8px}
+.page-tag{display:inline-flex;align-items:center;gap:4px;background:var(--blue-l);
+  color:var(--blue);font-size:11px;font-weight:700;padding:4px 10px;
+  border-radius:20px;margin-bottom:14px;letter-spacing:.3px}
+.page-title{font-size:22px;font-weight:800;color:var(--tt);line-height:1.35;
+  margin-bottom:8px;letter-spacing:-.5px}
+.page-desc{font-size:14px;color:var(--ts);line-height:1.65;margin-bottom:24px}
+
+/* FIELD */
+.field-block{margin-bottom:16px}
+.field-lbl{font-size:13px;font-weight:600;color:var(--tb);margin-bottom:8px;display:block}
+.field-input{width:100%;height:52px;background:var(--bg);border:1.5px solid var(--bdr);
+  border-radius:var(--r-md);padding:0 16px;font-family:inherit;font-size:15px;
+  color:var(--tt);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+.field-input::placeholder{color:var(--th)}
+.field-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(14,165,233,.12)}
+.field-select-wrap{position:relative}
+.field-select-wrap::after{content:"▾";position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  color:var(--th);font-size:14px;pointer-events:none}
+.field-select{width:100%;height:52px;background:var(--bg);border:1.5px solid var(--bdr);
+  border-radius:var(--r-md);padding:0 40px 0 16px;font-family:inherit;font-size:15px;
+  color:var(--tt);outline:none;transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;appearance:none;cursor:pointer}
+.field-select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(14,165,233,.12)}
+.field-select.placeholder{color:var(--th)}
+
+/* CHIPS */
+.chip-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:8px}
+.chip{background:var(--bg);border:1.5px solid var(--bdr);border-radius:var(--r-lg);
+  padding:16px 14px;cursor:pointer;transition:border-color .18s,background .18s,transform .12s;
+  position:relative;user-select:none;-webkit-tap-highlight-color:transparent}
+.chip:active{transform:scale(.97)}
+.chip.on{border-color:var(--blue);background:var(--bg-b)}
+.chip-check{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;
+  border:1.5px solid var(--bdr);background:white;display:flex;align-items:center;
+  justify-content:center;font-size:11px;transition:all .18s cubic-bezier(.175,.885,.32,1.275);
+  color:transparent}
+.chip.on .chip-check{background:var(--blue);border-color:var(--blue);color:white}
+.chip-emoji{font-size:22px;display:block;margin-bottom:8px}
+.chip-name{font-size:14px;font-weight:700;color:var(--tt);margin-bottom:2px}
+.chip-desc{font-size:11px;color:var(--ts)}
+
+/* SCORE SLIDER */
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;
+  border-radius:50%;background:var(--blue);cursor:pointer;box-shadow:0 2px 8px rgba(14,165,233,.4);
+  border:3px solid white}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
+  background:var(--blue);cursor:pointer;box-shadow:0 2px 8px rgba(14,165,233,.4);border:3px solid white}
+
+/* LETTER (essay writing) */
+.letter-box{margin:0 20px 12px;background:#FFFCF5;border:1.5px solid #ECE1C6;border-radius:var(--r-lg);
+  overflow:hidden;box-shadow:0 4px 16px rgba(120,96,40,.06);transition:border-color .2s,box-shadow .2s}
+.letter-box:focus-within{border-color:#D8B970;box-shadow:0 4px 20px rgba(120,96,40,.12)}
+.letter-hdr{background:linear-gradient(180deg,#FBF3E1,#F7EAD1);border-bottom:1px solid #ECE1C6;padding:11px 16px;
+  display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700;color:#8A6D3B;letter-spacing:.2px}
+.letter-seal{width:22px;height:22px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#D9A857,#9C6B2E);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:11px;
+  box-shadow:0 1px 3px rgba(120,90,30,.35)}
+.letter-body{padding:18px 18px 16px 34px;position:relative}
+.letter-rules{position:absolute;inset:0;pointer-events:none;padding:18px 18px 16px 34px;display:flex;flex-direction:column}
+.letter-body::before{content:"";position:absolute;left:26px;top:0;bottom:0;width:1px;background:rgba(196,84,68,.22)}
+.rule-line{border-bottom:1px solid rgba(180,150,90,.16);flex:1;min-height:32px}
+.letter-ta{width:100%;min-height:200px;border:none;background:transparent;
+  font-family:"Gowun Batang",serif;font-size:16px;color:#3B3226;line-height:2.15;letter-spacing:.2px;
+  resize:none;outline:none;position:relative;z-index:1}
+.letter-ta::placeholder{color:#B9A98A;font-family:"Noto Sans KR",sans-serif;font-size:14px}
+
+/* INK */
+.ink-row{display:flex;align-items:center;gap:10px;padding:0 20px;margin-bottom:12px}
+.ink-icon{font-size:16px}
+.ink-bar{flex:1;height:6px;background:var(--bdr);border-radius:3px;overflow:hidden}
+.ink-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:3px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
+.ink-num{font-size:12px;font-weight:500;color:var(--ts);min-width:58px;text-align:right}
+.milestone{display:none;align-items:center;gap:6px;padding:8px 16px;
+  margin:0 20px 12px;background:var(--green-l);border-radius:var(--r-sm);
+  font-size:12px;font-weight:600;color:var(--green)}
+.milestone.show{display:flex;animation:fadeUp .25s ease}
+
+/* CONSENT */
+.consent-card{margin:0 20px 28px;border:1px solid var(--bdr);border-radius:var(--r-lg);
+  padding:16px 16px 18px;background:var(--bg-s)}
+.consent-card-title{font-size:11px;font-weight:700;color:var(--ts);margin-bottom:8px;letter-spacing:.3px}
+.consent-card-body{font-size:12px;color:var(--ts);line-height:1.75;margin-bottom:14px}
+.consent-row{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg);
+  border:1.5px solid var(--bdr);border-radius:var(--r-md);cursor:pointer;
+  transition:border-color .15s,background .15s;-webkit-tap-highlight-color:transparent}
+.consent-row.on{border-color:var(--blue);background:var(--bg-b)}
+.consent-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--bdr);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;
+  transition:all .18s cubic-bezier(.175,.885,.32,1.275)}
+.consent-row.on .consent-box{background:var(--blue);border-color:var(--blue);color:#fff}
+.consent-text{font-size:13px;font-weight:600;color:var(--tb)}
+
+/* RESULT PAGE */
+.res-bg{background:var(--bg);min-height:calc(100vh - 56px)}
+@media(min-width:680px){.res-bg{min-height:auto}}
+.res-anim-wrap{display:flex;align-items:center;justify-content:center;padding:36px 20px 16px}
+.res-anim{width:130px;height:130px}
+.res-anim svg{width:100%;height:100%}
+.status-bar{margin:0 20px 20px;background:#F0FDF4;border:1.5px solid #BBF7D0;
+  border-radius:var(--r-lg);padding:16px 18px;display:flex;align-items:center;gap:12px}
+.status-dot{width:10px;height:10px;border-radius:50%;background:#10B981;flex-shrink:0;
+  animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.4)}50%{box-shadow:0 0 0 6px rgba(16,185,129,0)}}
+.status-text{font-size:14px;font-weight:700;color:#065F46}
+.status-sub{font-size:11px;color:#059669;margin-top:2px}
+.res-title{font-size:22px;font-weight:800;color:var(--tt);padding:0 20px;margin-bottom:8px;letter-spacing:-.5px}
+.res-sub{font-size:13px;color:var(--ts);padding:0 20px;margin-bottom:24px;line-height:1.7}
+.proc-ticket{margin:0 20px 20px;background:var(--bg);border:1.5px solid var(--bdr);border-radius:var(--r-xl);overflow:hidden}
+.proc-ticket-hdr{background:var(--bg-s);padding:14px 18px;border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:space-between}
+.proc-ticket-title{font-size:11px;font-weight:800;letter-spacing:2px;color:var(--ts)}
+.proc-ticket-badge{background:var(--blue-l);color:var(--blue);font-size:10px;
+  font-weight:700;padding:3px 10px;border-radius:20px;border:1px solid var(--blue-m)}
+.proc-steps{padding:8px 0}
+.proc-step{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-bottom:1px solid var(--bdr)}
+.proc-step:last-child{border-bottom:none}
+.proc-step-num{width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;margin-top:1px}
+.step-1{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0}
+.step-2{background:#FFF7ED;color:#D97706;border:1px solid #FDE68A}
+.step-3{background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE}
+.step-4{background:#FDF2F8;color:#BE185D;border:1px solid #FBCFE8}
+.proc-step-body{flex:1}
+.proc-step-t{font-size:14px;font-weight:700;color:var(--tt);margin-bottom:4px}
+.proc-step-d{font-size:12px;color:var(--ts);line-height:1.6}
+.proc-tag{display:inline-block;margin-top:8px;background:var(--blue-l);color:var(--blue);
+  font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid var(--blue-m)}
+/* REWARD GRID */
+.reward-section{padding:0 20px;margin-bottom:12px}
+.reward-eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;color:var(--blue);margin-bottom:4px}
+.reward-head{font-size:17px;font-weight:800;color:var(--tt);margin-bottom:0}
+.reward-grid{margin:0 20px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.reward-card{background:var(--bg-s);border:1.5px solid var(--bdr);border-radius:var(--r-lg);
+  padding:16px 14px;position:relative;overflow:hidden;transition:border-color .2s,box-shadow .2s}
+.reward-card:hover{border-color:var(--blue-m);box-shadow:0 2px 12px rgba(14,165,233,.1)}
+.reward-card-icon{font-size:24px;display:block;margin-bottom:10px}
+.reward-card-tag{display:inline-block;background:var(--blue-l);color:var(--blue);
+  font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:6px}
+.reward-card-title{font-size:13px;font-weight:800;color:var(--tt);margin-bottom:4px;line-height:1.3}
+.reward-card-desc{font-size:11px;color:var(--ts);line-height:1.5}
+.reward-card.gold{border-color:#FCD34D;background:#FFFBEB}
+.reward-card.gold .reward-card-tag{background:#FEF3C7;color:#B45309}
+.res-hint{text-align:center;font-size:12px;color:var(--th);padding:0 20px 32px}
+
+/* CTA */
+.bottom-cta{position:sticky;bottom:0;padding:12px 20px 28px;
+  background:linear-gradient(to top,rgba(255,255,255,1) 65%,rgba(255,255,255,0));z-index:90}
+.res-cta{background:linear-gradient(to top,rgba(255,255,255,1) 65%,rgba(255,255,255,0))}
+.cta-btn{width:100%;height:56px;background:var(--blue);color:white;border:none;
+  border-radius:var(--r-lg);font-family:inherit;font-size:16px;font-weight:700;
+  cursor:pointer;letter-spacing:-.3px;transition:background .15s,transform .12s,box-shadow .15s;
+  position:relative;overflow:hidden}
+.cta-btn:hover{background:var(--blue-d);box-shadow:0 4px 16px rgba(14,165,233,.35)}
+.cta-btn:active{transform:scale(.98)}
+.cta-btn:disabled{opacity:.6;cursor:not-allowed}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);
+  transform:scale(0);animation:ripple .55s linear;pointer-events:none}
+@keyframes ripple{to{transform:scale(4);opacity:0}}
+.toast{position:fixed;bottom:108px;left:50%;transform:translateX(-50%) translateY(8px);
+  background:#1E293B;color:white;font-size:13px;font-weight:600;padding:12px 20px;
+  border-radius:12px;white-space:nowrap;opacity:0;transition:opacity .2s,transform .2s;
+  pointer-events:none;z-index:9999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.cp{position:absolute;top:-12px;border-radius:3px;animation:cffall linear forwards}
+@keyframes cffall{to{transform:translateY(105vh) rotate(540deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="shell" id="shell">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-row">
+        <button class="back-btn" id="backBtn" onclick="goPrev()">←</button>
+        <span class="step-lbl" id="stepLbl">1 / 5</span>
+        <div style="width:32px"></div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="pFill" style="width:20%"></div></div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <div class="confetti-wrap" id="confettiWrap"></div>
+  <div class="scroll" id="scrollArea">
+
+    <!-- PAGE 1 -->
+    <div class="page active" id="p1">
+      <div class="hero-campus">
+        <svg viewBox="0 0 600 210" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#5CB3F0"/>
+              <stop offset="55%" stop-color="#9BD4F5"/>
+              <stop offset="100%" stop-color="#EAF7FF"/>
+            </linearGradient>
+            <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFF3C4" stop-opacity=".95"/>
+              <stop offset="100%" stop-color="#FFF3C4" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="peakFar" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#BFE0C8"/>
+              <stop offset="100%" stop-color="#9FCDAE"/>
+            </linearGradient>
+            <linearGradient id="peakNear" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7FBB92"/>
+              <stop offset="100%" stop-color="#5CA275"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="210" fill="url(#skyGrad)"/>
+          <g fill="#fff" opacity=".85">
+            <ellipse cx="90" cy="42" rx="26" ry="10"/><ellipse cx="115" cy="36" rx="18" ry="9"/>
+            <ellipse cx="500" cy="30" rx="22" ry="9"/><ellipse cx="522" cy="36" rx="15" ry="7"/>
+          </g>
+          <circle cx="430" cy="70" r="60" fill="url(#sunGlow)"/>
+          <circle cx="430" cy="70" r="26" fill="#FFD35C"/>
+          <path d="M0 210 L0 140 Q90 60 180 120 Q230 155 300 100 Q340 70 400 130 Q460 175 520 120 Q560 90 600 130 L600 210 Z" fill="url(#peakFar)"/>
+          <path d="M0 210 L0 175 Q70 100 150 165 Q210 210 260 150 Q300 105 360 160 Q420 210 470 155 Q520 105 600 165 L600 210 Z" fill="url(#peakNear)"/>
+        </svg>
+        <div class="hero-campus-overlay"></div>
+      </div>
+      <div class="hero-caption">📝 지금, 작년의 나에게 편지를 써봐</div>
+      <div class="sec">
+        <div class="page-tag">📝 서울권 대학생 에세이 공모전</div>
+        <div class="page-title">수고한 작년의 나에게<br>보내는 편지</div>
+        <div class="page-desc">끝까지 버텨낸 수고한 나에게, 솔직한 이야기를 들려주세요.<br>“그동안 정말 애썼어.”</div>
+
+        <!-- 마감 배너 -->
+        <div style="background:linear-gradient(135deg,#FFF7ED,#FEF3C7);border:1.5px solid #FCD34D;
+          border-radius:var(--r-lg);padding:14px 16px;margin-bottom:16px;
+          display:flex;align-items:center;gap:12px">
+          <span style="font-size:22px">⏰</span>
+          <div>
+            <div style="font-size:13px;font-weight:800;color:#B45309;margin-bottom:2px">마감 D-<span id="dday">?</span> · 2026.07.07 ~ 08.03</div>
+            <div style="font-size:12px;color:#92400E;line-height:1.5">선정자에게는 07.14~08.03 사이 개별로 연락드려요.<br>부담 없이 솔직하게, 지금 편지를 남겨주세요 🌿</div>
+          </div>
+        </div>
+
+        <!-- 실시간 신청 현황 -->
+        <div style="background:var(--bg-b);border:1.5px solid var(--blue-m);
+          border-radius:var(--r-lg);padding:14px 16px;margin-bottom:20px;
+          display:flex;align-items:center;gap:12px">
+          <span style="width:32px;height:32px;border-radius:50%;background:var(--blue-l);color:var(--blue);
+            display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">✉️</span>
+          <div style="flex:1">
+            <div style="font-size:12px;color:var(--ts);margin-bottom:3px">지금 이 순간도 함께 쓰고 있어요</div>
+            <div style="font-size:15px;font-weight:800;color:var(--tt)">
+              <span id="applicantCount" style="color:var(--blue)">...</span>명이 편지를 작성하고 있어요
+            </div>
+          </div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#10B981;
+            animation:pulse 1.8s ease-in-out infinite;flex-shrink:0"></div>
+        </div>
+
+        <div class="field-block">
+          <label class="field-lbl">이름</label>
+          <input class="field-input" id="f_name" type="text" placeholder="예: 김민준, 이서연" autocomplete="off">
+        </div>
+        <div class="field-block">
+          <label class="field-lbl">생년월일</label>
+          <input class="field-input" id="f_birth" type="text" inputmode="numeric" maxlength="10" placeholder="예: 20010315 (8자리 숫자로 입력)" autocomplete="off">
+        </div>
+        <div class="field-block">
+          <label class="field-lbl">나이 (만)</label>
+          <input class="field-input" id="f_age" type="number" placeholder="만 19~25세만 지원 가능해요" autocomplete="off">
+        </div>
+        <div class="field-block">
+          <label class="field-lbl">학교 · 학년</label>
+          <input class="field-input" id="f_school" type="text" placeholder="예: 연세대학교 2학년" autocomplete="off">
+        </div>
+        <div class="field-block">
+          <label class="field-lbl">전공</label>
+          <input class="field-input" id="f_major" type="text" placeholder="예: 경영학과" autocomplete="off">
+        </div>
+        <div class="field-block">
+          <label class="field-lbl">연락처</label>
+          <input class="field-input" id="f_phone" type="tel" placeholder="결과 안내에 사용돼요" autocomplete="off">
+        </div>
+        <div class="field-block">
+          <label class="field-lbl">거주 구</label>
+          <div style="font-size:12px;color:var(--th);margin-bottom:8px">※ 서울권 대학생 (만 19~25세)만 지원 가능해요</div>
+          <input class="field-input" id="f_gu" type="text" placeholder="예: 마포구, 서대문구" autocomplete="off">
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 2 - 고민 키워드 -->
+    <div class="page" id="p2">
+      <div class="sec" style="padding-top:20px">
+        <div class="page-tag">💭 지난 한 해</div>
+        <div class="page-title">이 편지에,<br>어떤 이야기를 담고 싶어?</div>
+        <div class="page-desc">마음에 걸리는 것들을 골라봐.<br>여러 개 선택해도 돼.</div>
+        <div class="chip-grid">
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">📚</span><div class="chip-name">학업 스트레스</div><div class="chip-desc">전공 공부와 학점의 압박</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">💼</span><div class="chip-name">취업 준비</div><div class="chip-desc">스펙과 자소서의 무게</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">😮‍💨</span><div class="chip-name">번아웃 · 무기력</div><div class="chip-desc">지치고 힘 빠졌던 시간</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">👥</span><div class="chip-name">인간관계</div><div class="chip-desc">관계에서 오는 어려움</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">💪</span><div class="chip-name">극복과 성장</div><div class="chip-desc">다시 일어섰던 순간</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">🎯</span><div class="chip-name">새로운 도전</div><div class="chip-desc">용기 냈던 기억</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">🙏</span><div class="chip-name">감사한 순간</div><div class="chip-desc">힘이 되어준 사람들</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">🌀</span><div class="chip-name">기타</div><div class="chip-desc">말로 표현하기 어려운 것</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 3 - 지난 1년 점수 -->
+    <div class="page" id="p3">
+      <div class="sec" style="padding-top:20px">
+        <div class="page-tag">📊 지난 한 해</div>
+        <div class="page-title">지난 한 해,<br>나에게 몇 점을 줄래?</div>
+        <div class="page-desc">드래그해서 점수를 매겨봐.</div>
+        <div style="position:relative;padding:8px 0 24px">
+          <input type="range" id="scoreSlider" min="0" max="100" value="50"
+            oninput="updateSlider(this)"
+            style="width:100%;-webkit-appearance:none;appearance:none;height:6px;
+              border-radius:3px;outline:none;cursor:pointer;
+              background:linear-gradient(to right,var(--blue) 50%,var(--bdr) 50%)">
+          <div style="display:flex;justify-content:space-between;margin-top:10px">
+            <span style="font-size:11px;color:var(--th)">0점</span>
+            <div style="text-align:center">
+              <span id="scoreDisplay" style="font-size:22px;font-weight:900;color:var(--blue);letter-spacing:-1px">50</span>
+              <span style="font-size:13px;font-weight:700;color:var(--blue)">점</span>
+            </div>
+            <span style="font-size:11px;color:var(--th)">100점</span>
+          </div>
+          <div id="scoreEmoji" style="text-align:center;font-size:13px;color:var(--ts);margin-top:4px">꽤 잘 살았어</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 4 - 편지 작성 + 동의 -->
+    <div class="page" id="p4">
+      <div class="sec" style="padding-top:20px">
+        <div class="page-tag">✒️ 편지 작성</div>
+        <div class="page-title">작년의 나에게<br>편지를 써주세요!</div>
+        <div style="background:var(--bg-s);border:1px solid var(--bdr);border-radius:var(--r-md);
+          padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--tb);line-height:1.9">
+          · 취업 준비하며 힘들었던 순간들<br>
+          · 무기력하거나 지쳤던 날들<br>
+          · 그럼에도 버텨내고 성장한 나에게
+        </div>
+        <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--r-md);
+          padding:12px 14px;margin-bottom:20px;font-size:13px;color:#065F46;line-height:1.65">
+          💬 <b>완성도보다 솔직함이 더 중요해요.</b><br>
+          거창하게 쓰려 하지 말고, 오늘 하루 일상처럼 편하게 털어놓으면 돼요.<br>
+          <span style="color:#059669;font-weight:600">마감까지 얼마 남지 않았으니, 지금 바로 적어봐요.</span>
+        </div>
+      </div>
+      <div class="ink-row"><span class="ink-icon">🖊️</span><div class="ink-bar"><div class="ink-fill" id="ink1"></div></div><span class="ink-num" id="cnt1">0 / 200자</span></div>
+      <div class="letter-box">
+        <div class="letter-hdr"><span class="letter-seal">✉</span><span>작년의 나에게</span></div>
+        <div class="letter-body">
+          <div class="letter-rules" id="rules1"></div>
+          <textarea class="letter-ta" id="ta1" placeholder="작년의 나에게 편하게 편지를 써줘.&#10;&#10;그동안 수고 많았어..." oninput="syncInk('ta1','ink1','cnt1',200,'mt1')"></textarea>
+        </div>
+      </div>
+      <div class="milestone" id="mt1">✨ 200자 달성! 잉크가 채워졌어.</div>
+
+      <div class="consent-card">
+        <div class="consent-card-title">// 개인정보 수집 · 이용 동의</div>
+        <div class="consent-card-body">
+          수집 항목 — 이름, 만 나이, 학교·학년, 전공, 연락처, 거주 구, 편지 키워드, 지난 한 해 점수, 편지 내용.<br>
+          이용 목적 — 신청자 선정 및 매칭, 결과 안내, 프로그램 운영 및 개선.<br>
+          보유 기간 — 사업 종료 후 1년 이내 파기. 제3자 제공 없음.
+        </div>
+        <div class="consent-row" id="consentRow" onclick="toggleConsent()">
+          <div class="consent-box" id="consentBox"></div>
+          <div class="consent-text">[필수] 개인정보 수집·이용에 동의합니다</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 5 - 완료 -->
+    <div class="page res-bg" id="p5">
+
+      <div class="res-anim-wrap">
+        <div class="res-anim" id="resAnim">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="52" fill="#F0F9FF"/>
+            <path d="M42 60 L-2 -2" stroke="none"/>
+            <path d="M60 26 L82 34 L60 42 L38 34 Z" fill="#0EA5E9"/>
+            <path d="M48 38 L48 52 Q60 60 72 52 L72 38" fill="#125FC0"/>
+            <circle cx="86" cy="32" r="2" fill="#F59E0B"/>
+            <path d="M86 32 L86 50" stroke="#F59E0B" stroke-width="1.6"/>
+            <path d="M40 78 L52 90 L82 60" stroke="#10B981" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <div class="status-dot"></div>
+        <div>
+          <div class="status-text">심사 대기 중 ✉️</div>
+          <div class="status-sub">편지가 심사위원단에게 전달됐어요</div>
+        </div>
+      </div>
+
+      <div class="res-title">편지가 무사히<br>접수되었습니다.</div>
+      <div class="res-sub">치열했던 한 해를 돌아보느라 애쓰셨습니다. 보내주신 편지는 대기업 현직자 선배와 운영진에게 소중히 전달됩니다.</div>
+
+      <div class="proc-ticket">
+        <div class="proc-ticket-hdr">
+          <span class="proc-ticket-title">공고 절차</span>
+          <span class="proc-ticket-badge">SCHEDULE</span>
+        </div>
+        <div class="proc-steps">
+          <div class="proc-step">
+            <div class="proc-step-num step-1">1</div>
+            <div class="proc-step-body">
+              <div class="proc-step-t">신청서 작성</div>
+              <div class="proc-step-d">기본 정보와 편지를 온라인 폼으로 작성해요.</div>
+            </div>
+          </div>
+          <div class="proc-step">
+            <div class="proc-step-num step-2">2</div>
+            <div class="proc-step-body">
+              <div class="proc-step-t">서류 제출</div>
+              <div class="proc-step-d">작성한 신청서가 자동으로 접수돼요.</div>
+            </div>
+          </div>
+          <div class="proc-step">
+            <div class="proc-step-num step-3">3</div>
+            <div class="proc-step-body">
+              <div class="proc-step-t">심사</div>
+              <div class="proc-step-d">심사위원단이 편지 내용을 꼼꼼하게 검토합니다.</div>
+            </div>
+          </div>
+          <div class="proc-step">
+            <div class="proc-step-num step-4">4</div>
+            <div class="proc-step-body">
+              <div class="proc-step-t">특전 안내</div>
+              <div class="proc-step-d">선정자에게 입력하신 연락처로 특전 내용을 개별 안내드립니다.</div>
+              <div class="proc-tag">선정자 개별 연락 07.14~08.03</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reward-section">
+        <div class="reward-eyebrow">REWARD</div>
+        <div class="reward-head">선정되면 받게 될<br>특전을 미리 확인해봐</div>
+      </div>
+      <div class="reward-grid">
+        <div class="reward-card">
+          <span class="reward-card-icon">💼</span>
+          <div class="reward-card-tag">취준 스펙</div>
+          <div class="reward-card-title">대기업 현직자 선배 자소서 피드백 1:1 멘토링</div>
+          <div class="reward-card-desc">자소서 · 포트폴리오까지 함께 봐드려요</div>
+        </div>
+        <div class="reward-card">
+          <span class="reward-card-icon">🌿</span>
+          <div class="reward-card-tag">방학 갓생 케어</div>
+          <div class="reward-card-title">무기력증·번아웃 완벽 탈출 '제일 잘 사는 법' 챌린지</div>
+          <div class="reward-card-desc">무료 체험권 증정</div>
+        </div>
+        <div class="reward-card gold" style="grid-column:1 / -1">
+          <span class="reward-card-icon">💰</span>
+          <div class="reward-card-tag">장학금</div>
+          <div class="reward-card-title">자기계발 지원금 총 100만원</div>
+          <div class="reward-card-desc">끝까지 버텨낸 나에게 주는 선물</div>
+        </div>
+      </div>
+
+      <div class="res-hint">✉ 문의 · program@login.kr · 🌐 theloginlab.co.kr</div>
+
+      <div class="bottom-cta res-cta">
+        <button class="cta-btn" onclick="gotoStart()">처음으로 돌아가기</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="bottom-cta" id="bottomCta">
+    <button class="cta-btn" id="ctaBtn" onclick="goNext(event)">편지 키워드 선택하러 가기 →</button>
+  </div>
+</div>
+<script>
+var cur=1,TOTAL=5,consentOn=false;
+var btnLabels=["편지 키워드 선택하러 가기 →","지난 한 해 점수 매기러 가기 →","편지 적으러 가기 →","편지 제출하기 📮",""];
+
+function refreshUI(){
+  document.getElementById("stepLbl").textContent=cur+" / "+TOTAL;
+  document.getElementById("pFill").style.width=(cur/TOTAL*100)+"%";
+  var bb=document.getElementById("backBtn");
+  (cur>1&&cur<TOTAL)?bb.classList.add("vis"):bb.classList.remove("vis");
+  var cta=document.getElementById("bottomCta");
+  if(cur===TOTAL){cta.style.display="none";}
+  else{cta.style.display="";document.getElementById("ctaBtn").textContent=btnLabels[cur-1];}
+}
+
+var SHEET_URL='https://script.google.com/macros/s/AKfycby3S-RCP0Z7Ku9QiuDlbFSoit4wsZLwy4vosDRehgiRC44yLJxKdf6aOF8DgIz-2Tgb/exec';
+
+function v(id){var el=document.getElementById(id);return el?el.value:'';}
+
+function flashInvalid(el,msg){
+  el.focus();
+  el.style.borderColor='#EF4444';el.style.boxShadow='0 0 0 3px rgba(239,68,68,.12)';
+  setTimeout(function(){el.style.borderColor='';el.style.boxShadow='';},2000);
+  showToast(msg);
+}
+
+function goNext(e){
+  if(cur===1){
+    var fields=[
+      {id:'f_name',label:'이름'},
+      {id:'f_birth',label:'생년월일'},
+      {id:'f_age',label:'나이'},
+      {id:'f_school',label:'학교 · 학년'},
+      {id:'f_major',label:'전공'},
+      {id:'f_phone',label:'연락처'},
+      {id:'f_gu',label:'거주 구'},
+    ];
+    for(var i=0;i<fields.length;i++){
+      var el=document.getElementById(fields[i].id);
+      if(!el||!el.value.trim()){ flashInvalid(el,fields[i].label+'을(를) 입력해주세요'); return; }
+    }
+    var textFields=[
+      {id:'f_name',label:'이름'},
+      {id:'f_school',label:'학교 · 학년'},
+      {id:'f_major',label:'전공'},
+      {id:'f_gu',label:'거주 구'},
+    ];
+    for(var j=0;j<textFields.length;j++){
+      var tel=document.getElementById(textFields[j].id);
+      if(tel && /^[0-9\s]+$/.test(tel.value.trim())){
+        flashInvalid(tel,textFields[j].label+' 항목은 숫자로만 입력할 수 없어요'); return;
+      }
+    }
+  }
+  if(cur===2){
+    var chips=document.querySelectorAll('.chip.on');
+    if(chips.length===0){ showToast('편지 키워드를 1개 이상 선택해주세요'); return; }
+  }
+  if(cur===4){
+    var story=document.getElementById('ta1');
+    if(!story.value.trim()){ flashInvalid(story,'편지 내용을 적어주세요'); return; }
+    if(!consentOn){ showToast('개인정보 수집·이용에 동의해주세요'); return; }
+  }
+
+  var btn=document.getElementById("ctaBtn");addRipple(btn,e);
+  if(cur>=TOTAL)return;
+
+  if(cur===TOTAL-1){
+    submitToSheet();
+    confetti();
+  }
+
+  document.getElementById("p"+cur).classList.remove("active");
+  cur++;
+  document.getElementById("p"+cur).classList.add("active");
+  document.getElementById("scrollArea").scrollTo(0,0);
+  refreshUI();
+}
+
+function submitToSheet(){
+  var chips=document.querySelectorAll('.chip.on .chip-name');
+  var keywords=[];
+  chips.forEach(function(c){keywords.push(c.textContent);});
+
+  var data={
+    name:     v('f_name'),
+    birth:    v('f_birth'),
+    age:      v('f_age'),
+    school:   v('f_school'),
+    major:    v('f_major'),
+    phone:    v('f_phone'),
+    region:   '서울',
+    gu:       v('f_gu'),
+    keywords: keywords.join(', '),
+    score:    document.getElementById('scoreSlider')?document.getElementById('scoreSlider').value:'',
+    letter:   v('ta1'),
+    agree_privacy: consentOn,
+    userAgent: navigator.userAgent,
+    timestamp: new Date().toISOString(),
+    form_type: 'essay_contest',
+    campaign: 'seoul_poster_2026'
+  };
+
+  fetch(SHEET_URL, {
+    method: 'POST', mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(data)
+  }).catch(function(){});
+}
+
+function goPrev(){
+  if(cur<=1)return;
+  document.getElementById("p"+cur).classList.remove("active");
+  cur--;
+  document.getElementById("p"+cur).classList.add("active");
+  document.getElementById("scrollArea").scrollTo(0,0);
+  refreshUI();
+}
+
+function updateSlider(el){
+  var val=parseInt(el.value);
+  document.getElementById('scoreDisplay').textContent=val;
+  el.style.background='linear-gradient(to right,var(--blue) '+val+'%,var(--bdr) '+val+'%)';
+  var emoji='많이 힘들었어...';
+  if(val>=10)emoji='그래도 버텼어';
+  if(val>=30)emoji='나쁘지 않았어';
+  if(val>=50)emoji='꽤 잘 살았어';
+  if(val>=70)emoji='정말 애썼어';
+  if(val>=90)emoji='레전드였다 나';
+  if(val===100)emoji='완벽했어, 진짜 고생했어';
+  document.getElementById('scoreEmoji').textContent=emoji;
+}
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2200);
+}
+
+function gotoStart(){
+  document.getElementById("p"+cur).classList.remove("active");
+  cur=1;
+  document.getElementById("p1").classList.add("active");
+  document.getElementById("scrollArea").scrollTo(0,0);
+  refreshUI();
+}
+
+function addRipple(btn,e){
+  var r=document.createElement("span");r.className="ripple";
+  var rect=btn.getBoundingClientRect(),sz=Math.max(btn.clientWidth,btn.clientHeight);
+  var cx=(e&&e.clientX)?e.clientX:rect.left+sz/2,cy=(e&&e.clientY)?e.clientY:rect.top+sz/2;
+  r.style.cssText="width:"+sz+"px;height:"+sz+"px;left:"+(cx-rect.left-sz/2)+"px;top:"+(cy-rect.top-sz/2)+"px";
+  btn.appendChild(r);setTimeout(function(){r.remove();},600);
+}
+
+function toggleChip(el){el.classList.toggle("on");}
+
+function toggleConsent(){
+  consentOn=!consentOn;
+  var row=document.getElementById('consentRow'), box=document.getElementById('consentBox');
+  if(consentOn){ row.classList.add('on'); box.textContent='✓'; }
+  else{ row.classList.remove('on'); box.textContent=''; }
+}
+
+function syncInk(taId,inkId,cntId,max,toastId){
+  var len=document.getElementById(taId).value.length;
+  document.getElementById(inkId).style.width=Math.min(len/max*100,100)+"%";
+  document.getElementById(cntId).textContent=len+" / "+max+"자";
+  var t=document.getElementById(toastId);
+  len>=max?t.classList.add("show"):t.classList.remove("show");
+}
+
+function confetti(){
+  var colors=["#0EA5E9","#06B6D4","#3B82F6","#10B981","#F59E0B","#EC4899","#8B5CF6"];
+  var wrap=document.getElementById("confettiWrap");
+  for(var i=0;i<80;i++){(function(i){setTimeout(function(){
+    var p=document.createElement("div");p.className="cp";
+    var sz=Math.random()*7+5;
+    p.style.cssText="left:"+Math.random()*100+"vw;width:"+sz+"px;height:"+sz+"px;background:"+colors[Math.floor(Math.random()*colors.length)]+";border-radius:"+(Math.random()>.5?"50%":"3px")+";animation-duration:"+(1.4+Math.random()*1.2)+"s;animation-delay:"+(Math.random()*.3)+"s;opacity:1";
+    wrap.appendChild(p);setTimeout(function(){p.remove();},2500);
+  },i*18);})(i);}
+}
+
+document.getElementById("rules1")&&(function(){
+  var el=document.getElementById("rules1");
+  for(var i=0;i<10;i++){var d=document.createElement("div");d.className="rule-line";el.appendChild(d);}
+})();
+refreshUI();
+
+// D-day 계산
+(function(){
+  var deadline=new Date('2026-08-03T23:59:59');
+  var diff=Math.ceil((deadline-new Date())/(1000*60*60*24));
+  var el=document.getElementById('dday');
+  if(el) el.textContent=diff>0?diff:'당일';
+})();
+
+// 신청자 수 자연스러운 실시간 카운트
+(function(){
+  var el=document.getElementById('applicantCount');
+  if(!el)return;
+  var n=47+Math.floor(Math.random()*8);
+  el.textContent=n;
+  setInterval(function(){
+    if(Math.random()>0.4){n+=Math.floor(Math.random()*2)+1;el.textContent=n;}
+  },25000);
+})();
+</script>
+</body>
+</html>
