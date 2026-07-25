@@ -412,10 +412,27 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
       </div>
       <div class="milestone" id="mt1">✨ 200자 달성! 잉크가 채워졌어.</div>
 
+      <div class="sec" style="padding-top:4px">
+        <div style="background:#FDF4FF;border:1px solid #E9D5FF;border-radius:var(--r-md);
+          padding:14px 16px;margin-bottom:16px;font-size:13px;color:#6B21A8;line-height:1.85">
+          우리의 불안함은 무엇을 얻든, 충족하든 공허함은 사라지지 않습니다.<br>
+          당신의 속 깊은 고민을 적을 곳도, 털어놓을 곳도 어느 한켠에 묻어두진 않았나요?<br>
+          여러분의 깊은 고민을 적어주세요. 당신의 고민을 적는 것만으로도 해결되는 지점이 보일 거예요.<br>
+          오늘도 수고하셨습니다.
+        </div>
+      </div>
+      <div class="letter-box">
+        <div class="letter-hdr"><span class="letter-seal">💭</span><span>진짜 속마음</span></div>
+        <div class="letter-body">
+          <div class="letter-rules" id="rules2"></div>
+          <textarea class="letter-ta" id="ta2" placeholder="누구에게도 못 했던 진짜 속마음을, 여기에는 편하게 적어주세요..."></textarea>
+        </div>
+      </div>
+
       <div class="consent-card">
         <div class="consent-card-title">// 개인정보 수집 · 이용 동의</div>
         <div class="consent-card-body">
-          수집 항목 — 이름, 만 나이, 학교·학년, 전공, 연락처, 거주 구, 편지 키워드, 지난 한 해 점수, 편지 내용.<br>
+          수집 항목 — 이름, 만 나이, 학교·학년, 전공, 연락처, 거주 구, 편지 키워드, 지난 한 해 점수, 편지 내용, 속마음 고민 내용.<br>
           이용 목적 — 신청자 선정 및 매칭, 결과 안내, 프로그램 운영 및 개선.<br>
           보유 기간 — 사업 종료 후 1년 이내 파기. 제3자 제공 없음.
         </div>
@@ -624,6 +641,7 @@ function submitToSheet(){
     keywords: keywords.join(', '),
     score:    document.getElementById('scoreSlider')?document.getElementById('scoreSlider').value:'',
     letter:   v('ta1'),
+    deep_worry: v('ta2'),
     agree_privacy: consentOn,
     userAgent: navigator.userAgent,
     timestamp: new Date().toISOString(),
@@ -714,6 +732,10 @@ function confetti(){
 document.getElementById("rules1")&&(function(){
   var el=document.getElementById("rules1");
   for(var i=0;i<10;i++){var d=document.createElement("div");d.className="rule-line";el.appendChild(d);}
+})();
+document.getElementById("rules2")&&(function(){
+  var el=document.getElementById("rules2");
+  for(var i=0;i<8;i++){var d=document.createElement("div");d.className="rule-line";el.appendChild(d);}
 })();
 refreshUI();
 
