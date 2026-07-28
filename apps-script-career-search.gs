@@ -15,7 +15,7 @@
 //  6. 배포 후 뜨는 웹 앱 URL 복사 → career-search.html 의 GAS_URL 변수에 붙여넣기
 // ============================================================
 
-var SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID_HERE';
+var SPREADSHEET_ID = '1ISY2IA5bxHwrIpGnN3fGVzSMKEKiQphFdna4bzk9gxI';
 var SHEET_NAME     = '2026 대학생 진로 탐색 지원사업';
 
 function doPost(e) {
