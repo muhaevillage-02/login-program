@@ -18,8 +18,8 @@
     --ink-soft: #4A4130;
     --ink-mid: #7A6F5C;
     --ink-light: #A79C87;
-    --line: #E3D9C0;
-    --line-strong: #4A4130;
+    --line: #D8E2DB;
+    --line-strong: #4A4A4A;
     --lime: #00EF83;
     --lime-deep: #00C96E;
     --lime-soft: #DDF9E8;
@@ -248,13 +248,13 @@
     border: 2px solid var(--lime-deep);
     box-shadow: 0 10px 28px rgba(0,239,131,0.15);
   }
-  .section-highlight .section-head { background: var(--lime-soft); }
+  .section-highlight .section-head { background: var(--bg-warm); }
   .section-highlight .section-num { background: var(--lime-deep); color: #000; }
 
   /* 포스터 안내 콜아웃 */
   .worry-intro {
-    background: var(--lime-soft); border: 1.5px solid var(--lime-deep);
-    border-radius: 6px; padding: 18px 20px; margin-bottom: 24px;
+    background: var(--bg-warm); border-left: 3px solid var(--lime-deep);
+    border-radius: 0 6px 6px 0; padding: 16px 20px; margin-bottom: 24px;
   }
   .worry-intro-title {
     font-size: 16px; font-weight: 800; color: var(--ink); margin: 0;
@@ -262,7 +262,7 @@
 
   /* 고민 작성 칸 분리 */
   .worry-box {
-    background: var(--bg-warm); border: 1.5px solid rgba(0,239,131,0.35);
+    background: var(--bg-warm); border: 1.5px solid var(--line);
     border-radius: 6px; padding: 20px 22px; margin-bottom: 18px;
   }
   .worry-box:last-of-type { margin-bottom: 0; }
@@ -270,7 +270,7 @@
     display: flex; align-items: center; gap: 8px;
     font-family: 'IBM Plex Mono', monospace; font-size: 11px;
     letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--lime-deep); font-weight: 700; margin-bottom: 10px;
+    color: var(--ink); font-weight: 700; margin-bottom: 10px;
   }
   .worry-box-step {
     display: inline-flex; align-items: center; justify-content: center;
@@ -282,11 +282,11 @@
 
   /* SECTION 04 무채색 처리 (동의) */
   .section-plain .section-head { background: var(--card); }
-  .section-plain .section-num { background: #2A2A2A; color: #7A7A7A; }
+  .section-plain .section-num { background: #EAEAE4; color: #9A9A9A; }
   .section-plain .consent {
-    background: #161616; border-color: #262626;
+    background: #F2EFE7; border-color: var(--line);
   }
-  .section-plain .consent strong { color: #9A9A9A; }
+  .section-plain .consent strong { color: var(--ink-mid); }
 
   /* FIELDS */
   .field { margin-bottom: 22px; }
@@ -622,7 +622,7 @@
         </div>
 
         <div class="field">
-          <label>현재 신분 <span class="req">REQUIRED</span></label>
+          <label>현재 상태 <span class="req">REQUIRED</span></label>
           <select name="student_status" required>
             <option value="">선택해주세요</option>
             <option value="대학생 (재학 중)">대학생 (재학 중)</option>
@@ -736,7 +736,8 @@
         </div>
 
         <div class="worry-box">
-          <div class="worry-box-label"><span class="worry-box-step">1</span>고민이 시작된 상황 <span class="req">REQUIRED</span></div>
+          <div class="worry-box-label"><span class="worry-box-step">1</span>현재의 나의 고민은? <span class="req">REQUIRED</span></div>
+          <p class="hint" style="margin-top:0; margin-bottom:10px;">// 이런 키워드로 자유롭게 적어봐도 좋아요 · #진로 #전공 #미래 #적성 #대학생활</p>
           <textarea name="worry_situation" id="worry_situation" maxlength="400"
             placeholder="예) 전공 수업을 들을수록 흥미가 사라지는 것 같아서 불안해요. 동기들은 다 방향을 잡은 것 같은데 저만 계속 헤매는 느낌이에요..." required></textarea>
           <div class="char-counter"><span id="situationCount">0</span> / 400자</div>
@@ -787,7 +788,7 @@
       <div class="section-body">
         <div class="consent">
           <strong>// Personal Data Collection Notice</strong>
-          수집 항목: 이름, 만 나이, 신분, 거주지, 연락처, 이메일(선택), 학교, 전공, 고민 유형, 고민 상황, 힘든 점, 지원 항목.<br>
+          수집 항목: 이름, 만 나이, 현재 상태, 거주지, 연락처, 이메일(선택), 학교, 전공, 고민 유형, 고민 상황, 힘든 점, 지원 항목.<br>
           이용 목적: 대상자 선별, 결과 안내, 프로그램 운영.<br>
           보유 기간: 사업 종료 후 6개월 이내 파기 (선발자는 1년). 제3자 제공 없음.
         </div>
