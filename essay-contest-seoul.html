@@ -281,14 +281,23 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
         <div class="page-title">수고한 작년의 나에게<br>보내는 편지</div>
         <div class="page-desc">끝까지 버텨낸 수고한 나에게, 솔직한 이야기를 들려주세요.<br>“그동안 정말 애썼어.”</div>
 
+        <!-- 정책 제안 명분 -->
+        <div style="background:#FDF4FF;border:1.5px solid #E9D5FF;border-radius:var(--r-lg);
+          padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
+          <span style="font-size:22px">🏛️</span>
+          <div style="font-size:13px;color:#6B21A8;line-height:1.6">
+            여러분의 소중한 편지가 향후 정부·지자체에 제안할<br><b>‘청년 정책 제안서’</b>의 큰 도움이 됩니다.
+          </div>
+        </div>
+
         <!-- 마감 배너 -->
         <div style="background:linear-gradient(135deg,#FFF7ED,#FEF3C7);border:1.5px solid #FCD34D;
           border-radius:var(--r-lg);padding:14px 16px;margin-bottom:16px;
           display:flex;align-items:center;gap:12px">
           <span style="font-size:22px">⏰</span>
           <div>
-            <div style="font-size:13px;font-weight:800;color:#B45309;margin-bottom:2px">마감 D-<span id="dday">?</span> · 2026.07.07 ~ 08.03</div>
-            <div style="font-size:12px;color:#92400E;line-height:1.5">선정자에게는 07.14~08.03 사이 개별로 연락드려요.<br>부담 없이 솔직하게, 지금 편지를 남겨주세요 🌿</div>
+            <div style="font-size:13px;font-weight:800;color:#B45309;margin-bottom:2px">마감 D-<span id="dday">?</span> · 2026.07.07 ~ 08.07</div>
+            <div style="font-size:12px;color:#92400E;line-height:1.5">선정자에게는 07.14~08.07 사이 개별로 연락드려요.<br>부담 없이 솔직하게, 지금 편지를 남겨주세요 🌿</div>
           </div>
         </div>
 
@@ -487,8 +496,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
           <div class="proc-step">
             <div class="proc-step-num step-2">2</div>
             <div class="proc-step-body">
-              <div class="proc-step-t">서류 제출</div>
-              <div class="proc-step-d">작성한 신청서가 자동으로 접수돼요.</div>
+              <div class="proc-step-t">편지 제출</div>
+              <div class="proc-step-d">작성한 편지와 신청서가 자동으로 접수돼요.</div>
             </div>
           </div>
           <div class="proc-step">
@@ -503,7 +512,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
             <div class="proc-step-body">
               <div class="proc-step-t">특전 안내</div>
               <div class="proc-step-d">선정자에게 입력하신 연락처로 특전 내용을 개별 안내드립니다.</div>
-              <div class="proc-tag">선정자 개별 연락 07.14~08.03</div>
+              <div class="proc-tag">선정자 개별 연락 07.14~08.07</div>
             </div>
           </div>
         </div>
@@ -516,20 +525,20 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
       <div class="reward-grid">
         <div class="reward-card">
           <span class="reward-card-icon">💼</span>
-          <div class="reward-card-tag">취준 스펙</div>
-          <div class="reward-card-title">대기업 현직자 선배 자소서 피드백 1:1 멘토링</div>
-          <div class="reward-card-desc">자소서 · 포트폴리오까지 함께 봐드려요</div>
+          <div class="reward-card-tag">취준 스펙 · 10명</div>
+          <div class="reward-card-title">대기업 현직자 선배 자소서 피드백</div>
+          <div class="reward-card-desc">1:1 멘토링까지 함께 진행돼요</div>
         </div>
         <div class="reward-card">
           <span class="reward-card-icon">🌿</span>
-          <div class="reward-card-tag">방학 갓생 케어</div>
-          <div class="reward-card-title">무기력증·번아웃 완벽 탈출 '제일 잘 사는 법' 챌린지</div>
-          <div class="reward-card-desc">무료 체험권 증정</div>
+          <div class="reward-card-tag">방학 갓생 루틴 · 10명</div>
+          <div class="reward-card-title">도파민 디톡스 30일 체험권</div>
+          <div class="reward-card-desc">갓생 루틴 키트 증정 (다이어리 · 스케줄러 · 미니 타이머)</div>
         </div>
         <div class="reward-card gold" style="grid-column:1 / -1">
           <span class="reward-card-icon">💰</span>
-          <div class="reward-card-tag">장학금</div>
-          <div class="reward-card-title">자기계발 지원금 총 100만원</div>
+          <div class="reward-card-tag">장학금 · 3명</div>
+          <div class="reward-card-title">자기계발 지원 지원금 50만원</div>
           <div class="reward-card-desc">끝까지 버텨낸 나에게 주는 선물</div>
         </div>
       </div>
@@ -741,7 +750,7 @@ refreshUI();
 
 // D-day 계산
 (function(){
-  var deadline=new Date('2026-08-03T23:59:59');
+  var deadline=new Date('2026-08-07T23:59:59');
   var diff=Math.ceil((deadline-new Date())/(1000*60*60*24));
   var el=document.getElementById('dday');
   if(el) el.textContent=diff>0?diff:'당일';
