@@ -44,16 +44,6 @@ html,body{min-height:100%;background:#F1F5F9;color:var(--tt);
 .page.active{display:block;animation:fadeUp .3s cubic-bezier(.4,0,.2,1)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
-/* HERO - single unified campus scene (not split) */
-.hero-campus{margin:20px 20px 0;border-radius:var(--r-xl);overflow:hidden;
-  height:210px;position:relative;background:#BFE3FB}
-.hero-campus svg{width:100%;height:100%;display:block}
-.hero-campus-overlay{position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,.12) 100%)}
-.hero-caption{margin:14px 20px 24px;text-align:center;background:var(--blue-l);
-  color:var(--blue-d);font-size:13px;font-weight:700;padding:10px 16px;
-  border-radius:20px;letter-spacing:.2px}
-
 /* SECTION */
 .sec{padding:0 20px;margin-bottom:8px}
 .page-tag{display:inline-flex;align-items:center;gap:4px;background:var(--blue-l);
@@ -197,8 +187,6 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
   font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:6px}
 .reward-card-title{font-size:13px;font-weight:800;color:var(--tt);margin-bottom:4px;line-height:1.3}
 .reward-card-desc{font-size:11px;color:var(--ts);line-height:1.5}
-.reward-card.gold{border-color:#FCD34D;background:#FFFBEB}
-.reward-card.gold .reward-card-tag{background:#FEF3C7;color:#B45309}
 .res-hint{text-align:center;font-size:12px;color:var(--th);padding:0 20px 32px}
 
 /* CTA */
@@ -242,44 +230,10 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
 
     <!-- PAGE 1 -->
     <div class="page active" id="p1">
-      <div class="hero-campus">
-        <svg viewBox="0 0 600 210" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#5CB3F0"/>
-              <stop offset="55%" stop-color="#9BD4F5"/>
-              <stop offset="100%" stop-color="#EAF7FF"/>
-            </linearGradient>
-            <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#FFF3C4" stop-opacity=".95"/>
-              <stop offset="100%" stop-color="#FFF3C4" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="peakFar" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#BFE0C8"/>
-              <stop offset="100%" stop-color="#9FCDAE"/>
-            </linearGradient>
-            <linearGradient id="peakNear" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#7FBB92"/>
-              <stop offset="100%" stop-color="#5CA275"/>
-            </linearGradient>
-          </defs>
-          <rect width="600" height="210" fill="url(#skyGrad)"/>
-          <g fill="#fff" opacity=".85">
-            <ellipse cx="90" cy="42" rx="26" ry="10"/><ellipse cx="115" cy="36" rx="18" ry="9"/>
-            <ellipse cx="500" cy="30" rx="22" ry="9"/><ellipse cx="522" cy="36" rx="15" ry="7"/>
-          </g>
-          <circle cx="430" cy="70" r="60" fill="url(#sunGlow)"/>
-          <circle cx="430" cy="70" r="26" fill="#FFD35C"/>
-          <path d="M0 210 L0 140 Q90 60 180 120 Q230 155 300 100 Q340 70 400 130 Q460 175 520 120 Q560 90 600 130 L600 210 Z" fill="url(#peakFar)"/>
-          <path d="M0 210 L0 175 Q70 100 150 165 Q210 210 260 150 Q300 105 360 160 Q420 210 470 155 Q520 105 600 165 L600 210 Z" fill="url(#peakNear)"/>
-        </svg>
-        <div class="hero-campus-overlay"></div>
-      </div>
-      <div class="hero-caption">📝 지금, 3월의 나에게 편지를 써봐</div>
-      <div class="sec">
+      <div class="sec" style="padding-top:24px">
         <div class="page-tag">📝 서울·경기 대학생 에세이 공모전</div>
-        <div class="page-title">3월의 나에게 보내는<br>대학생의 종강 편지</div>
-        <div class="page-desc">치열했던 '흔적' 뒤의 솔직한 고민까지 들어줄게요.<br>“한 학기 버텨낸 너한테, 상 한번 줘야지.”</div>
+        <div class="page-title">지금의 나에게 보내는<br>대학생의 솔직한 이야기</div>
+        <div class="page-desc">지금 가장 하고 싶은 이야기를 들려주세요.<br>고민 · 선택 · 실패 · 좌절 · 변화, 5가지 주제 중 하나를 골라봐!</div>
 
         <!-- 마감 배너 -->
         <div style="background:linear-gradient(135deg,#FFF7ED,#FEF3C7);border:1.5px solid #FCD34D;
@@ -287,8 +241,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
           display:flex;align-items:center;gap:12px">
           <span style="font-size:22px">⏰</span>
           <div>
-            <div style="font-size:13px;font-weight:800;color:#B45309;margin-bottom:2px">마감 D-<span id="dday">?</span> · 2026.07.07 ~ 08.03</div>
-            <div style="font-size:12px;color:#92400E;line-height:1.5">선정자에게는 07.14~08.03 사이 개별로 연락드려요.<br>부담 없이 솔직하게, 지금 편지를 남겨주세요 🌿</div>
+            <div style="font-size:13px;font-weight:800;color:#B45309;margin-bottom:2px">마감 D-<span id="dday">?</span> · 2026.08.03 ~ 08.24</div>
+            <div style="font-size:12px;color:#92400E;line-height:1.5">선정자에게는 08.10~08.24 사이 개별로 연락드려요.<br>부담 없이 솔직하게, 지금 이야기를 남겨주세요 🌿</div>
           </div>
         </div>
 
@@ -301,7 +255,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
           <div style="flex:1">
             <div style="font-size:12px;color:var(--ts);margin-bottom:3px">지금 이 순간도 함께 쓰고 있어요</div>
             <div style="font-size:15px;font-weight:800;color:var(--tt)">
-              <span id="applicantCount" style="color:var(--blue)">...</span>명이 편지를 작성하고 있어요
+              <span id="applicantCount" style="color:var(--blue)">...</span>명이 이야기를 쓰고 있어요
             </div>
           </div>
           <div style="width:8px;height:8px;border-radius:50%;background:#10B981;
@@ -368,18 +322,15 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
     <!-- PAGE 2 - 고민 키워드 -->
     <div class="page" id="p2">
       <div class="sec" style="padding-top:20px">
-        <div class="page-tag">💭 이번 학기</div>
-        <div class="page-title">이 편지에,<br>어떤 이야기를 담고 싶어?</div>
-        <div class="page-desc">마음에 걸리는 것들을 골라봐.<br>여러 개 선택해도 돼.</div>
+        <div class="page-tag">💭 주제 선택</div>
+        <div class="page-title">어떤 주제로<br>이야기를 들려줄래?</div>
+        <div class="page-desc">고민 · 선택 · 실패 · 좌절 · 변화<br>5가지 주제 중 하나를 골라봐!</div>
         <div class="chip-grid">
-          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">📚</span><div class="chip-name">학업 스트레스</div><div class="chip-desc">전공 공부와 학점의 압박</div></div>
-          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">💼</span><div class="chip-name">취업 준비</div><div class="chip-desc">스펙과 자소서의 무게</div></div>
-          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">😮‍💨</span><div class="chip-name">번아웃 · 무기력</div><div class="chip-desc">지치고 힘 빠졌던 시간</div></div>
-          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">👥</span><div class="chip-name">인간관계</div><div class="chip-desc">관계에서 오는 어려움</div></div>
-          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">💪</span><div class="chip-name">극복과 성장</div><div class="chip-desc">다시 일어섰던 순간</div></div>
-          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">🎯</span><div class="chip-name">새로운 도전</div><div class="chip-desc">용기 냈던 기억</div></div>
-          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">🙏</span><div class="chip-name">감사한 순간</div><div class="chip-desc">힘이 되어준 사람들</div></div>
-          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">🌀</span><div class="chip-name">기타</div><div class="chip-desc">말로 표현하기 어려운 것</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">😣</span><div class="chip-name">고민</div><div class="chip-desc">진로와 미래 앞에서 흔들렸던 마음</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">🤔</span><div class="chip-name">선택</div><div class="chip-desc">갈림길에서 내린 나만의 결정</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">📉</span><div class="chip-name">실패</div><div class="chip-desc">뜻대로 되지 않았던 경험</div></div>
+          <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">💔</span><div class="chip-name">좌절</div><div class="chip-desc">무너지고 힘들었던 순간</div></div>
+          <div class="chip" onclick="toggleChip(this)" style="grid-column:1 / -1"><div class="chip-check">✓</div><span class="chip-emoji">🌱</span><div class="chip-name">변화</div><div class="chip-desc">달라지고 성장한 나의 모습</div></div>
         </div>
       </div>
     </div>
@@ -387,8 +338,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
     <!-- PAGE 3 - 지난 1년 점수 -->
     <div class="page" id="p3">
       <div class="sec" style="padding-top:20px">
-        <div class="page-tag">📊 이번 학기</div>
-        <div class="page-title">이번 학기,<br>나에게 몇 점을 줄래?</div>
+        <div class="page-tag">📊 자기 진단</div>
+        <div class="page-title">지금까지의 나에게,<br>몇 점을 줄래?</div>
         <div class="page-desc">드래그해서 점수를 매겨봐.</div>
         <div style="position:relative;padding:8px 0 24px">
           <input type="range" id="scoreSlider" min="0" max="100" value="50"
@@ -412,13 +363,13 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
     <!-- PAGE 4 - 편지 작성 + 동의 -->
     <div class="page" id="p4">
       <div class="sec" style="padding-top:20px">
-        <div class="page-tag">✒️ 편지 작성</div>
-        <div class="page-title">3월의 나에게<br>편지를 써주세요!</div>
+        <div class="page-tag">✒️ 이야기 작성</div>
+        <div class="page-title">지금의 나에게<br>솔직한 이야기를 들려주세요!</div>
         <div style="background:var(--bg-s);border:1px solid var(--bdr);border-radius:var(--r-md);
           padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--tb);line-height:1.9">
-          · 취업 준비하며 힘들었던 순간들<br>
-          · 무기력하거나 지쳤던 날들<br>
-          · 그럼에도 버텨내고 성장한 나에게
+          · 고민 · 선택 · 실패 · 좌절 · 변화, 고른 주제를 자유롭게<br>
+          · 그때의 감정과 생각들<br>
+          · 지금 돌아보면 드는 마음까지
         </div>
         <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--r-md);
           padding:12px 14px;margin-bottom:20px;font-size:13px;color:#065F46;line-height:1.65">
@@ -429,18 +380,46 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
       </div>
       <div class="ink-row"><span class="ink-icon">🖊️</span><div class="ink-bar"><div class="ink-fill" id="ink1"></div></div><span class="ink-num" id="cnt1">0 / 200자</span></div>
       <div class="letter-box">
-        <div class="letter-hdr"><span class="letter-seal">✉</span><span>3월의 나에게</span></div>
+        <div class="letter-hdr"><span class="letter-seal">✉</span><span>지금의 나에게</span></div>
         <div class="letter-body">
           <div class="letter-rules" id="rules1"></div>
-          <textarea class="letter-ta" id="ta1" placeholder="3월의 나에게 편하게 편지를 써줘.&#10;&#10;그동안 수고 많았어..." oninput="syncInk('ta1','ink1','cnt1',200,'mt1')"></textarea>
+          <textarea class="letter-ta" id="ta1" placeholder="지금 가장 하고 싶은 이야기를 편하게 적어줘.&#10;&#10;그동안 수고 많았어..." oninput="syncInk('ta1','ink1','cnt1',200,'mt1')"></textarea>
         </div>
       </div>
       <div class="milestone" id="mt1">✨ 200자 달성! 잉크가 채워졌어.</div>
 
       <div class="consent-card">
+        <div class="consent-card-title">// [EVENT] 나의 이야기를 더 깊이 들여다보기</div>
+        <div class="consent-card-body">
+          이번 공모전에 작성해주신 이야기를 바탕으로<br>
+          평소에는 미처 발견하지 못했던 나의 강점과 고민, 방향성을<br>
+          전문가와 함께 이야기해볼 수 있어요.<br>
+          관심이 있다면 아래 항목을 선택해주세요. (선택)
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="consent-row evt-row" onclick="toggleEvt(this)">
+            <div class="consent-box"></div>
+            <div class="consent-text">내가 쓴 이야기를 바탕으로 1:1 코칭을 받아보고 싶어요</div>
+          </div>
+          <div class="consent-row evt-row" onclick="toggleEvt(this)">
+            <div class="consent-box"></div>
+            <div class="consent-text">지금 가지고 있는 고민에 대해 이야기해보고 싶어요</div>
+          </div>
+          <div class="consent-row evt-row" onclick="toggleEvt(this)">
+            <div class="consent-box"></div>
+            <div class="consent-text">나의 강점과 앞으로의 방향을 알아보고 싶어요</div>
+          </div>
+          <div class="consent-row evt-row" onclick="toggleEvt(this)">
+            <div class="consent-box"></div>
+            <div class="consent-text">일단 어떤 내용인지 안내받아보고 싶어요</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="consent-card">
         <div class="consent-card-title">// 개인정보 수집 · 이용 동의</div>
         <div class="consent-card-body">
-          수집 항목 — 이름, 만 나이, 학교·학년, 전공, 연락처, 거주지, 편지 키워드, 지난 1년 점수, 편지 내용.<br>
+          수집 항목 — 이름, 만 나이, 학교·학년, 전공, 연락처, 거주지, 선택 주제, 자가진단 점수, 이야기 내용.<br>
           이용 목적 — 신청자 선정 및 매칭, 결과 안내, 프로그램 운영 및 개선.<br>
           보유 기간 — 사업 종료 후 1년 이내 파기. 제3자 제공 없음.
         </div>
@@ -472,12 +451,12 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
         <div class="status-dot"></div>
         <div>
           <div class="status-text">심사 대기 중 ✉️</div>
-          <div class="status-sub">편지가 심사위원단에게 전달됐어요</div>
+          <div class="status-sub">이야기가 심사위원단에게 전달됐어요</div>
         </div>
       </div>
 
-      <div class="res-title">편지가 무사히<br>접수되었습니다.</div>
-      <div class="res-sub">치열했던 한 학기를 돌아보느라 애쓰셨습니다. 보내주신 편지는 대기업·스타트업 현직자 선배와 운영진에게 소중히 전달됩니다.</div>
+      <div class="res-title">이야기가 무사히<br>접수되었습니다.</div>
+      <div class="res-sub">솔직한 이야기를 들려주셔서 감사합니다. 보내주신 이야기는 대기업·스타트업 현직자 선배와 운영진에게 소중히 전달됩니다.<br>선정되신 분께는 입력하신 연락처로 개별 연락드려요.</div>
 
       <div class="proc-ticket">
         <div class="proc-ticket-hdr">
@@ -489,7 +468,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
             <div class="proc-step-num step-1">1</div>
             <div class="proc-step-body">
               <div class="proc-step-t">신청서 작성</div>
-              <div class="proc-step-d">기본 정보와 편지를 온라인 폼으로 작성해요.</div>
+              <div class="proc-step-d">기본 정보와 이야기를 온라인 폼으로 작성해요.</div>
             </div>
           </div>
           <div class="proc-step">
@@ -503,7 +482,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
             <div class="proc-step-num step-3">3</div>
             <div class="proc-step-body">
               <div class="proc-step-t">심사</div>
-              <div class="proc-step-d">심사위원단이 편지 내용을 꼼꼼하게 검토합니다.</div>
+              <div class="proc-step-d">심사위원단이 이야기 내용을 꼼꼼하게 검토합니다.</div>
             </div>
           </div>
           <div class="proc-step">
@@ -511,44 +490,38 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
             <div class="proc-step-body">
               <div class="proc-step-t">특전 안내</div>
               <div class="proc-step-d">선정자에게 입력하신 연락처로 특전 내용을 개별 안내드립니다.</div>
-              <div class="proc-tag">선정자 개별 연락 07.14~08.03</div>
+              <div class="proc-tag">선정자 개별 연락 08.10~08.24</div>
             </div>
           </div>
         </div>
       </div>
 
       <div class="reward-section">
-        <div class="reward-eyebrow">REWARD</div>
+        <div class="reward-eyebrow">REWARD · 총 20명 선발</div>
         <div class="reward-head">선정되면 받게 될<br>특전을 미리 확인해봐</div>
       </div>
       <div class="reward-grid">
         <div class="reward-card">
           <span class="reward-card-icon">💼</span>
-          <div class="reward-card-tag">취업 스펙</div>
+          <div class="reward-card-tag">취업 스펙 · 05명</div>
           <div class="reward-card-title">대기업·스타트업 현직자 선배 1:1 밀착 피드백</div>
           <div class="reward-card-desc">자소서 · 포트폴리오까지 함께 봐드려요</div>
         </div>
         <div class="reward-card">
           <span class="reward-card-icon">📖</span>
-          <div class="reward-card-tag">정식 작가 데뷔</div>
+          <div class="reward-card-tag">정식 작가 데뷔 · 10명</div>
           <div class="reward-card-title">'2026 트렌드 리포트' 매거진 발간</div>
           <div class="reward-card-desc">내 이름으로 출판되고 작가로 등록돼요</div>
         </div>
-        <div class="reward-card">
+        <div class="reward-card" style="grid-column:1 / -1">
           <span class="reward-card-icon">🌿</span>
-          <div class="reward-card-tag">방학 갓생 케어</div>
+          <div class="reward-card-tag">방학 갓생 케어 · 05명</div>
           <div class="reward-card-title">무기력증 탈출 '갓생 챌린지'</div>
           <div class="reward-card-desc">2주 무료 체험권 증정</div>
         </div>
-        <div class="reward-card gold">
-          <span class="reward-card-icon">💰</span>
-          <div class="reward-card-tag">장학금</div>
-          <div class="reward-card-title">자기계발 지원금 총 100만원</div>
-          <div class="reward-card-desc">끝까지 버텨낸 나에게 주는 선물</div>
-        </div>
       </div>
 
-      <div class="res-hint">✉ 문의 · program@login.kr · 🌐 theloginlab.co.kr</div>
+      <div class="res-hint">✉ 문의 · program@login.kr · 🌐 <a href="https://theloginlab.co.kr/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">theloginlab.co.kr</a></div>
 
       <div class="bottom-cta res-cta">
         <button class="cta-btn" onclick="gotoStart()">처음으로 돌아가기</button>
@@ -557,12 +530,12 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
 
   </div>
   <div class="bottom-cta" id="bottomCta">
-    <button class="cta-btn" id="ctaBtn" onclick="goNext(event)">편지 키워드 선택하러 가기 →</button>
+    <button class="cta-btn" id="ctaBtn" onclick="goNext(event)">주제 선택하러 가기 →</button>
   </div>
 </div>
 <script>
 var cur=1,TOTAL=5,consentOn=false;
-var btnLabels=["편지 키워드 선택하러 가기 →","지난 1년 점수 매기러 가기 →","편지 적으러 가기 →","편지 제출하기 📮",""];
+var btnLabels=["주제 선택하러 가기 →","자가진단 하러 가기 →","이야기 적으러 가기 →","이야기 제출하기 📮",""];
 
 function refreshUI(){
   document.getElementById("stepLbl").textContent=cur+" / "+TOTAL;
@@ -616,11 +589,11 @@ function goNext(e){
   }
   if(cur===2){
     var chips=document.querySelectorAll('.chip.on');
-    if(chips.length===0){ showToast('편지 키워드를 1개 이상 선택해주세요'); return; }
+    if(chips.length===0){ showToast('주제를 1개 선택해주세요'); return; }
   }
   if(cur===4){
     var story=document.getElementById('ta1');
-    if(!story.value.trim()){ flashInvalid(story,'편지 내용을 적어주세요'); return; }
+    if(!story.value.trim()){ flashInvalid(story,'이야기를 적어주세요'); return; }
     if(!consentOn){ showToast('개인정보 수집·이용에 동의해주세요'); return; }
   }
 
@@ -644,6 +617,10 @@ function submitToSheet(){
   var keywords=[];
   chips.forEach(function(c){keywords.push(c.textContent);});
 
+  var evtRows=document.querySelectorAll('.evt-row.on .consent-text');
+  var eventInterests=[];
+  evtRows.forEach(function(t){eventInterests.push(t.textContent);});
+
   var data={
     name:     v('f_name'),
     birth:    v('f_birth'),
@@ -656,6 +633,7 @@ function submitToSheet(){
     keywords: keywords.join(', '),
     score:    document.getElementById('scoreSlider')?document.getElementById('scoreSlider').value:'',
     letter:   v('ta1'),
+    event_interest: eventInterests.join(', '),
     agree_privacy: consentOn,
     userAgent: navigator.userAgent,
     timestamp: new Date().toISOString(),
@@ -714,7 +692,17 @@ function addRipple(btn,e){
   btn.appendChild(r);setTimeout(function(){r.remove();},600);
 }
 
-function toggleChip(el){el.classList.toggle("on");}
+function toggleChip(el){
+  var wasOn=el.classList.contains("on");
+  el.parentElement.querySelectorAll(".chip").forEach(function(c){c.classList.remove("on");});
+  if(!wasOn)el.classList.add("on");
+}
+
+function toggleEvt(el){
+  el.classList.toggle('on');
+  var box=el.querySelector('.consent-box');
+  box.textContent=el.classList.contains('on')?'✓':'';
+}
 
 function toggleConsent(){
   consentOn=!consentOn;
@@ -750,7 +738,7 @@ refreshUI();
 
 // D-day 계산
 (function(){
-  var deadline=new Date('2026-08-03T23:59:59');
+  var deadline=new Date('2026-08-24T23:59:59');
   var diff=Math.ceil((deadline-new Date())/(1000*60*60*24));
   var el=document.getElementById('dday');
   if(el) el.textContent=diff>0?diff:'당일';
