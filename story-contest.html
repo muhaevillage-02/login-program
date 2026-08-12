@@ -301,10 +301,10 @@ html,body{min-height:100%;background:#F1F5F9;color:var(--tt);
         <div class="page-title">어떤 도전을<br>이야기해줄 거야?</div>
         <div class="page-desc">스스로의 인생에서 도전했던 경험을 글로 적어주세요.<br>여러분의 크고 작은 변화의 경험이, 성공으로 이끕니다.</div>
         <div class="radio-list" id="categoryList">
-          <div class="radio-row" data-group="category" data-value="진로" onclick="pickRadio(this,'category')"><div class="radio-circle"></div><div class="radio-text">진로</div></div>
-          <div class="radio-row" data-group="category" data-value="대인관계" onclick="pickRadio(this,'category')"><div class="radio-circle"></div><div class="radio-text">대인관계</div></div>
-          <div class="radio-row" data-group="category" data-value="실패경험" onclick="pickRadio(this,'category')"><div class="radio-circle"></div><div class="radio-text">실패경험</div></div>
-          <div class="radio-row" data-group="category" data-value="변화" onclick="pickRadio(this,'category')"><div class="radio-circle"></div><div class="radio-text">변화</div></div>
+          <div class="radio-row" data-group="category" data-value="진로" onclick="pickRadio(this,'category')"><div class="radio-circle"></div><div class="radio-text">🏢 진로</div></div>
+          <div class="radio-row" data-group="category" data-value="대인관계" onclick="pickRadio(this,'category')"><div class="radio-circle"></div><div class="radio-text">👥 대인관계</div></div>
+          <div class="radio-row" data-group="category" data-value="실패경험" onclick="pickRadio(this,'category')"><div class="radio-circle"></div><div class="radio-text">❤️‍🩹 실패경험</div></div>
+          <div class="radio-row" data-group="category" data-value="변화" onclick="pickRadio(this,'category')"><div class="radio-circle"></div><div class="radio-text">🔥 변화</div></div>
           <div class="radio-row" data-group="category" data-value="기타" onclick="pickRadio(this,'category')"><div class="radio-circle"></div><div class="radio-text">기타</div></div>
         </div>
       </div>
@@ -318,9 +318,8 @@ html,body{min-height:100%;background:#F1F5F9;color:var(--tt);
         <div class="page-desc">잘 쓰려고 하지 않아도 괜찮아요.<br>스스로 도전했던 경험을 편하게 적어주세요.</div>
         <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:var(--r-md);
           padding:12px 14px;margin-bottom:20px;font-size:13px;color:#065F46;line-height:1.65">
-          💬 <b>완성된 글이 아니어도 좋아요.</b><br>
-          어떤 도전을 했고, 어떤 어려움이 있었으며, 무엇을 배우고 성장했는지 자유롭게 적어주세요.<br>
-          <span style="color:#059669;font-weight:600">솔직한 경험 그대로가 가장 좋은 스토리예요.</span>
+          💬 <b>본인만의 경험과 감정, 생각이 진솔하게 담아보세요.</b><br>
+          추상적인 고민을 넘어, 자신만의 상황과 경험을 구체적으로 적어보세요.
         </div>
       </div>
       <div class="ink-row"><span class="ink-icon">🖊️</span><div class="ink-bar"><div class="ink-fill" id="ink1"></div></div><span class="ink-num" id="cnt1">0 / 1,000자</span></div>
@@ -332,34 +331,6 @@ html,body{min-height:100%;background:#F1F5F9;color:var(--tt);
         </div>
       </div>
       <div class="milestone" id="mt1">✨ 충분히 진솔한 이야기예요!</div>
-
-      <div class="consent-card">
-        <div class="consent-card-title">🎊 [EVENT] 나의 도전을 깊게 들여다보기</div>
-        <div class="consent-card-body">
-          이번 공모전에 작성해주신 스토리를 바탕으로<br>
-          평소에는 발견하지 못했던 나의 강점과 고민, 방향성을<br>
-          전문가와 함께 이야기해볼 수 있습니다.<br>
-          관심이 있다면 아래 항목을 선택해주세요. (선택)
-        </div>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <div class="consent-row evt-row" onclick="toggleEvt(this)">
-            <div class="consent-box"></div>
-            <div class="consent-text">내가 쓴 스토리를 바탕으로 1:1 코칭을 받아보고 싶어요</div>
-          </div>
-          <div class="consent-row evt-row" onclick="toggleEvt(this)">
-            <div class="consent-box"></div>
-            <div class="consent-text">지금 가지고 있는 고민에 대해 이야기해보고 싶어요</div>
-          </div>
-          <div class="consent-row evt-row" onclick="toggleEvt(this)">
-            <div class="consent-box"></div>
-            <div class="consent-text">나의 강점과 앞으로의 방향을 알아보고 싶어요</div>
-          </div>
-          <div class="consent-row evt-row" onclick="toggleEvt(this)">
-            <div class="consent-box"></div>
-            <div class="consent-text">일단 어떤 내용인지 안내받아보고 싶어요</div>
-          </div>
-        </div>
-      </div>
 
       <div class="consent-card">
         <div class="consent-card-title">// 개인정보 수집 · 이용 동의</div>
@@ -546,16 +517,11 @@ function goNext(e){
 }
 
 function submitToSheet(){
-  var evtRows=document.querySelectorAll('.evt-row.on .consent-text');
-  var eventInterests=[];
-  evtRows.forEach(function(t){eventInterests.push(t.textContent);});
-
   var data={
     name: v('f_name'), age: v('f_age'), student_status: v('f_status'),
     region: selectedRegion, residence_detail: v('f_residence'),
     phone: v('f_phone'), email: v('f_email'),
     story_category: selectedCategory, story: v('ta1'),
-    event_interest: eventInterests.join(', '),
     agree_privacy: consentOn, userAgent: navigator.userAgent,
     timestamp: new Date().toISOString(), form_type: 'story_contest'
   };
@@ -596,12 +562,6 @@ function toggleConsent(){
   var row=document.getElementById('consentRow'), box=document.getElementById('consentBox');
   if(consentOn){ row.classList.add('on'); box.textContent='✓'; }
   else{ row.classList.remove('on'); box.textContent=''; }
-}
-
-function toggleEvt(el){
-  el.classList.toggle('on');
-  var box=el.querySelector('.consent-box');
-  box.textContent=el.classList.contains('on')?'✓':'';
 }
 
 function showToast(msg){
