@@ -179,6 +179,21 @@ html,body{min-height:100%;background:#F1F5F9;color:var(--tt);
 .reward-card-desc{font-size:11px;color:var(--ts);line-height:1.5}
 .res-hint{text-align:center;font-size:12px;color:var(--th);padding:0 20px 32px}
 
+/* REVIEW MEMO SLIDE */
+.memo-slide{display:flex;gap:14px;overflow-x:auto;padding:6px 20px 22px;
+  scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.memo-slide::-webkit-scrollbar{display:none}
+.memo-card{scroll-snap-align:start;flex:0 0 78%;max-width:280px;
+  background:#FFFCF5;border:1.5px solid #ECE1C6;border-radius:var(--r-lg);
+  padding:26px 18px 18px;box-shadow:0 4px 16px rgba(120,96,40,.08);position:relative}
+.memo-pin{position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  width:16px;height:16px;border-radius:50%;
+  background:linear-gradient(135deg,#F87171,#DC2626);box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.memo-quote{font-size:22px;color:#D8B970;line-height:1;margin-bottom:6px;font-family:Georgia,serif}
+.memo-text{font-family:"Gowun Batang",serif;font-size:14.5px;color:#3B3226;
+  line-height:1.85;letter-spacing:.1px;min-height:150px}
+.memo-tag{margin-top:14px;font-size:11px;font-weight:700;color:#8A6D3B;text-align:right}
+
 /* CTA */
 .bottom-cta{position:sticky;bottom:0;padding:12px 20px 28px;
   background:linear-gradient(to top,rgba(255,255,255,1) 65%,rgba(255,255,255,0));z-index:90}
@@ -389,7 +404,7 @@ html,body{min-height:100%;background:#F1F5F9;color:var(--tt);
             <div class="proc-step-body">
               <div class="proc-step-t">최종 결과 발표</div>
               <div class="proc-step-d">선정자에게 입력하신 연락처로 개별 상세 안내가 예정되어 있습니다.</div>
-              <div class="proc-tag">접수 마감 후 총 26명 선정 · 개별 안내</div>
+              <div class="proc-tag">선정자 개별 연락 08.10~마감일까지</div>
             </div>
           </div>
         </div>
@@ -417,6 +432,43 @@ html,body{min-height:100%;background:#F1F5F9;color:var(--tt);
           <div class="reward-card-tag">몰입 지원 · 15명</div>
           <div class="reward-card-title">공간·생산성 AI 툴 지원</div>
           <div class="reward-card-desc">몰입을 위한 공간과 생산성 AI 툴을 지원해드려요</div>
+        </div>
+      </div>
+
+      <div class="reward-section" style="margin-top:8px">
+        <div class="reward-eyebrow">REVIEW · 1기 당첨자 후기</div>
+        <div class="reward-head">먼저 도전한 선배들의<br>생생한 후기예요</div>
+      </div>
+      <div class="memo-slide" id="memoSlide">
+        <div class="memo-card">
+          <div class="memo-pin"></div>
+          <div class="memo-quote">“</div>
+          <div class="memo-text">그냥 제가 했던 도전들을 적는 거라고 생각했는데, 돌아보니 생각보다 많은 경험을 해왔다는 걸 알게 됐어요. 제 이야기를 한 번 정리해볼 수 있어서 참여하길 잘했다는 생각이 들었습니다!</div>
+          <div class="memo-tag">— 1기 당첨자</div>
+        </div>
+        <div class="memo-card">
+          <div class="memo-pin"></div>
+          <div class="memo-quote">“</div>
+          <div class="memo-text">평소에는 실패했던 경험이라고만 생각했던 일들도 새로운 시선으로 돌아볼 수 있었어요. 지나온 도전들을 스스로 격려할 수 있었던 뜻깊은 공모전이었습니다.</div>
+          <div class="memo-tag">— 1기 당첨자</div>
+        </div>
+        <div class="memo-card">
+          <div class="memo-pin"></div>
+          <div class="memo-quote">“</div>
+          <div class="memo-text">막연하게 지나쳤던 제 경험들이 하나의 이야기로 정리되는 과정이 생각보다 재미있었어요. 참여하고 나니 저 자신을 다시 돌아볼 수 있어서 확실히 얻는 게 많았습니다!</div>
+          <div class="memo-tag">— 1기 당첨자</div>
+        </div>
+        <div class="memo-card">
+          <div class="memo-pin"></div>
+          <div class="memo-quote">“</div>
+          <div class="memo-text">막상 쓰기 전엔 부담스러울 것 같았는데, 쓰다 보니 제 안에 있던 이야기가 술술 나왔어요. 도전이라고 부를 수 있는 순간들이 생각보다 많았다는 걸 새삼 느꼈습니다.</div>
+          <div class="memo-tag">— 1기 당첨자</div>
+        </div>
+        <div class="memo-card">
+          <div class="memo-pin"></div>
+          <div class="memo-quote">“</div>
+          <div class="memo-text">혼자 간직하고 있던 이야기를 글로 꺼내놓으니 마음이 한결 가벼워졌어요. 저와 비슷한 고민을 하는 친구들에게도 꼭 추천하고 싶은 공모전이었습니다.</div>
+          <div class="memo-tag">— 1기 당첨자</div>
         </div>
       </div>
 
