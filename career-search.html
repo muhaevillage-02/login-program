@@ -273,11 +273,14 @@
     display: flex; align-items: center; gap: 6px;
     font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px;
   }
-  label .req {
+  .req {
+    display: inline-block;
     color: var(--lime); background: var(--panel);
-    padding: 2px 6px; border-radius: 2px;
-    font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.05em;
+    padding: 1px 4px; border-radius: 2px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.04em;
+    font-weight: 600; vertical-align: middle;
   }
+  .worry-box-label .req { background: var(--lime); color: var(--on-lime); }
   label .opt {
     color: var(--ink-soft); background: var(--bg-warm);
     border: 1px solid var(--line-strong);
