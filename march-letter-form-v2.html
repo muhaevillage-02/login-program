@@ -189,6 +189,21 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
 .reward-card-desc{font-size:11px;color:var(--ts);line-height:1.5}
 .res-hint{text-align:center;font-size:12px;color:var(--th);padding:0 20px 32px}
 
+/* REVIEW MEMO SLIDE */
+.memo-slide{display:flex;gap:14px;overflow-x:auto;padding:6px 20px 22px;
+  scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.memo-slide::-webkit-scrollbar{display:none}
+.memo-card{scroll-snap-align:start;flex:0 0 62%;max-width:220px;
+  background:#FFFCF5;border:1.5px solid #ECE1C6;border-radius:var(--r-lg);
+  padding:20px 15px 14px;box-shadow:0 4px 16px rgba(120,96,40,.08);position:relative}
+.memo-pin{position:absolute;top:-7px;left:50%;transform:translateX(-50%);
+  width:14px;height:14px;border-radius:50%;
+  background:linear-gradient(135deg,#F87171,#DC2626);box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.memo-quote{font-size:19px;color:#D8B970;line-height:1;margin-bottom:5px;font-family:Georgia,serif}
+.memo-text{font-family:"Gowun Batang",serif;font-size:12.5px;color:#3B3226;
+  line-height:1.75;letter-spacing:.1px;min-height:120px}
+.memo-tag{margin-top:10px;font-size:10.5px;font-weight:700;color:#8A6D3B;text-align:right}
+
 /* CTA */
 .bottom-cta{position:sticky;bottom:0;padding:12px 20px 28px;
   background:linear-gradient(to top,rgba(255,255,255,1) 65%,rgba(255,255,255,0));z-index:90}
@@ -518,6 +533,43 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
           <div class="reward-card-tag">작가 데뷔 · 10명</div>
           <div class="reward-card-title">'2026 트렌드 리포트' 매거진 발간</div>
           <div class="reward-card-desc">내 이름으로 출판되고 작가로 등록돼요</div>
+        </div>
+      </div>
+
+      <div class="reward-section" style="margin-top:8px">
+        <div class="reward-eyebrow">REVIEW · 1기 당첨자 후기</div>
+        <div class="reward-head">먼저 참여한 선배들의<br>생생한 후기예요</div>
+      </div>
+      <div class="memo-slide" id="memoSlide">
+        <div class="memo-card">
+          <div class="memo-pin"></div>
+          <div class="memo-quote">“</div>
+          <div class="memo-text">작년의 저에게 편지를 쓴다는 게 처음에는 조금 낯설었는데, 지나온 시간을 돌아보면서 제 마음을 솔직하게 정리할 수 있었어요. 참여하고 나니 그동안 수고했던 저 자신을 한 번 더 응원하게 됐습니다!</div>
+          <div class="memo-tag">— 1기 당첨자</div>
+        </div>
+        <div class="memo-card">
+          <div class="memo-pin"></div>
+          <div class="memo-quote">“</div>
+          <div class="memo-text">그냥 글 하나 쓰는 공모전이라고 생각했는데, 작년의 나를 돌아보고 미래의 내가 전하는 응원을 생각해보는 과정이 생각보다 의미 있었어요. 참여하길 잘했다는 생각이 들었습니다ㅎㅎ</div>
+          <div class="memo-tag">— 1기 당첨자</div>
+        </div>
+        <div class="memo-card">
+          <div class="memo-pin"></div>
+          <div class="memo-quote">“</div>
+          <div class="memo-text">바쁘게 지나왔던 지난 1년을 잠시 멈춰서 돌아볼 수 있었어요. 그동안의 저에게 하고 싶었던 말을 직접 적어보니, 공모전 참여 이상의 좋은 경험이 된 것 같습니다!</div>
+          <div class="memo-tag">— 1기 당첨자</div>
+        </div>
+        <div class="memo-card">
+          <div class="memo-pin"></div>
+          <div class="memo-quote">“</div>
+          <div class="memo-text">누군가에게 편지를 쓰듯 저 자신에게 쓰다 보니, 평소엔 하지 못했던 솔직한 말들이 자연스럽게 나왔어요. 다 쓰고 나니 마음이 한결 편안해졌습니다.</div>
+          <div class="memo-tag">— 1기 당첨자</div>
+        </div>
+        <div class="memo-card">
+          <div class="memo-pin"></div>
+          <div class="memo-quote">“</div>
+          <div class="memo-text">그동안 앞만 보고 달리느라 놓쳤던 제 감정들을 이번 기회에 찬찬히 들여다볼 수 있었어요. 나에게 편지 쓰는 시간, 생각보다 힐링이었습니다.</div>
+          <div class="memo-tag">— 1기 당첨자</div>
         </div>
       </div>
 
