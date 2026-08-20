@@ -139,39 +139,6 @@
   }
   .rh-sub { font-size: 14px; color: rgba(255,255,255,0.65); position: relative; margin: 0; }
 
-  /* 지원 혜택 카드 그리드 */
-  .reward-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0; position: relative;
-  }
-  .reward-card {
-    padding: 22px 24px;
-    border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
-    position: relative;
-  }
-  .reward-card:nth-child(2n) { border-right: none; }
-  .reward-card:nth-last-child(-n+2) { border-bottom: none; }
-  .reward-card.full { grid-column: 1 / -1; border-right: none; }
-  .reward-num {
-    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-    letter-spacing: 0.15em; color: var(--ink-light); margin-bottom: 10px;
-  }
-  .reward-main {
-    font-size: 21px; font-weight: 900; color: var(--ink);
-    letter-spacing: -0.5px; line-height: 1.25; margin-bottom: 6px;
-  }
-  .reward-main .sub-amount {
-    font-size: 13px; font-weight: 500; color: var(--ink-light);
-    margin-top: 2px; display: block;
-  }
-  .reward-desc { font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
-  .reward-badge {
-    display: inline-block; background: var(--panel); color: var(--lime);
-    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-    padding: 3px 8px; border-radius: 2px; letter-spacing: 0.1em;
-    font-weight: 600; margin-bottom: 8px;
-    border: 1px solid var(--line);
-  }
-
   /* 지원 자격 요약 */
   .qualify-bar {
     background: var(--lime); padding: 14px 32px;
@@ -262,23 +229,31 @@
 
   /* 고민 작성 칸 분리 */
   .worry-box {
-    background: var(--bg-warm); border: 1.5px solid var(--line);
-    border-radius: 6px; padding: 20px 22px; margin-bottom: 18px;
+    background: var(--panel); border: 2px solid var(--lime);
+    border-radius: 8px; padding: 22px 24px; margin-bottom: 18px;
+    box-shadow: 0 10px 24px rgba(0,239,131,0.18);
   }
   .worry-box:last-of-type { margin-bottom: 0; }
   .worry-box-label {
-    display: flex; align-items: center; gap: 8px;
-    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--ink); font-weight: 700; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 19px;
+    letter-spacing: -0.3px;
+    color: #fff; font-weight: 800; margin-bottom: 14px;
   }
+  .worry-box-emoji { font-size: 22px; line-height: 1; }
   .worry-box-step {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+    width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
     background: var(--lime); color: var(--on-lime);
-    font-size: 10px; font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 700;
   }
   .worry-box textarea { background: var(--card); }
+  .worry-box .hint { color: rgba(255,255,255,0.55); }
+  .worry-box .guide { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.75); }
+  .worry-box .guide::before { color: var(--on-lime); }
+  .worry-box .char-counter { color: rgba(255,255,255,0.45); }
+  .worry-box .char-counter.warn { color: var(--lime); }
 
   /* SECTION 04 무채색 처리 (동의) */
   .section-plain .section-head { background: var(--card); }
@@ -453,10 +428,6 @@
     .header-title { font-size: 26px; }
     .section-head, .section-body { padding-left: 20px; padding-right: 20px; }
     .reward-hero-top { padding: 24px 20px 20px; }
-    .reward-grid { grid-template-columns: 1fr; }
-    .reward-card:nth-child(2n) { border-right: 1px solid var(--line); }
-    .reward-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
-    .reward-card:last-child { border-bottom: none; }
     .qualify-bar { padding: 14px 20px; }
     .schedule-row { grid-template-columns: 1fr; }
     .schedule-label { border-right: none; border-bottom: 1px solid var(--line); }
@@ -502,7 +473,7 @@
     <span class="topbar-dot"></span>
     <span>LOGIN LAB · 2026 대학생 진로 탐색 지원사업 접수 중</span>
   </div>
-  <div>DEADLINE · 2026.08.14</div>
+  <div>DEADLINE · 2026.08.27</div>
 </div>
 
 <!-- HEADER -->
@@ -521,7 +492,7 @@
     <p class="header-sub">전공이 나와 맞는지 고민된다면?<br>AI 진단부터 1:1 컨설팅까지 한 번에 확인해보세요.</p>
 
     <div class="header-meta">
-      <span>PERIOD · <strong>07.13 ~ 08.14</strong></span>
+      <span>PERIOD · <strong>08.07 ~ 08.27</strong></span>
       <span>WHO · <strong>서울/경기 거주 대학생</strong></span>
       <span>SEATS · <strong>총 30명</strong></span>
     </div>
@@ -533,32 +504,9 @@
   <!-- 지원 혜택 강조 -->
   <section class="reward-hero">
     <div class="reward-hero-top">
-      <div class="rh-label">// Benefits · 지원 내용</div>
-      <h2 class="rh-title">마음에 드는 리워드를 편하게 하나 골라주세요</h2>
-      <p class="rh-sub">1인 1개 선택하시면 돼요 · 결과는 개별로 편안하게 안내드릴게요</p>
-    </div>
-
-    <div class="reward-grid">
-      <div class="reward-card">
-        <div class="reward-badge">REWARD 01</div>
-        <div class="reward-main">AI 전공 적합도<span class="sub-amount">진단</span></div>
-        <div class="reward-desc">AI 분석으로 내 전공과 적성이 얼마나 맞는지 객관적으로 확인해요.</div>
-      </div>
-      <div class="reward-card">
-        <div class="reward-badge">REWARD 02</div>
-        <div class="reward-main">내면·강점 분석<span class="sub-amount">1:1 컨설팅</span></div>
-        <div class="reward-desc">나도 몰랐던 강점과 성향을 짚어주는 1:1 맞춤 컨설팅.</div>
-      </div>
-      <div class="reward-card">
-        <div class="reward-badge">REWARD 03</div>
-        <div class="reward-main">인턴십 취업<span class="sub-amount">연계 제공</span></div>
-        <div class="reward-desc">실무 경험을 쌓을 수 있는 인턴십 기회로 연결해 드려요.</div>
-      </div>
-      <div class="reward-card">
-        <div class="reward-badge">REWARD 04</div>
-        <div class="reward-main">개인 커리어<span class="sub-amount">로드맵 PDF</span></div>
-        <div class="reward-desc">나만의 방향을 정리한 커리어 로드맵을 PDF로 제작해 드립니다.</div>
-      </div>
+      <div class="rh-label">// Career Exploration Support Program</div>
+      <h2 class="rh-title">2026 대학생들을 위한<br>진로 탐색 지원사업 Ver 2</h2>
+      <p class="rh-sub">내 전공, 지금 이대로 괜찮을까? · 서울/경기 거주 대학생을 위한 진로 탐색 프로그램</p>
     </div>
 
     <div class="qualify-bar">
@@ -578,11 +526,11 @@
     <div class="schedule-table">
       <div class="schedule-row">
         <div class="schedule-label">신청 접수</div>
-        <div class="schedule-value"><strong>2026. 07. 13 (월) ~ 08. 14 (금)</strong></div>
+        <div class="schedule-value"><strong>2026. 08. 07 (금) ~ 08. 27 (목)</strong></div>
       </div>
       <div class="schedule-row">
         <div class="schedule-label">최종 발표</div>
-        <div class="schedule-value">접수 마감 후 <strong>대상자 선별</strong> · 개별 연락</div>
+        <div class="schedule-value"><strong>대상자 심사팀</strong> 개별 연락</div>
       </div>
       <div class="schedule-row">
         <div class="schedule-label">모집 인원</div>
@@ -721,9 +669,9 @@
               </label>
             </div>
             <div class="option">
-              <input type="radio" id="worry-c" name="worry_type" value="C: 취업 준비를 어떻게 시작해야 할지 고민인 대학생" />
+              <input type="radio" id="worry-c" name="worry_type" value="C: 하는건 많지만 정작 결과는 없는 대학생" />
               <label for="worry-c">
-                <span><span class="opt-tag">C</span><strong>취업 준비를 어떻게 시작해야 할지 고민인 대학생</strong></span>
+                <span><span class="opt-tag">C</span><strong>하는건 많지만 정작 결과는 없는 대학생</strong></span>
               </label>
             </div>
             <div class="option">
@@ -736,7 +684,7 @@
         </div>
 
         <div class="worry-box">
-          <div class="worry-box-label"><span class="worry-box-step">1</span>현재의 나의 고민은? <span class="req">REQUIRED</span></div>
+          <div class="worry-box-label"><span class="worry-box-step">1</span><span class="worry-box-emoji">💭</span>현재 나의 고민은? <span class="req">REQUIRED</span></div>
           <p class="hint" style="margin-top:0; margin-bottom:10px;">// 이런 키워드로 자유롭게 적어봐도 좋아요 · #진로 #전공 #미래 #적성 #대학생활</p>
           <textarea name="worry_situation" id="worry_situation" maxlength="400"
             placeholder="예) 전공 수업을 들을수록 흥미가 사라지는 것 같아서 불안해요. 동기들은 다 방향을 잡은 것 같은데 저만 계속 헤매는 느낌이에요..." required></textarea>
@@ -744,7 +692,7 @@
         </div>
 
         <div class="worry-box">
-          <div class="worry-box-label"><span class="worry-box-step">2</span>구체적으로 가장 막막한 부분 <span class="req">REQUIRED</span></div>
+          <div class="worry-box-label"><span class="worry-box-step">2</span><span class="worry-box-emoji">🎯</span>구체적인 고민은? <span class="req">REQUIRED</span></div>
           <textarea name="worry_difficulty" id="worry_difficulty" maxlength="400"
             placeholder="예) 이 전공으로 실제 어떤 진로가 가능한지 감이 안 와요. 그래서 뭘 준비해야 할지도 못 정하고 있어요." required></textarea>
           <div class="char-counter"><span id="difficultyCount">0</span> / 400자</div>
@@ -756,20 +704,20 @@
           <p class="hint" style="margin-top:0; margin-bottom:10px;">// 하단 리워드 중 1개를 선택해 지원해주세요.</p>
           <div class="options options-vertical">
             <div class="option">
-              <input type="radio" id="hope-1" name="hope" value="AI 전공 적합도 진단" required />
-              <label for="hope-1"><span><span class="opt-tag">1</span><strong>AI 전공 적합도 진단</strong></span></label>
+              <input type="radio" id="hope-1" name="hope" value="현직자 초청 기업 설명회" required />
+              <label for="hope-1"><span><span class="opt-tag">1</span><strong>현직자 초청 기업 설명회</strong></span></label>
             </div>
             <div class="option">
-              <input type="radio" id="hope-2" name="hope" value="내면·강점 분석 1:1 컨설팅" />
-              <label for="hope-2"><span><span class="opt-tag">2</span><strong>내면·강점 분석 1:1 컨설팅</strong></span></label>
+              <input type="radio" id="hope-2" name="hope" value="강점·적성 분석 1:1 코칭" />
+              <label for="hope-2"><span><span class="opt-tag">2</span><strong>강점·적성 분석 1:1 코칭</strong></span></label>
             </div>
             <div class="option">
-              <input type="radio" id="hope-3" name="hope" value="인턴십 취업 연계 제공" />
-              <label for="hope-3"><span><span class="opt-tag">3</span><strong>인턴십 취업 연계 제공</strong></span></label>
+              <input type="radio" id="hope-3" name="hope" value="인턴쉽 취업 연계 제공" />
+              <label for="hope-3"><span><span class="opt-tag">3</span><strong>인턴쉽 취업 연계 제공</strong></span></label>
             </div>
             <div class="option">
-              <input type="radio" id="hope-4" name="hope" value="개인 커리어 로드맵 PDF" />
-              <label for="hope-4"><span><span class="opt-tag">4</span><strong>개인 커리어 로드맵 PDF</strong></span></label>
+              <input type="radio" id="hope-4" name="hope" value="개인 AI 분석 리포트" />
+              <label for="hope-4"><span><span class="opt-tag">4</span><strong>개인 AI 분석 리포트</strong></span></label>
             </div>
           </div>
         </div>
@@ -803,10 +751,10 @@
 
     <!-- SUBMIT -->
     <div class="submit-area">
-      <div class="submit-deadline">// Application Deadline · 2026.08.14 (금)</div>
+      <div class="submit-deadline">// Application Deadline · 2026.08.27 (목)</div>
       <div class="submit-reward-line">
         신청해주시면 담당자가 직접 연락드립니다.<br>
-        <span style="font-size:13px; color:var(--ink-light);">리워드 1택 · 총 30명 선발 · 대상자 선별 후 개별 연락</span>
+        <span style="font-size:13px; color:var(--ink-light);">리워드 1택 · 총 30명 선발 · 대상자 심사팀 개별 연락</span>
       </div>
       <button type="submit" class="submit-btn" id="submitBtn">고민 적고 리워드 받기 →</button>
     </div>
@@ -902,7 +850,7 @@
     var placeholders = {
       'A: 전공이 나와 맞는지 고민되는 대학생': '예) 전공 수업을 들을수록 흥미가 사라지는 것 같아서 불안해요. 동기들은 다 방향을 잡은 것 같은데 저만 계속 헤매는 느낌이에요...',
       'B: 어떤 진로를 선택해야 할지 막막한 대학생': '예) 이 전공으로 어떤 진로가 가능한지 감이 안 와요. 선택지가 너무 많아서 오히려 더 막막해요...',
-      'C: 취업 준비를 어떻게 시작해야 할지 고민인 대학생': '예) 취업 준비를 시작은 해야 할 것 같은데 뭐부터 해야 할지 모르겠어요...',
+      'C: 하는건 많지만 정작 결과는 없는 대학생': '예) 스펙도 쌓고 이것저것 열심히 하는 것 같은데 막상 남는 결과물이 없어서 불안해요...',
       'D: 내 강점과 적성에 맞는 방향을 찾고 싶은 대학생': '예) 제 강점이 뭔지 스스로 잘 모르겠어요. 객관적으로 점검받고 싶어요...'
     };
     worryInputs.forEach(function (w) {
