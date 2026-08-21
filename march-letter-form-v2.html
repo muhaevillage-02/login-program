@@ -256,8 +256,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
           display:flex;align-items:center;gap:12px">
           <span style="font-size:22px">⏰</span>
           <div>
-            <div style="font-size:13px;font-weight:800;color:#B45309;margin-bottom:2px">마감 D-<span id="dday">?</span> · 2026.08.03 ~ 08.24</div>
-            <div style="font-size:12px;color:#92400E;line-height:1.5">선정자에게는 08.10~08.24 사이 개별로 연락드려요.<br>부담 없이 솔직하게, 지금 이야기를 남겨주세요 🌿</div>
+            <div style="font-size:13px;font-weight:800;color:#B45309;margin-bottom:2px">마감 D-<span id="dday">?</span> · 2026.08.21 ~ 09.07</div>
+            <div style="font-size:12px;color:#92400E;line-height:1.5">선정자에게는 08.22~09.07 사이 개별로 연락드려요.<br>부담 없이 솔직하게, 지금 이야기를 남겨주세요 🌿</div>
           </div>
         </div>
 
@@ -505,7 +505,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
             <div class="proc-step-body">
               <div class="proc-step-t">특전 안내</div>
               <div class="proc-step-d">선정자에게 입력하신 연락처로 특전 내용을 개별 안내드립니다.</div>
-              <div class="proc-tag">선정자 개별 연락 08.10~08.24</div>
+              <div class="proc-tag">선정자 개별 연락 08.22~09.07</div>
             </div>
           </div>
         </div>
@@ -790,7 +790,7 @@ refreshUI();
 
 // D-day 계산
 (function(){
-  var deadline=new Date('2026-08-24T23:59:59');
+  var deadline=new Date('2026-09-07T23:59:59');
   var diff=Math.ceil((deadline-new Date())/(1000*60*60*24));
   var el=document.getElementById('dday');
   if(el) el.textContent=diff>0?diff:'당일';
