@@ -143,8 +143,9 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
 .res-bg{background:var(--bg);min-height:calc(100vh - 56px)}
 @media(min-width:680px){.res-bg{min-height:auto}}
 .res-anim-wrap{display:flex;align-items:center;justify-content:center;padding:36px 20px 16px}
-.res-anim{width:130px;height:130px}
-.res-anim svg{width:100%;height:100%}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.res-anim{width:130px;height:130px;display:flex;align-items:center;justify-content:center;
+  font-size:68px;animation:floatY 3s ease-in-out infinite}
 .status-bar{margin:0 20px 20px;background:#F0FDF4;border:1.5px solid #BBF7D0;
   border-radius:var(--r-lg);padding:16px 18px;display:flex;align-items:center;gap:12px}
 .status-dot{width:10px;height:10px;border-radius:50%;background:#10B981;flex-shrink:0;
@@ -246,8 +247,8 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
     <!-- PAGE 1 -->
     <div class="page active" id="p1">
       <div class="sec" style="padding-top:24px">
-        <div class="page-tag">📝 서울·경기 대학생 에세이 공모전</div>
-        <div class="page-title">지금의 나에게 보내는<br>대학생의 솔직한 이야기</div>
+        <div class="page-tag">📝 서울·경기 대학생 에세이 공모전 2기</div>
+        <div class="page-title">작년의 나에게 보내는<br>대학생의 솔직한 이야기</div>
         <div class="page-desc">지금 가장 하고 싶은 이야기를 들려주세요.<br>고민 · 선택 · 실패 · 목표 · 변화, 5가지 주제 중 하나를 골라봐!</div>
 
         <!-- 마감 배너 -->
@@ -279,7 +280,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
 
         <div class="field-block">
           <label class="field-lbl">이름</label>
-          <input class="field-input" id="f_name" type="text" placeholder="예: 김민준, 이서연" autocomplete="off">
+          <input class="field-input" id="f_name" type="text" placeholder="이름을 입력해주세요" autocomplete="off">
         </div>
         <div class="field-block">
           <label class="field-lbl">생년월일</label>
@@ -338,7 +339,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
     <div class="page" id="p2">
       <div class="sec" style="padding-top:20px">
         <div class="page-tag">💭 주제 선택</div>
-        <div class="page-title">어떤 주제로<br>이야기를 들려줄래?</div>
+        <div class="page-title">당신의 이야기를 적을<br>주제를 선택해주세요!</div>
         <div class="page-desc">고민 · 선택 · 실패 · 목표 · 변화<br>5가지 주제 중 하나를 골라봐!</div>
         <div class="chip-grid">
           <div class="chip" onclick="toggleChip(this)"><div class="chip-check">✓</div><span class="chip-emoji">😣</span><div class="chip-name">고민</div><div class="chip-desc">요즘 나의 가장 큰 고민</div></div>
@@ -354,7 +355,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
     <div class="page" id="p3">
       <div class="sec" style="padding-top:20px">
         <div class="page-tag">📊 자기 진단</div>
-        <div class="page-title">지금까지의 나에게,<br>몇 점을 줄래?</div>
+        <div class="page-title">수고한 나를 돌아보며<br>점수를 매겨보세요</div>
         <div class="page-desc">드래그해서 점수를 매겨봐.</div>
         <div style="position:relative;padding:8px 0 24px">
           <input type="range" id="scoreSlider" min="0" max="100" value="50"
@@ -398,7 +399,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
         <div class="letter-hdr"><span class="letter-seal">✉</span><span>지금의 나에게</span></div>
         <div class="letter-body">
           <div class="letter-rules" id="rules1"></div>
-          <textarea class="letter-ta" id="ta1" placeholder="지금 가장 하고 싶은 이야기를 편하게 적어줘.&#10;&#10;그동안 수고 많았어..." oninput="syncInk('ta1','ink1','cnt1',200,'mt1')"></textarea>
+          <textarea class="letter-ta" id="ta1" placeholder="작년과 바뀐 지금의 나를 돌아보며 과거의 나에게 편지를 적어보세요." oninput="syncInk('ta1','ink1','cnt1',200,'mt1')"></textarea>
         </div>
       </div>
       <div class="milestone" id="mt1">✨ 200자 달성! 잉크가 채워졌어.</div>
@@ -449,17 +450,7 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
     <div class="page res-bg" id="p5">
 
       <div class="res-anim-wrap">
-        <div class="res-anim" id="resAnim">
-          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="60" cy="60" r="52" fill="#F0F9FF"/>
-            <path d="M42 60 L-2 -2" stroke="none"/>
-            <path d="M60 26 L82 34 L60 42 L38 34 Z" fill="#0EA5E9"/>
-            <path d="M48 38 L48 52 Q60 60 72 52 L72 38" fill="#125FC0"/>
-            <circle cx="86" cy="32" r="2" fill="#F59E0B"/>
-            <path d="M86 32 L86 50" stroke="#F59E0B" stroke-width="1.6"/>
-            <path d="M40 78 L52 90 L82 60" stroke="#10B981" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
+        <div class="res-anim" id="resAnim">💌</div>
       </div>
 
       <div class="status-bar">
@@ -519,20 +510,20 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;
         <div class="reward-card">
           <span class="reward-card-icon">💰</span>
           <div class="reward-card-tag">드림 장학금 · 01명</div>
-          <div class="reward-card-title">100만원 드림 장학금</div>
-          <div class="reward-card-desc">100만원 장학금을 지원해드려요</div>
+          <div class="reward-card-title">100만원 진로 지원금</div>
+          <div class="reward-card-desc">100만원 진로 지원금을 드려요</div>
         </div>
         <div class="reward-card">
           <span class="reward-card-icon">🎯</span>
-          <div class="reward-card-tag">취업 스펙 · 10명</div>
-          <div class="reward-card-title">1:1 직무·성향 코칭</div>
-          <div class="reward-card-desc">강점부터 방향까지, 전문가와 1:1로 코칭해드려요</div>
+          <div class="reward-card-tag">커리어 로드맵 · 10명</div>
+          <div class="reward-card-title">1:1 강점·성향 코칭</div>
+          <div class="reward-card-desc">강점부터 잠재력 발견까지, 전문가와 1:1로 코칭해드려요</div>
         </div>
         <div class="reward-card" style="grid-column:1 / -1">
           <span class="reward-card-icon">📖</span>
-          <div class="reward-card-tag">작가 데뷔 · 10명</div>
-          <div class="reward-card-title">'2026 트렌드 리포트' 매거진 발간</div>
-          <div class="reward-card-desc">내 이름으로 출판되고 작가로 등록돼요</div>
+          <div class="reward-card-tag">공동 저자 등록 · 10명</div>
+          <div class="reward-card-title">'2026 트렌드 서울' 매거진 발간</div>
+          <div class="reward-card-desc">내 이름으로 출판되고 공동 저자로 등록돼요</div>
         </div>
       </div>
 
