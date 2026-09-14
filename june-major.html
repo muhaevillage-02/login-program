@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Login · 나에게 딱 맞는 전공테스트</title>
+<meta name="description" content="서울·경기 대학생 1,000명 연구 기반. 1분이면 끝나는 나에게 딱 맞는 전공·진로 성향 테스트." />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+<style>
+  /* =========================================================
+     디자인 토큰 (로그인랩 공통 시스템)
+     ========================================================= */
+  :root{
+    --mint:#0A9E78; --mint-deep:#0B8A69; --mint-tint:#E9F5F0; --mint-tint-2:#F1F8F5;
+    --paper:#F2F6F4; --ink:#14241E; --ink-60:#586A63; --ink-40:#8A9A93;
+    --amber:#BE7327; --amber-tint:#F6ECDD;
+    --surface:#FFFFFF; --line:#E1E9E5; --line-strong:#CFDAD5; --danger:#C2492E;
+    --radius:16px; --radius-sm:12px; --maxw:480px;
+    --font-sans:'Pretendard',system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --dur:.16s;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font-sans);
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  button{font-family:inherit;cursor:pointer;}
+  input,select,textarea{font-family:inherit;}
+
+  /* =========================================================
+     통일 프레임 (모든 화면이 이 틀 안에서 교체됨)
+     ========================================================= */
+  .app{
+    min-height:100dvh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px 16px;
+  }
+  .frame{
+    width:100%;
+    max-width:var(--maxw);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:24px;
+    box-shadow:0 24px 60px -32px rgba(11,55,42,.28);
+    display:flex;
+    flex-direction:column;
+    height:min(760px,92dvh);
+    overflow:hidden;
+  }
+  /* 상단 바: 브랜드 / 이전버튼 + 진행바 — 매 화면 같은 위치·높이 */
+  .bar{
+    flex:0 0 auto;
+    height:56px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:0 20px;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{
+    font-weight:800;
+    font-size:18px;
+    letter-spacing:-.01em;
+    color:var(--ink);
+    display:flex;align-items:center;gap:7px;
+  }
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);display:inline-block;}
+  .bar__back{
+    border:0;background:transparent;padding:6px;margin-left:-6px;border-radius:8px;
+    color:var(--ink-60);display:none;align-items:center;gap:4px;font-size:14px;font-weight:600;
+  }
+  .bar__back:hover{color:var(--ink);background:var(--mint-tint-2);}
+  .bar__spacer{flex:1;}
+  .progress{display:none;align-items:center;gap:10px;flex:1;}
+  .progress__track{flex:1;height:6px;border-radius:99px;background:var(--line);overflow:hidden;}
+  .progress__fill{height:100%;width:0;border-radius:99px;background:var(--mint);transition:width .3s cubic-bezier(.4,0,.2,1);}
+  .progress__num{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--ink-60);letter-spacing:.02em;white-space:nowrap;}
+  .bar__tag{margin-left:auto;font-size:12px;font-weight:600;color:var(--mint);background:var(--mint-tint);padding:5px 10px;border-radius:99px;}
+
+  /* 본문: 스크롤 영역 */
+  .body{
+    flex:1 1 auto;
+    overflow-y:auto;
+    padding:28px 24px 20px;
+    -webkit-overflow-scrolling:touch;
+  }
+  /* 하단 고정 CTA: 매 화면 같은 위치 */
+  .foot{
+    flex:0 0 auto;
+    padding:14px 24px calc(16px + env(safe-area-inset-bottom));
+    border-top:1px solid var(--line);
+    background:var(--surface);
+  }
+
+  /* 화면 전환 */
+  .screen{display:none;}
+  .screen.is-active{display:block;animation:fade var(--dur) ease;}
+  @keyframes fade{from{opacity:0;}to{opacity:1;}}
+
+  /* =========================================================
+     타이포 / 공통 요소
+     ========================================================= */
+  .eyebrow{font-size:13px;font-weight:700;color:var(--mint);margin:0 0 10px;}
+  h1.title{font-size:25px;line-height:1.32;font-weight:800;letter-spacing:-.02em;margin:0 0 14px;}
+  h2.title{font-size:22px;line-height:1.35;font-weight:800;letter-spacing:-.02em;margin:0 0 14px;}
+  .lead{font-size:15.5px;line-height:1.62;color:var(--ink-60);margin:0 0 16px;}
+  .lead strong{color:var(--ink);font-weight:700;}
+  .emoji-lead{font-size:40px;line-height:1;margin:2px 0 16px;}
+
+  /* 버튼 */
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    width:100%;border:0;border-radius:14px;
+    background:var(--mint);color:#fff;
+    font-size:16px;font-weight:700;letter-spacing:-.01em;
+    padding:16px 20px;transition:background var(--dur) ease;
+  }
+  .btn:hover{background:var(--mint-deep);}
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{background:var(--line-strong);color:#fff;cursor:not-allowed;}
+  .btn--ghost{background:transparent;color:var(--ink-60);border:1.5px solid var(--line);}
+  .btn--ghost:hover{background:var(--mint-tint-2);color:var(--ink);border-color:var(--line-strong);}
+  .btn-note{text-align:center;font-size:12.5px;color:var(--ink-40);margin:10px 2px 0;}
+
+  :focus-visible{outline:2.5px solid var(--mint);outline-offset:2px;border-radius:6px;}
+
+  /* =========================================================
+     인트로: 라이브 소셜 프루프 히어로
+     ========================================================= */
+  .hero-count{display:flex;align-items:baseline;gap:8px;margin:6px 0 4px;}
+  .hero-count .num{font-family:var(--font-mono);font-size:52px;font-weight:600;letter-spacing:-.02em;color:var(--mint);line-height:1;}
+  .hero-count .unit{font-size:17px;font-weight:700;color:var(--ink);}
+  .hero-sub{font-size:15px;color:var(--ink-60);margin:0 0 20px;}
+  .ticker{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--mint-tint-2);border:1px solid var(--line);
+    border-radius:99px;padding:8px 14px;margin-bottom:24px;
+    font-size:13px;color:var(--ink-60);
+  }
+  .ticker .live{width:7px;height:7px;border-radius:50%;background:var(--mint);position:relative;flex:0 0 auto;}
+  .ticker .live::after{content:"";position:absolute;inset:-4px;border-radius:50%;background:var(--mint);opacity:.35;animation:pulse 1.8s ease-out infinite;}
+  @keyframes pulse{0%{transform:scale(1);opacity:.35;}70%,100%{transform:scale(2.4);opacity:0;}}
+  .ticker__text{font-family:var(--font-mono);letter-spacing:-.01em;transition:opacity .3s ease;}
+  .research{
+    border-left:3px solid var(--mint);
+    background:var(--mint-tint-2);
+    border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+    padding:16px 16px 16px 18px;
+    font-size:14.5px;line-height:1.6;color:var(--ink);
+  }
+  .research b{color:var(--mint-deep);font-weight:700;}
+
+  /* =========================================================
+     공감(hook) 화면
+     ========================================================= */
+  .think{margin:0 0 12px;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .think li{
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    padding:14px 16px;font-size:14.5px;line-height:1.55;color:var(--ink);
+  }
+  .think li::before{content:"“";color:var(--mint);font-weight:800;margin-right:2px;}
+  .think li::after{content:"”";color:var(--mint);font-weight:800;margin-left:2px;}
+  .hook-note{
+    margin-top:18px;padding:16px;border-radius:14px;background:var(--mint-tint);
+    font-size:14.5px;line-height:1.6;color:var(--ink);
+  }
+  .hook-note strong{color:var(--mint-deep);font-weight:700;}
+  .gift-line{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:14px;color:var(--ink-60);line-height:1.55;}
+  .gift-line .ic{font-size:18px;line-height:1.4;}
+
+  /* =========================================================
+     질문(quiz) 화면
+     ========================================================= */
+  .q-count{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--mint);margin:0 0 10px;}
+  .q-title{font-size:21px;line-height:1.4;font-weight:800;letter-spacing:-.02em;margin:0 0 20px;}
+  .opts{display:flex;flex-direction:column;gap:10px;}
+  .opt{
+    display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+    background:var(--surface);border:1.5px solid var(--line);border-radius:14px;
+    padding:15px 16px;font-size:15px;font-weight:500;color:var(--ink);line-height:1.4;
+    transition:border-color var(--dur) ease,background var(--dur) ease;
+  }
+  .opt:hover{border-color:var(--line-strong);}
+  .opt .op-emoji{font-size:20px;flex:0 0 auto;}
+  .opt .op-check{margin-left:auto;flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:2px solid var(--line-strong);transition:all var(--dur) ease;}
+  .opt.is-selected{border-color:var(--mint);background:var(--mint-tint);}
+  .opt.is-selected .op-check{border-color:var(--mint);background:var(--mint);box-shadow:inset 0 0 0 3px var(--surface);}
+
+  /* =========================================================
+     리워드 화면
+     ========================================================= */
+  .reward-hd{margin-bottom:6px;}
+  .rewards{display:flex;flex-direction:column;gap:12px;margin-top:18px;}
+  .reward{
+    display:flex;gap:14px;align-items:flex-start;
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;
+  }
+  .reward--hot{border-color:var(--amber-tint);background:var(--amber-tint);border-left:4px solid var(--amber);}
+  .reward__ic{
+    flex:0 0 auto;width:48px;height:48px;border-radius:12px;background:var(--mint-tint);
+    display:flex;align-items:center;justify-content:center;font-size:24px;
+  }
+  .reward--hot .reward__ic{background:#fff;}
+  .reward__body{flex:1;min-width:0;}
+  .reward__eyebrow{font-size:12px;font-weight:700;color:var(--mint);margin:0 0 3px;}
+  .reward--hot .reward__eyebrow{color:var(--amber);}
+  .reward__name{font-size:16px;font-weight:800;letter-spacing:-.01em;margin:0 0 5px;line-height:1.3;}
+  .reward__desc{font-size:13px;line-height:1.5;color:var(--ink-60);margin:0;}
+  .reward-foot{margin-top:16px;text-align:center;font-size:13px;color:var(--ink-40);}
+
+  /* =========================================================
+     폼 화면
+     ========================================================= */
+  .field{margin-bottom:18px;}
+  .field > label,.field .field__label{display:block;font-size:14px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+  .req{color:var(--mint);margin-left:3px;}
+  .hint{font-size:12.5px;font-weight:500;color:var(--ink-40);margin-left:6px;}
+  .input,select.input,textarea.input{
+    width:100%;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;
+    padding:13px 14px;font-size:15px;color:var(--ink);transition:border-color var(--dur) ease,background var(--dur) ease;
+  }
+  .input:focus{border-color:var(--mint);background:var(--surface);outline:none;}
+  textarea.input{resize:vertical;min-height:84px;line-height:1.5;}
+  select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23586A63' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;}
+  .segment{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .segment label{
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    background:var(--paper);border:1.5px solid var(--line);border-radius:12px;
+    padding:12px 6px;font-size:14px;font-weight:600;color:var(--ink-60);
+    transition:all var(--dur) ease;
+  }
+  .segment input{position:absolute;opacity:0;width:0;height:0;}
+  .segment label:hover{border-color:var(--line-strong);}
+  .segment input:checked + span{color:var(--mint-deep);}
+  .segment label:has(input:checked){border-color:var(--mint);background:var(--mint-tint);color:var(--mint-deep);}
+  .field-err{display:none;color:var(--danger);font-size:12.5px;font-weight:600;margin-top:6px;}
+  .field.has-err .input,.field.has-err .segment label{border-color:var(--danger);}
+  .field.has-err .field-err{display:block;}
+
+  .consent{
+    display:flex;gap:11px;align-items:flex-start;
+    background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:14px;
+    transition:border-color var(--dur) ease,background var(--dur) ease;
+  }
+  .consent.has-err{border-color:var(--danger);}
+  .consent input{margin-top:2px;width:18px;height:18px;accent-color:var(--mint);flex:0 0 auto;}
+  .consent__text{font-size:13px;line-height:1.55;color:var(--ink-60);}
+  .consent__text b{color:var(--ink);font-weight:700;}
+  .consent__meta{display:block;margin-top:6px;font-size:11.5px;color:var(--ink-40);line-height:1.5;}
+  .form-foot{margin-top:6px;font-size:11.5px;line-height:1.6;color:var(--ink-40);}
+
+  /* =========================================================
+     결과 화면
+     ========================================================= */
+  .result-emoji{font-size:64px;line-height:1;text-align:center;margin:8px 0 14px;}
+  .result-type{text-align:center;}
+  .result-type .kicker{font-size:13px;font-weight:700;color:var(--mint);margin:0 0 6px;}
+  .result-type .name{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 4px;}
+  .result-type .one{font-size:15px;color:var(--ink-60);margin:0 0 22px;}
+  .result-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px;}
+  .result-card p{margin:0;font-size:14.5px;line-height:1.66;color:var(--ink);}
+  .result-hint{display:flex;gap:11px;align-items:flex-start;background:var(--mint-tint);border-radius:16px;padding:16px 18px;margin-bottom:22px;}
+  .result-hint .ic{font-size:18px;flex:0 0 auto;}
+  .result-hint b{display:block;font-size:13px;color:var(--mint-deep);margin-bottom:3px;}
+  .result-hint span{font-size:14px;line-height:1.55;color:var(--ink);}
+  .result-actions{display:flex;flex-direction:column;gap:10px;}
+  .result-foot{margin-top:18px;font-size:11.5px;line-height:1.6;color:var(--ink-40);}
+  .toast{
+    position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(12px);
+    background:var(--ink);color:#fff;font-size:14px;font-weight:600;
+    padding:12px 18px;border-radius:99px;opacity:0;pointer-events:none;transition:all .25s ease;z-index:50;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* 데스크톱 여백 정리 */
+  @media (min-width:520px){ .body{padding:32px 28px 22px;} .foot{padding-left:28px;padding-right:28px;} .bar{padding:0 24px;} }
+  /* 작은 화면: 프레임을 꽉 채워 앱처럼 */
+  @media (max-width:520px){
+    .app{padding:0;}
+    .frame{max-width:none;height:100dvh;border:0;border-radius:0;box-shadow:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="frame" role="main">
+    <!-- 상단 바 -->
+    <div class="bar">
+      <button class="bar__back" id="backBtn" type="button" aria-label="이전">‹ 이전</button>
+      <span class="brand" id="brand"><span class="dot"></span>Login</span>
+      <div class="progress" id="progress" aria-hidden="true">
+        <div class="progress__track"><div class="progress__fill" id="progressFill"></div></div>
+        <span class="progress__num" id="progressNum">1/7</span>
+      </div>
+      <span class="bar__tag" id="barTag" hidden>1분 소요</span>
+    </div>
+
+    <!-- 본문 -->
+    <div class="body" id="body">
+
+      <!-- 0. 인트로 -->
+      <section class="screen is-active" data-screen="intro">
+        <p class="eyebrow">나에게 딱 맞는 전공테스트</p>
+        <div class="hero-count">
+          <span class="num" id="heroCount">0</span>
+          <span class="unit">명 완료</span>
+        </div>
+        <p class="hero-sub">이미 이만큼의 청년이 자기 방향을 확인했어요.</p>
+        <div class="ticker">
+          <span class="live"></span>
+          <span class="ticker__text" id="ticker">서울 마포구 · 24세 · 방금 완료</span>
+        </div>
+        <div class="research">
+          이 테스트는 <b>서울·경기 대학생 1,000명</b>을 대상으로 진로 만족도·불안·방향을 연구한 결과를 바탕으로 제작되었습니다.
+        </div>
+      </section>
+
+      <!-- 1. 공감(hook) -->
+      <section class="screen" data-screen="hook">
+        <div class="emoji-lead">😮‍💨</div>
+        <h1 class="title">요즘 이런 생각,<br>해본 적 없나요?</h1>
+        <ul class="think">
+          <li>다들 갓생 산다는데, 나만 매일 제자리걸음인 것 같고…</li>
+          <li>청년 정책·혜택? 나한테 진짜 필요한 게 뭔지 찾기조차 귀찮아.</li>
+          <li>누가 내 현실적인 고민 좀 듣고 속 시원하게 풀어주면 안 되나?</li>
+        </ul>
+        <div class="hook-note">
+          여러분이 들려주는 <strong>이야기(login)</strong> 하나하나가<br>답답한 현실을 바꾸는 진짜 힘이 됩니다.
+        </div>
+        <div class="gift-line"><span class="ic">🎁</span><span>목소리를 듣기 전, 팍팍한 일상에 작은 숨통이 트이길 바라며 선물을 준비했어요.</span></div>
+        <div class="gift-line"><span class="ic">⚡</span><span>딱 1분이면 충분해요.</span></div>
+      </section>
+
+      <!-- 2. 질문 (동적 렌더) -->
+      <section class="screen" data-screen="quiz">
+        <p class="q-count" id="qCount">질문 1 / 7</p>
+        <h2 class="q-title" id="qTitle">질문</h2>
+        <div class="opts" id="opts"></div>
+      </section>
+
+      <!-- 3. 리워드 -->
+      <section class="screen" data-screen="reward">
+        <div class="reward-hd">
+          <p class="eyebrow">REWARD</p>
+          <h2 class="title">🎁 내 유형에 맞는 선물은?</h2>
+          <p class="lead">테스트를 완료한 분께 진심을 담은 <strong>3가지 리워드 중 단 하나</strong>를 드려요.</p>
+        </div>
+        <div class="rewards" id="rewards"></div>
+        <p class="reward-foot">당첨 리워드는 신청서에 남겨주신 연락처로 안내됩니다.</p>
+      </section>
+
+      <!-- 4. 폼 -->
+      <section class="screen" data-screen="form">
+        <p class="eyebrow">STEP · LAST</p>
+        <h2 class="title">📋 마지막 단계예요</h2>
+        <p class="lead">입력해주신 정보로 <strong>당첨 리워드 안내</strong>를 드려요. 정확히 적어주셔야 받으실 수 있으니 한 번 더 확인해주세요.</p>
+
+        <div class="field" data-field="name">
+          <label for="f-name">성함<span class="req">*</span></label>
+          <input class="input" id="f-name" type="text" autocomplete="name" placeholder="이름을 입력해주세요" />
+          <p class="field-err">이름을 입력해주세요.</p>
+        </div>
+
+        <div class="field" data-field="age">
+          <label for="f-age">나이<span class="req">*</span><span class="hint">만 20~26세</span></label>
+          <input class="input" id="f-age" type="number" inputmode="numeric" min="20" max="26" placeholder="숫자만 입력" />
+          <p class="field-err">나이는 20~26 사이 숫자로 입력해주세요.</p>
+        </div>
+
+        <div class="field" data-field="phone">
+          <label for="f-phone">연락처<span class="req">*</span></label>
+          <input class="input" id="f-phone" type="tel" autocomplete="tel" placeholder="010-0000-0000" />
+          <p class="field-err">연락처를 정확히 입력해주세요.</p>
+        </div>
+
+        <div class="field" data-field="region">
+          <span class="field__label">거주 지역<span class="req">*</span></span>
+          <div class="segment" id="seg-region">
+            <label><input type="radio" name="region" value="서울권" /><span>서울권</span></label>
+            <label><input type="radio" name="region" value="경기권" /><span>경기권</span></label>
+            <label><input type="radio" name="region" value="그 외 지역" /><span>그 외</span></label>
+          </div>
+          <p class="field-err">거주 지역을 선택해주세요.</p>
+        </div>
+
+        <div class="field" data-field="district">
+          <label for="f-district">거주 중인 시/군/구<span class="req">*</span><span class="hint">서울·경기권 확인용</span></label>
+          <input class="input" id="f-district" type="text" placeholder="예: 마포구, 성남시 분당구" />
+          <p class="field-err">거주 중인 시/군/구를 입력해주세요.</p>
+        </div>
+
+        <div class="field" data-field="status">
+          <label for="f-status">현재 상황<span class="req">*</span></label>
+          <select class="input" id="f-status">
+            <option value="" disabled selected>선택해주세요</option>
+            <option>대학교 재학중</option>
+            <option>대학교 휴학중</option>
+            <option>대학원생</option>
+            <option>취업 준비중</option>
+            <option>직장인</option>
+            <option>기타</option>
+          </select>
+          <p class="field-err">현재 상황을 선택해주세요.</p>
+        </div>
+
+        <div class="field" data-field="concern">
+          <label for="f-concern">지금 가장 고민되는 것<span class="hint">선택</span></label>
+          <textarea class="input" id="f-concern" placeholder="편하게 적어주세요. 익명으로 연구에만 활용돼요."></textarea>
+        </div>
+
+        <div class="field" data-field="consent" style="margin-bottom:8px;">
+          <label class="consent" for="f-consent">
+            <input type="checkbox" id="f-consent" />
+            <span class="consent__text">
+              <b>[필수] 개인정보 수집·이용에 동의합니다.</b>
+              <span class="consent__meta">수집 항목: 이름, 나이, 연락처, 지역, 직업 상태, 고민 내용 / 이용 목적: 리포트 전달 및 연구 활용 / 보유 기간: 목적 달성 시까지</span>
+            </span>
+          </label>
+          <p class="field-err">개인정보 수집·이용에 동의해주세요.</p>
+        </div>
+
+        <p class="form-foot">· 입력하신 정보는 연구 목적으로만 사용되며 익명 처리됩니다.<br>· Login 공식 웹페이지에서 상세 안내를 확인하실 수 있습니다.</p>
+      </section>
+
+      <!-- 5. 결과 -->
+      <section class="screen" data-screen="result">
+        <div class="result-emoji" id="rEmoji">🧭</div>
+        <div class="result-type">
+          <p class="kicker">나의 성격 유형 결과</p>
+          <p class="name" id="rName">탐색가형</p>
+          <p class="one" id="rOne">가능성을 열어두는 사람</p>
+        </div>
+        <div class="result-card"><p id="rDesc"></p></div>
+        <div class="result-hint">
+          <span class="ic">🧩</span>
+          <span><b>이런 방향이 잘 맞아요</b><span id="rHint"></span></span>
+        </div>
+        <p class="result-foot">· 모든 응답은 익명 처리되며 연구 목적으로만 사용됩니다.<br>· Login 공식 웹페이지에서 상세 안내를 확인할 수 있습니다.</p>
+      </section>
+
+    </div><!-- /body -->
+
+    <!-- 하단 고정 CTA (매 화면 같은 위치) -->
+    <div class="foot" id="foot">
+      <button class="btn" id="primaryBtn" type="button">시작하기</button>
+      <p class="btn-note" id="footNote" hidden></p>
+      <div id="resultActions" style="display:none;flex-direction:column;gap:10px;">
+        <button class="btn" id="shareBtn" type="button">🔗 친구에게 테스트 공유하기</button>
+        <button class="btn btn--ghost" id="restartBtn" type="button">🔄 다시 테스트하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =============================================================
+   ⚙️ 편집 영역 — 여기 값만 바꾸면 문항·결과·리워드·수집처가 바뀝니다
+   ============================================================= */
+const CONFIG = {
+
+  /* 시작 시 보여줄 완료 인원 (실제 숫자로 교체) */
+  START_COUNT: 1247,
+
+  /* 폼 제출을 서버(구글 시트)로 보내려면 여기에 Apps Script 웹앱 URL을 넣으세요.
+     설정 방법: 저장소 루트의 apps-script-june-major.gs 파일 상단 주석 참고.
+     비워두면 브라우저 localStorage에만 저장됩니다.
+     예) "https://script.google.com/macros/s/AKfycb.../exec" */
+  SUBMIT_ENDPOINT: "",
+
+  /* 인트로 하단 실시간 참여 표시 (지역·나이·시점) */
+  TICKER: [
+    "서울 마포구 · 24세 · 방금 완료",
+    "경기 성남시 · 22세 · 1분 전 완료",
+    "서울 관악구 · 25세 · 방금 완료",
+    "경기 고양시 · 23세 · 2분 전 완료",
+    "서울 광진구 · 21세 · 방금 완료",
+  ],
+
+  /* 리워드 3종 */
+  REWARDS: [
+    { hot:true,  eyebrow:"초대박 찬스", emoji:"📱", name:"갓생러의 완성, 애플 아이패드", desc:"어떤 고민이든 무적의 치트키가 되어줄 단 하나의 완벽한 장비." },
+    { hot:false, eyebrow:"고민 해결",   emoji:"💊", name:"맞춤형 인사이트 PDF",       desc:"취준·직장생활·멘탈케어·트렌드 등 복잡한 머릿속을 시원하게 뚫어줄 핵심 요약 처방전." },
+    { hot:false, eyebrow:"취향 저격",   emoji:"✨", name:"배경화면 & 디지털 굿즈",     desc:"내 무드에 찰떡같이 어울리는 폰·아이패드 배경화면과 디지털 문방구 세트." },
+  ],
+
+  /* 결과 유형 (원하는 유형/문구로 교체) */
+  RESULTS: {
+    explorer:  { emoji:"🧭", name:"탐색가형", one:"가능성을 열어두는 사람",
+      desc:"아직 한 길로 정하진 않았지만, 그건 방향이 없어서가 아니라 여러 길을 진지하게 재보고 있어서예요. 지금의 애매함은 곧 선택의 폭이 넓다는 뜻이기도 해요.",
+      hint:"다양한 경험을 짧게 여러 번 해보며 나와 맞는 결을 빠르게 찾아가는 방식이 잘 맞아요." },
+    strategist:{ emoji:"📐", name:"전략가형", one:"차근차근 쌓는 사람",
+      desc:"계획을 세우고 하나씩 밟아가는 게 편한 타입이에요. 가끔 ‘이 속도가 맞나’ 싶어 불안할 때가 있지만, 그 꾸준함이 결국 가장 큰 무기가 됩니다.",
+      hint:"목표를 잘게 쪼개고 기록으로 관리하면 확신이 쌓이는 구조를 만들 수 있어요." },
+    pioneer:   { emoji:"🎨", name:"개척가형", one:"내 색깔로 가는 사람",
+      desc:"남들과 같은 길보다 내 방식이 더 끌리는 타입이에요. 개성이 분명한 만큼, 그걸 ‘어떻게 써먹을지’만 잡히면 훨씬 더 강해질 수 있어요.",
+      hint:"내 강점을 눈에 보이는 결과물(포트폴리오)로 만들면, 색깔 자체가 무기가 돼요." },
+    harmonizer:{ emoji:"🌙", name:"조율가형", one:"깊게 고민하는 사람",
+      desc:"겉으론 잔잔해 보여도 속으론 꽤 많은 걸 재고 있는 타입이에요. 아직 밖으로 안 꺼냈을 뿐, 원하는 건 분명히 있어요.",
+      hint:"마음속 우선순위를 밖으로 꺼내 정리해보면, 방향이 한결 또렷해져요." },
+  },
+
+  /* 7문항 — 각 보기의 type이 위 RESULTS 키와 연결됩니다 */
+  QUESTIONS: [
+    { q:"새 학기, 시간표 짤 때 나는?", options:[
+      { emoji:"🧭", label:"관심 가는 거 일단 여러 개 담아둠", type:"explorer" },
+      { emoji:"📐", label:"졸업요건·계획부터 확인하고 딱 맞게", type:"strategist" },
+      { emoji:"🎨", label:"남들 잘 안 듣는 특이한 수업 골라봄", type:"pioneer" },
+      { emoji:"🌙", label:"고민만 하다 막판에 겨우 확정", type:"harmonizer" },
+    ]},
+    { q:"진로 얘기가 나오면 속마음은?", options:[
+      { emoji:"🧭", label:"아직 정하긴 이르지, 더 봐야지", type:"explorer" },
+      { emoji:"📐", label:"계획은 있는데 잘 되고 있나 싶음", type:"strategist" },
+      { emoji:"🎨", label:"내 식대로 가고 싶은데 이해받기 어려움", type:"pioneer" },
+      { emoji:"🌙", label:"하고 싶은 건 있는데 말로 못 꺼냄", type:"harmonizer" },
+    ]},
+    { q:"과제나 프로젝트를 할 때 나는?", options:[
+      { emoji:"🧭", label:"이것저것 시도하다 방향을 잡음", type:"explorer" },
+      { emoji:"📐", label:"일정표 짜고 순서대로 진행", type:"strategist" },
+      { emoji:"🎨", label:"남들과 다른 접근으로 튀게", type:"pioneer" },
+      { emoji:"🌙", label:"완벽하게 하려다 시작이 늦음", type:"harmonizer" },
+    ]},
+    { q:"친구들이 나한테 자주 하는 말은?", options:[
+      { emoji:"🧭", label:"“관심사 진짜 넓다”", type:"explorer" },
+      { emoji:"📐", label:"“넌 참 계획적이야”", type:"strategist" },
+      { emoji:"🎨", label:"“생각이 남다르네”", type:"pioneer" },
+      { emoji:"🌙", label:"“속을 잘 모르겠어, 근데 깊어”", type:"harmonizer" },
+    ]},
+    { q:"쉬는 날, 갑자기 생긴 자유시간엔?", options:[
+      { emoji:"🧭", label:"안 해본 거 하나 질러봄", type:"explorer" },
+      { emoji:"📐", label:"밀린 거 정리하고 다음 주 준비", type:"strategist" },
+      { emoji:"🎨", label:"나만의 취미에 몰입", type:"pioneer" },
+      { emoji:"🌙", label:"그냥 생각 정리하며 쉼", type:"harmonizer" },
+    ]},
+    { q:"미래를 떠올리면 가장 가까운 문장은?", options:[
+      { emoji:"🧭", label:"“정해진 길 없어도 괜찮아, 일단 가보자”", type:"explorer" },
+      { emoji:"📐", label:"“천천히라도 내 자리를 만들어가는 중”", type:"strategist" },
+      { emoji:"🎨", label:"“남들이 뭐라 해도 내 방식이 맞다고 믿어”", type:"pioneer" },
+      { emoji:"🌙", label:"“아직 못 꺼냈지만, 분명 원하는 게 있어”", type:"harmonizer" },
+    ]},
+    { q:"지금 나에게 가장 필요한 건?", options:[
+      { emoji:"🧭", label:"다양한 선택지를 직접 경험해볼 기회", type:"explorer" },
+      { emoji:"📐", label:"계획을 점검해줄 구체적인 피드백", type:"strategist" },
+      { emoji:"🎨", label:"내 강점을 살릴 나만의 방향", type:"pioneer" },
+      { emoji:"🌙", label:"복잡한 마음을 정리할 시간과 대화", type:"harmonizer" },
+    ]},
+  ],
+};
+
+/* =============================================================
+   앱 로직 (여기부터는 보통 손대지 않아도 됩니다)
+   ============================================================= */
+const STORAGE_KEY = "loginlab_major_responses_v1";
+let memStore = []; // localStorage 사용 불가 환경용 폴백
+
+const Store = {
+  read(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }catch(e){ return memStore.slice(); } },
+  write(list){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }catch(e){ memStore = list.slice(); } },
+};
+
+const state = { qIndex:0, answers:new Array(CONFIG.QUESTIONS.length).fill(null), result:null };
+
+// 요소
+const $ = (s)=>document.querySelector(s);
+const bodyEl = $("#body");
+const screens = {};
+document.querySelectorAll(".screen").forEach(s=>screens[s.dataset.screen]=s);
+const brand = $("#brand"), backBtn = $("#backBtn"), progress = $("#progress"),
+      progressFill = $("#progressFill"), progressNum = $("#progressNum"), barTag = $("#barTag");
+const primaryBtn = $("#primaryBtn"), footNote = $("#footNote"), resultActions = $("#resultActions");
+
+// 화면 순서 및 진입 로직
+function setBar(mode){
+  // mode: intro | hook | quiz | reward | form | result
+  const inQuiz = mode==="quiz";
+  backBtn.style.display = (mode==="hook"||inQuiz) ? "inline-flex" : "none";
+  brand.style.display = (mode==="hook"||inQuiz) ? "none" : "inline-flex";
+  progress.style.display = inQuiz ? "flex" : "none";
+  progress.setAttribute("aria-hidden", inQuiz ? "false":"true");
+  barTag.hidden = !(mode==="intro"||mode==="hook");
+}
+
+function showScreen(name){
+  Object.values(screens).forEach(s=>s.classList.remove("is-active"));
+  screens[name].classList.add("is-active");
+  bodyEl.scrollTop = 0;
+  setBar(name);
+
+  // CTA 구성
+  const isResult = name==="result";
+  primaryBtn.style.display = isResult ? "none" : "flex";
+  resultActions.style.display = isResult ? "flex" : "none";
+  footNote.hidden = true;
+
+  if(name==="intro"){ primaryBtn.textContent="시작하기"; primaryBtn.disabled=false; }
+  if(name==="hook"){ primaryBtn.textContent="테스트 시작하기"; primaryBtn.disabled=false; footNote.hidden=false; footNote.textContent="1분이면 끝나요"; }
+  if(name==="quiz"){ renderQuestion(); }
+  if(name==="reward"){ primaryBtn.textContent="결과 & 리워드 신청하기"; primaryBtn.disabled=false; }
+  if(name==="form"){ primaryBtn.textContent="지금 바로 신청하기"; primaryBtn.disabled=false; }
+  if(isResult){ renderResult(); }
+
+  window.__screen = name;
+}
+
+/* ---------- 인트로: 카운트업 + 티커 ---------- */
+function animateCount(el, target){
+  const reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
+  if(reduce){ el.textContent = target.toLocaleString(); return; }
+  const dur=1200, t0=performance.now();
+  function tick(now){
+    const p=Math.min((now-t0)/dur,1);
+    const eased=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*eased).toLocaleString();
+    if(p<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+let tickerTimer=null, tickerI=0;
+function startTicker(){
+  const el=$("#ticker");
+  if(!CONFIG.TICKER.length) return;
+  el.textContent=CONFIG.TICKER[0];
+  clearInterval(tickerTimer);
+  tickerTimer=setInterval(()=>{
+    tickerI=(tickerI+1)%CONFIG.TICKER.length;
+    el.style.opacity="0";
+    setTimeout(()=>{ el.textContent=CONFIG.TICKER[tickerI]; el.style.opacity="1"; },300);
+  },2400);
+}
+
+/* ---------- 질문 렌더 ---------- */
+function renderQuestion(){
+  const i=state.qIndex, item=CONFIG.QUESTIONS[i], total=CONFIG.QUESTIONS.length;
+  $("#qCount").textContent=`질문 ${i+1} / ${total}`;
+  $("#qTitle").textContent=item.q;
+  progressNum.textContent=`${i+1}/${total}`;
+  progressFill.style.width=`${((i+1)/total)*100}%`;
+
+  const opts=$("#opts"); opts.innerHTML="";
+  item.options.forEach((op,idx)=>{
+    const b=document.createElement("button");
+    b.type="button"; b.className="opt";
+    if(state.answers[i]===op.type) b.classList.add("is-selected");
+    b.innerHTML=`<span class="op-emoji">${op.emoji}</span><span>${op.label}</span><span class="op-check" aria-hidden="true"></span>`;
+    b.addEventListener("click",()=>{
+      state.answers[i]=op.type;
+      opts.querySelectorAll(".opt").forEach(o=>o.classList.remove("is-selected"));
+      b.classList.add("is-selected");
+      primaryBtn.disabled=false;
+    });
+    opts.appendChild(b);
+  });
+  primaryBtn.textContent = (i===total-1) ? "선물 확인하기" : "다음";
+  primaryBtn.disabled = state.answers[i]===null;
+}
+function nextFromQuiz(){
+  const total=CONFIG.QUESTIONS.length;
+  if(state.answers[state.qIndex]===null) return;
+  if(state.qIndex < total-1){ state.qIndex++; renderQuestion(); }
+  else { computeResult(); showScreen("reward"); }
+}
+function prevFromQuiz(){
+  if(state.qIndex>0){ state.qIndex--; renderQuestion(); }
+  else { showScreen("hook"); }
+}
+
+/* ---------- 결과 계산 ---------- */
+function computeResult(){
+  const tally={};
+  const order=Object.keys(CONFIG.RESULTS); // 동점 시 우선순위
+  order.forEach(k=>tally[k]=0);
+  state.answers.forEach(t=>{ if(t&&tally[t]!=null) tally[t]++; });
+  let best=order[0];
+  order.forEach(k=>{ if(tally[k]>tally[best]) best=k; });
+  state.result=best;
+}
+function renderResult(){
+  const r=CONFIG.RESULTS[state.result]||Object.values(CONFIG.RESULTS)[0];
+  $("#rEmoji").textContent=r.emoji;
+  $("#rName").textContent=r.name;
+  $("#rOne").textContent=r.one;
+  $("#rDesc").textContent=r.desc;
+  $("#rHint").textContent=r.hint;
+}
+
+/* ---------- 리워드 렌더 ---------- */
+function renderRewards(){
+  const wrap=$("#rewards"); wrap.innerHTML="";
+  CONFIG.REWARDS.forEach(rw=>{
+    const el=document.createElement("div");
+    el.className="reward"+(rw.hot?" reward--hot":"");
+    el.innerHTML=`
+      <div class="reward__ic">${rw.emoji}</div>
+      <div class="reward__body">
+        <p class="reward__eyebrow">${rw.eyebrow}</p>
+        <p class="reward__name">${rw.name}</p>
+        <p class="reward__desc">${rw.desc}</p>
+      </div>`;
+    wrap.appendChild(el);
+  });
+}
+
+/* ---------- 폼 검증 & 제출 ---------- */
+function setErr(fieldName, on){
+  const f=document.querySelector(`[data-field="${fieldName}"]`);
+  if(!f) return;
+  f.classList.toggle("has-err", on);
+  const c=f.querySelector(".consent"); if(c) c.classList.toggle("has-err", on);
+}
+function validateForm(){
+  const name=$("#f-name").value.trim();
+  const ageRaw=$("#f-age").value.trim();
+  const age=parseInt(ageRaw,10);
+  const phone=$("#f-phone").value.trim();
+  const region=(document.querySelector('input[name="region"]:checked')||{}).value||"";
+  const district=$("#f-district").value.trim();
+  const status=$("#f-status").value;
+  const concern=$("#f-concern").value.trim();
+  const consent=$("#f-consent").checked;
+
+  const errors=[];
+  const phoneOk=/^[0-9\-\s]{9,}$/.test(phone);
+  const ageOk=!isNaN(age)&&age>=20&&age<=26;
+
+  setErr("name", !name); if(!name) errors.push("name");
+  setErr("age", !ageOk); if(!ageOk) errors.push("age");
+  setErr("phone", !phoneOk); if(!phoneOk) errors.push("phone");
+  setErr("region", !region); if(!region) errors.push("region");
+  setErr("district", !district); if(!district) errors.push("district");
+  setErr("status", !status); if(!status) errors.push("status");
+  setErr("consent", !consent); if(!consent) errors.push("consent");
+
+  return { ok:errors.length===0, first:errors[0],
+    data:{ name, age, phone, region, district, status, concern } };
+}
+async function sendToEndpoint(record){
+  if(!CONFIG.SUBMIT_ENDPOINT) return;
+  try{
+    await fetch(CONFIG.SUBMIT_ENDPOINT,{
+      method:"POST", mode:"no-cors",
+      headers:{ "Content-Type":"text/plain;charset=utf-8" },
+      body:JSON.stringify(record),
+    });
+  }catch(e){ /* 네트워크 실패해도 로컬엔 이미 저장됨 */ }
+}
+async function submitForm(){
+  const { ok, first, data }=validateForm();
+  if(!ok){
+    const f=document.querySelector(`[data-field="${first}"]`);
+    if(f){ const inp=f.querySelector("input,select,textarea"); f.scrollIntoView({behavior:"smooth",block:"center"}); if(inp) setTimeout(()=>inp.focus(),200); }
+    return;
+  }
+  const r=CONFIG.RESULTS[state.result]||{};
+  const record={ ...data, resultKey:state.result, resultType:r.name||state.result,
+    answers:state.answers, submittedAt:new Date().toISOString() };
+
+  const list=Store.read(); list.push(record); Store.write(list);
+
+  primaryBtn.disabled=true; primaryBtn.textContent="신청 중…";
+  await sendToEndpoint(record);
+  primaryBtn.disabled=false;
+  showScreen("result");
+}
+
+/* ---------- 공유 / 토스트 ---------- */
+let toastTimer=null;
+function toast(msg){
+  const t=$("#toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),1800);
+}
+async function shareTest(){
+  const url=location.href;
+  const title="나에게 딱 맞는 전공테스트";
+  const text="1분이면 끝나는 전공·진로 성향 테스트, 나도 해봤어! 결과 보러가기 →";
+  if(navigator.share){
+    try{ await navigator.share({title,text,url}); return; }catch(e){ if(e&&e.name==="AbortError") return; }
+  }
+  try{ await navigator.clipboard.writeText(url); toast("링크가 복사됐어요"); }
+  catch(e){ toast("링크: "+url); }
+}
+function restart(){
+  state.qIndex=0; state.answers=new Array(CONFIG.QUESTIONS.length).fill(null); state.result=null;
+  document.querySelectorAll(".field.has-err,.consent.has-err").forEach(el=>el.classList.remove("has-err"));
+  showScreen("intro");
+}
+
+/* ---------- CTA 라우팅 ---------- */
+primaryBtn.addEventListener("click",()=>{
+  const s=window.__screen;
+  if(s==="intro") showScreen("hook");
+  else if(s==="hook") showScreen("quiz");
+  else if(s==="quiz") nextFromQuiz();
+  else if(s==="reward") showScreen("form");
+  else if(s==="form") submitForm();
+});
+backBtn.addEventListener("click",()=>{
+  const s=window.__screen;
+  if(s==="hook") showScreen("intro");
+  else if(s==="quiz") prevFromQuiz();
+});
+$("#shareBtn").addEventListener("click",shareTest);
+$("#restartBtn").addEventListener("click",restart);
+
+/* ---------- 초기화 ---------- */
+renderRewards();
+showScreen("intro");
+animateCount($("#heroCount"), CONFIG.START_COUNT);
+startTicker();
+</script>
+</body>
+</html>
