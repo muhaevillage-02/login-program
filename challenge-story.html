@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>도전스토리 공모전 참가 신청 · Login Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --track:      #EC5A2B;
+    --track-deep: #C9481D;
+    --sky:        #29B7C7;
+    --sky-deep:   #17909E;
+    --sun:        #F4C740;
+    --sun-deep:   #EEB833;
+    --ink:        #262523;
+    --ink-soft:   #6E6A62;
+    --line:       #E9E3D5;
+    --error:      #D8402B;
+    --ok:         #2FA36B;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    font-family: "Noto Sans KR", sans-serif;
+    color: var(--ink);
+    background: radial-gradient(130% 100% at 50% 0%, var(--sun) 42%, var(--sun-deep) 100%);
+    min-height: 100vh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .jua { font-family: "Jua", "Noto Sans KR", sans-serif; font-weight: 400; letter-spacing: .01em; }
+
+  .wrap { max-width: 600px; margin: 0 auto; padding: 26px 16px 40px; }
+
+  .card {
+    position: relative;
+    background: #FFF;
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 20px 48px rgba(70,45,10,.18), 0 3px 10px rgba(70,45,10,.08);
+  }
+
+  /* ---------- 진행 바 (헤더) ---------- */
+  .progress {
+    display: none;
+    padding: 16px 22px 20px;
+    border-bottom: 1.5px solid var(--line);
+    background: #FFF;
+  }
+  .step-count {
+    text-align: center;
+    font-family: "Jua", sans-serif;
+    font-size: 14px;
+    color: var(--track);
+    margin-bottom: 12px;
+    letter-spacing: .04em;
+  }
+  .lane { position: relative; height: 34px; }
+  .lane-line {
+    position: absolute; top: 50%; left: 2px; right: 26px;
+    border-top: 3px dashed #F0C4B3;
+    transform: translateY(-50%);
+  }
+  .finish { position: absolute; right: -2px; top: 50%; transform: translateY(-50%); font-size: 23px; }
+  .runner {
+    position: absolute; left: 5%; top: 50%;
+    transform: translate(-50%, -50%);
+    transition: left .65s cubic-bezier(.34,1.06,.6,1);
+  }
+  .runner .rn, .ct-runner .rn { display: inline-block; }
+  .runner .rn { font-size: 27px; animation: bob .5s ease-in-out infinite; }
+  @keyframes bob {
+    0%, 100% { transform: scaleX(-1) translateY(0); }
+    50%      { transform: scaleX(-1) translateY(-3px); }
+  }
+
+  /* ---------- 슬라이드 뷰포트 ---------- */
+  .viewport { overflow: hidden; transition: height .42s ease; }
+  .track-row { display: flex; align-items: flex-start; transition: transform .46s cubic-bezier(.4,0,.2,1); }
+  .panel { flex: 0 0 100%; width: 100%; }
+
+  /* ---------- 커버 ---------- */
+  .cover {
+    position: relative;
+    background: linear-gradient(158deg, var(--sky) 0%, var(--sky-deep) 100%);
+    color: #FFF;
+    text-align: center;
+    padding: 46px 26px 40px;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: ""; position: absolute; inset: -30% -20%;
+    background-image: repeating-linear-gradient(114deg, transparent 0 44px, rgba(255,255,255,.10) 44px 47px);
+    pointer-events: none;
+  }
+  .cover > * { position: relative; z-index: 1; }
+  .kicker {
+    display: inline-block; background: var(--track); color: #FFF;
+    font-size: 13px; font-weight: 700; padding: 5px 15px; border-radius: 999px;
+    margin-bottom: 16px; box-shadow: 0 4px 0 rgba(0,0,0,.12);
+  }
+  .cover h1 { margin: 0; font-size: clamp(34px, 10vw, 52px); line-height: 1.1; text-shadow: 0 3px 0 rgba(0,0,0,.15); }
+  .cover .tagline { margin: 14px auto 0; font-size: clamp(14px,3.8vw,17px); font-weight: 500; color: #E8FBFD; max-width: 26ch; }
+
+  .cover-track { position: relative; height: 30px; max-width: 320px; margin: 26px auto 6px; }
+  .ct-line { position: absolute; top: 50%; left: 0; right: 22px; border-top: 3px dashed rgba(255,255,255,.55); transform: translateY(-50%); }
+  .ct-flag { position: absolute; right: -2px; top: 50%; transform: translateY(-50%); font-size: 21px; }
+  .ct-runner { position: absolute; left: 8%; top: 50%; transform: translate(-50%,-50%); }
+  .ct-runner .rn { font-size: 24px; animation: bob .5s ease-in-out infinite; }
+
+  .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; margin: 22px 0 4px; }
+  .fact { background: rgba(255,255,255,.16); border: 1.5px solid rgba(255,255,255,.34); color: #FFF; font-size: 12.5px; font-weight: 500; padding: 6px 13px; border-radius: 999px; }
+  .fact b { font-weight: 700; }
+
+  .cta {
+    font-family: "Jua", sans-serif; font-size: 21px; color: #FFF;
+    background: var(--track); border: none; border-radius: 16px;
+    padding: 16px 40px; margin-top: 26px; cursor: pointer; width: 100%; max-width: 320px;
+    box-shadow: 0 6px 0 var(--track-deep), 0 8px 24px rgba(236,90,43,.30);
+  }
+  .cta:hover { background: var(--track-deep); }
+  .cta:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--track-deep); }
+  .cover-note { margin: 14px 0 0; font-size: 12.5px; color: #D9F4F7; }
+
+  /* ---------- 스텝 ---------- */
+  .step { padding: 30px 26px 28px; }
+  .step-head { margin-bottom: 22px; }
+  .step-head h2 { margin: 0; font-size: 23px; color: var(--track); outline: none; }
+  .step-head p { margin: 5px 0 0; font-size: 13.5px; color: var(--ink-soft); }
+
+  .field { margin-bottom: 20px; }
+  .label { display: flex; align-items: baseline; gap: 6px; font-size: 15px; font-weight: 700; margin-bottom: 9px; }
+  .req { color: var(--track); font-size: 13px; line-height: 1; }
+  .hint { font-weight: 400; font-size: 12.5px; color: var(--ink-soft); margin-left: auto; }
+
+  input[type="text"], input[type="tel"], input[type="email"], textarea, select {
+    width: 100%; font-family: inherit; font-size: 16px; color: var(--ink);
+    background: #FBF9F4; border: 2px solid var(--line); border-radius: 13px;
+    padding: 13px 15px; transition: border-color .15s, background .15s, box-shadow .15s;
+    appearance: none; -webkit-appearance: none;
+  }
+  input::placeholder, textarea::placeholder { color: #B8B2A6; }
+  input:focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--track); background: #FFF;
+    box-shadow: 0 0 0 4px rgba(236,90,43,.14);
+  }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23EC5A2B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 15px center; padding-right: 42px; cursor: pointer;
+  }
+  select:invalid { color: #B8B2A6; }
+  textarea { min-height: 200px; height: 200px; line-height: 1.7; resize: none; overflow-y: auto; background: #FFFDF5; }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 440px) { .row2 { grid-template-columns: 1fr; } }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 9px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .chip span {
+    display: block; font-size: 14.5px; font-weight: 500; padding: 10px 16px;
+    border: 2px solid var(--line); border-radius: 999px; background: #FBF9F4; transition: all .14s; user-select: none;
+  }
+  .chip input:hover + span { border-color: #F0B58C; }
+  .chip input:checked + span { background: var(--track); border-color: var(--track); color: #FFF; box-shadow: 0 4px 10px rgba(236,90,43,.28); }
+  .chip input:focus-visible + span { box-shadow: 0 0 0 4px rgba(236,90,43,.20); }
+
+  .conditional { display: none; }
+  .conditional.show { display: block; }
+
+  .story-guide { font-size: 13px; color: var(--ink-soft); margin: 0 0 10px; line-height: 1.6; }
+  .count { font-variant-numeric: tabular-nums; }
+  .count.warn { color: var(--track); font-weight: 700; }
+
+  .consent { background: #FFFBEC; border: 1.5px solid #F3E6A8; border-radius: 14px; padding: 15px 16px; }
+  .consent-note { font-size: 12.5px; color: var(--ink-soft); margin: 0 0 11px; line-height: 1.55; }
+  .agree { display: flex; align-items: flex-start; gap: 11px; cursor: pointer; }
+  .agree input { position: absolute; opacity: 0; width: 22px; height: 22px; cursor: pointer; }
+  .box { flex: 0 0 auto; width: 22px; height: 22px; border: 2px solid #D9C77F; border-radius: 7px; background: #FFF; display: grid; place-items: center; transition: all .14s; margin-top: 1px; }
+  .box svg { width: 13px; height: 13px; stroke: #FFF; stroke-width: 3.5; opacity: 0; transition: opacity .12s; }
+  .agree input:checked ~ .box { background: var(--track); border-color: var(--track); }
+  .agree input:checked ~ .box svg { opacity: 1; }
+  .agree input:focus-visible ~ .box { box-shadow: 0 0 0 4px rgba(236,90,43,.20); }
+  .agree .txt { font-size: 14.5px; font-weight: 500; }
+
+  .error-msg { display: none; color: var(--error); font-size: 12.5px; font-weight: 500; margin-top: 7px; }
+  .field.invalid input, .field.invalid textarea, .field.invalid select { border-color: var(--error); background: #FEF6F4; }
+  .field.invalid .error-msg, .consent.invalid .error-msg { display: block; }
+  .consent.invalid { border-color: var(--error); }
+
+  /* ---------- 내비게이션 ---------- */
+  .nav { display: flex; gap: 10px; margin-top: 26px; }
+  .btn { font-family: "Jua", sans-serif; font-size: 18px; border-radius: 14px; padding: 14px 18px; cursor: pointer; transition: transform .08s, box-shadow .08s, background .15s; }
+  .btn.primary { flex: 1; color: #FFF; background: var(--track); border: none; box-shadow: 0 5px 0 var(--track-deep); }
+  .btn.primary:hover { background: var(--track-deep); }
+  .btn.primary:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--track-deep); }
+  .btn.primary:disabled { background: #E7B7A5; box-shadow: 0 5px 0 #D3A996; cursor: default; }
+  .btn.ghost { flex: 0 0 auto; background: #FFF; color: var(--track); border: 2px solid #F2D2C4; padding-left: 22px; padding-right: 22px; }
+  .btn.ghost:hover { border-color: var(--track); }
+
+  /* ---------- 완료 ---------- */
+  .done { position: relative; background: linear-gradient(158deg, var(--sky) 0%, var(--sky-deep) 100%); color: #FFF; text-align: center; padding: 52px 30px 56px; overflow: hidden; }
+  .confetti { position: absolute; width: 12px; height: 12px; border-radius: 2px; opacity: .9; }
+  .burst {
+    position: relative; z-index: 1; width: 88px; height: 88px; margin: 0 auto 22px;
+    border-radius: 50%; background: #FFF; display: grid; place-items: center;
+    box-shadow: 0 10px 26px rgba(0,0,0,.18); animation: pop .5s cubic-bezier(.2,.9,.3,1.5) both;
+  }
+  .burst svg { width: 44px; height: 44px; stroke: var(--track); stroke-width: 4.5; fill: none; }
+  @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+  .done h2 { position: relative; z-index: 1; margin: 0 0 10px; font-size: 28px; text-shadow: 0 2px 0 rgba(0,0,0,.14); outline: none; }
+  .done p { position: relative; z-index: 1; margin: 0 auto; font-size: 15px; color: #EAFBFD; max-width: 32ch; }
+  .done .name { font-weight: 700; color: #FFF; }
+
+  .foot { text-align: center; margin-top: 20px; font-size: 12.5px; color: #7A5A34; }
+  .foot b { color: #5E4526; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="card">
+      <form id="applyForm" name="challenge-story-application" novalidate>
+
+        <!-- 진행 바 -->
+        <div class="progress" id="progress">
+          <div class="step-count" id="stepCount">1 / 5</div>
+          <div class="lane">
+            <span class="lane-line"></span>
+            <span class="runner" id="runner"><span class="rn">🏃</span></span>
+            <span class="finish">🏁</span>
+          </div>
+        </div>
+
+        <div class="viewport" id="viewport">
+          <div class="track-row" id="trackRow">
+
+            <!-- 0. 커버 -->
+            <section class="panel cover">
+              <span class="kicker">아직 안 끝난 이야기</span>
+              <h1 class="jua">도전 스토리<br />공모전</h1>
+              <p class="tagline">당신만의 도전 경험이, 당신만의 무기가 됩니다</p>
+              <div class="cover-track">
+                <span class="ct-line"></span>
+                <span class="ct-runner"><span class="rn">🏃</span></span>
+                <span class="ct-flag">🏁</span>
+              </div>
+              <div class="facts">
+                <span class="fact">📅 <b>09.14~09.28</b></span>
+                <span class="fact">🎯 <b>07~02년생</b> · 서울·경기</span>
+                <span class="fact">👥 <b>43명</b> 참여</span>
+              </div>
+              <button type="button" class="cta jua" id="startBtn">참가 신청하기</button>
+              <p class="cover-note">참가비 없음 · 작성 약 2분</p>
+            </section>
+
+            <!-- 1. 기본 정보 -->
+            <section class="panel step" inert>
+              <div class="step-head"><h2 class="jua">기본 정보</h2><p>먼저 간단히 소개해 주세요.</p></div>
+
+              <div class="field" data-field>
+                <label class="label" for="name">이름 <span class="req">*</span></label>
+                <input type="text" id="name" name="이름" placeholder="성함을 입력해 주세요" autocomplete="name" />
+                <div class="error-msg">이름을 입력해 주세요.</div>
+              </div>
+
+              <div class="field" data-field>
+                <label class="label" for="birth">출생연도 <span class="req">*</span><span class="hint">2002~2007년생 대상</span></label>
+                <select id="birth" name="출생연도(년생)" required>
+                  <option value="" selected disabled>선택해 주세요</option>
+                  <option>2007년생</option><option>2006년생</option><option>2005년생</option>
+                  <option>2004년생</option><option>2003년생</option><option>2002년생</option>
+                </select>
+                <div class="error-msg">출생연도를 선택해 주세요.</div>
+              </div>
+
+              <div class="field" data-field data-chipgroup="gender">
+                <label class="label">성별 <span class="req">*</span></label>
+                <div class="chips" role="radiogroup" aria-label="성별">
+                  <label class="chip"><input type="radio" name="성별" value="남성" /><span>남성</span></label>
+                  <label class="chip"><input type="radio" name="성별" value="여성" /><span>여성</span></label>
+                </div>
+                <div class="error-msg">성별을 선택해 주세요.</div>
+              </div>
+
+              <div class="nav">
+                <button type="button" class="btn ghost" data-action="prev">이전</button>
+                <button type="button" class="btn primary" data-action="next">다음</button>
+              </div>
+            </section>
+
+            <!-- 2. 거주지 & 직업 -->
+            <section class="panel step" inert>
+              <div class="step-head"><h2 class="jua">거주지와 직업</h2><p>어디 사시고, 무엇을 하고 계신가요?</p></div>
+
+              <div class="field" data-field>
+                <label class="label">거주지 <span class="req">*</span><span class="hint">구까지 선택</span></label>
+                <div class="row2">
+                  <div>
+                    <select id="region" name="거주지-지역" required>
+                      <option value="" selected disabled>지역</option>
+                      <option value="서울특별시">서울특별시</option>
+                      <option value="경기도">경기도</option>
+                    </select>
+                  </div>
+                  <div>
+                    <select id="district" name="거주지-시군구" required disabled>
+                      <option value="" selected disabled>시·군·구</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="error-msg">거주 지역과 시·군·구를 모두 선택해 주세요.</div>
+              </div>
+
+              <div class="field" data-field data-chipgroup="job">
+                <label class="label">직업 <span class="req">*</span></label>
+                <div class="chips" role="radiogroup" aria-label="직업">
+                  <label class="chip"><input type="radio" name="직업" value="대학생" /><span>대학생</span></label>
+                  <label class="chip"><input type="radio" name="직업" value="대학원생" /><span>대학원생</span></label>
+                  <label class="chip"><input type="radio" name="직업" value="취업준비생" /><span>취업준비생</span></label>
+                  <label class="chip"><input type="radio" name="직업" value="직장인" /><span>직장인</span></label>
+                  <label class="chip"><input type="radio" name="직업" value="프리랜서" /><span>프리랜서</span></label>
+                  <label class="chip"><input type="radio" name="직업" value="자영업·사업" /><span>자영업·사업</span></label>
+                  <label class="chip"><input type="radio" name="직업" value="군 복무 중" /><span>군 복무 중</span></label>
+                  <label class="chip"><input type="radio" name="직업" value="기타" /><span>기타</span></label>
+                </div>
+                <div class="error-msg">직업을 선택해 주세요.</div>
+              </div>
+
+              <div class="conditional" id="univWrap">
+                <div class="field" data-field>
+                  <label class="label" for="univ">대학명 <span class="req">*</span></label>
+                  <input type="text" id="univ" name="대학명" placeholder="예) 로그인대학교" />
+                  <div class="error-msg">대학명을 입력해 주세요.</div>
+                </div>
+              </div>
+
+              <div class="nav">
+                <button type="button" class="btn ghost" data-action="prev">이전</button>
+                <button type="button" class="btn primary" data-action="next">다음</button>
+              </div>
+            </section>
+
+            <!-- 3. 연락처 -->
+            <section class="panel step" inert>
+              <div class="step-head"><h2 class="jua">연락처</h2><p>결과를 안내받으실 곳이에요.</p></div>
+
+              <div class="field" data-field>
+                <label class="label" for="phone">전화번호 <span class="req">*</span></label>
+                <input type="tel" id="phone" name="전화번호" placeholder="010-0000-0000" inputmode="numeric" autocomplete="tel" maxlength="13" />
+                <div class="error-msg">올바른 휴대폰 번호를 입력해 주세요.</div>
+              </div>
+
+              <div class="field" data-field>
+                <label class="label" for="email">이메일 <span class="req">*</span></label>
+                <input type="email" id="email" name="이메일" placeholder="example@email.com" autocomplete="email" />
+                <div class="error-msg">올바른 이메일 주소를 입력해 주세요.</div>
+              </div>
+
+              <div class="nav">
+                <button type="button" class="btn ghost" data-action="prev">이전</button>
+                <button type="button" class="btn primary" data-action="next">다음</button>
+              </div>
+            </section>
+
+            <!-- 4. 도전 스토리 -->
+            <section class="panel step" inert>
+              <div class="step-head"><h2 class="jua">나의 도전 스토리</h2><p>이 공모전의 주인공, 당신의 이야기예요.</p></div>
+
+              <div class="field" data-field>
+                <label class="label" for="story">도전 스토리 <span class="req">*</span><span class="hint count" id="count">0자</span></label>
+                <p class="story-guide">세상에서 도전했던 경험, 힘들고 있던 변화를 느꼈던 순간, 실패했지만 괜찮았던 이야기 — 무엇이든 좋아요. 진심하고 담담한 이야기를 구체적인 장면과 함께 들려주세요.</p>
+                <textarea id="story" name="도전 스토리" placeholder="예) 처음으로 혼자 여행을 떠났던 날, 나는..."></textarea>
+                <div class="error-msg">도전 스토리를 입력해 주세요.</div>
+              </div>
+
+              <div class="nav">
+                <button type="button" class="btn ghost" data-action="prev">이전</button>
+                <button type="button" class="btn primary" data-action="next">다음</button>
+              </div>
+            </section>
+
+            <!-- 5. 마지막 확인 -->
+            <section class="panel step" inert>
+              <div class="step-head"><h2 class="jua">마지막 확인</h2><p>도전한 첫 신청을 완료해 주세요.</p></div>
+
+              <div class="consent" id="consentBox">
+                <p class="consent-note">공모전 진행 및 결과 안내를 위해 이름, 출생연도, 거주지, 직업, 성별, 연락처(전화번호·이메일)를 수집·이용합니다. 수집된 정보는 공모전 종료 후 파기됩니다.</p>
+                <label class="agree">
+                  <input type="checkbox" id="agree" name="개인정보-수집이용-동의" value="동의함" />
+                  <span class="box"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                  <span class="txt">개인정보 수집·이용에 동의합니다. <span class="req">(필수)</span></span>
+                </label>
+                <div class="error-msg">개인정보 수집·이용에 동의해 주세요.</div>
+              </div>
+
+              <div class="nav">
+                <button type="button" class="btn ghost" data-action="prev">이전</button>
+                <button type="submit" class="btn primary" id="submitBtn">신청 완료하기</button>
+              </div>
+            </section>
+
+            <!-- 6. 완료 -->
+            <section class="panel done" inert>
+              <span class="confetti" style="left:12%;top:18%;background:#F4C740;transform:rotate(20deg)"></span>
+              <span class="confetti" style="left:82%;top:22%;background:#EC5A2B;transform:rotate(-15deg)"></span>
+              <span class="confetti" style="left:24%;top:70%;background:#FFF;transform:rotate(35deg)"></span>
+              <span class="confetti" style="left:74%;top:66%;background:#F4C740;transform:rotate(-25deg)"></span>
+              <span class="confetti" style="left:50%;top:12%;background:#FFF;transform:rotate(10deg)"></span>
+              <div class="burst"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <h2 class="jua">결승점 통과!</h2>
+              <p><span class="name" id="doneName"></span>님, 신청이 완료되었어요.<br />도전 스토리 잘 받았습니다. 결과는 입력하신 연락처로 안내드릴게요 🎉</p>
+            </section>
+
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <p class="foot">주최 <b>Login Lab</b> &nbsp;·&nbsp; 문의 <b>theloginlab.co.kr</b></p>
+  </main>
+
+<script>
+(function () {
+  const $  = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+
+  /* 구글 시트로 응답을 전송하려면 여기에 Apps Script 웹 앱 URL을 붙여넣으세요.
+     설정 방법: 저장소 루트의 apps-script-challenge-story.gs 파일 상단 주석 참고.
+     비워두면 폼은 정상 동작하지만 시트에는 저장되지 않습니다.
+     예) "https://script.google.com/macros/s/AKfycb.../exec" */
+  const APPS_SCRIPT_URL = "";
+
+  const TOTAL = 5;
+  const form      = $("#applyForm");
+  const viewport  = $("#viewport");
+  const trackRow  = $("#trackRow");
+  const panels    = $$(".panel", trackRow);
+  const DONE      = panels.length - 1;
+  const progress  = $("#progress");
+  const runner    = $("#runner");
+  const stepCount = $("#stepCount");
+
+  const nameEl = $("#name"), birth = $("#birth"), region = $("#region"),
+        district = $("#district"), univ = $("#univ"), univWrap = $("#univWrap"),
+        phone = $("#phone"), email = $("#email"), story = $("#story"),
+        agree = $("#agree"), consentBox = $("#consentBox"),
+        submitBtn = $("#submitBtn"), doneName = $("#doneName"), count = $("#count");
+
+  const STEP_POS = { 1: 5, 2: 27, 3: 50, 4: 72, 5: 92 };
+  const phoneRe = /^01[016789]-\d{3,4}-\d{4}$/;
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const DISTRICTS = {
+    "서울특별시": ["종로구","중구","용산구","성동구","광진구","동대문구","중랑구","성북구","강북구","도봉구","노원구","은평구","서대문구","마포구","양천구","강서구","구로구","금천구","영등포구","동작구","관악구","서초구","강남구","송파구","강동구"],
+    "경기도": ["수원시","성남시","고양시","용인시","부천시","안산시","안양시","남양주시","화성시","평택시","의정부시","시흥시","파주시","광명시","김포시","군포시","광주시","이천시","양주시","오산시","구리시","안성시","포천시","의왕시","하남시","여주시","동두천시","과천시","가평군","양평군","연천군"]
+  };
+
+  let current = 0;
+
+  function setHeight() { viewport.style.height = panels[current].offsetHeight + "px"; }
+
+  function focusHead(panel) {
+    const h = panel.querySelector("h1, h2");
+    if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+  }
+
+  function goTo(i) {
+    if (i < 0 || i >= panels.length) return;
+    current = i;
+    trackRow.style.transform = "translateX(" + (-i * 100) + "%)";
+    panels.forEach((p, idx) => idx === i ? p.removeAttribute("inert") : p.setAttribute("inert", ""));
+    const isStep = i >= 1 && i <= TOTAL;
+    progress.style.display = isStep ? "block" : "none";
+    if (isStep) { runner.style.left = STEP_POS[i] + "%"; stepCount.textContent = i + " / " + TOTAL; }
+    setHeight();
+    focusHead(panels[i]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  const fieldOf = el => el.closest("[data-field]");
+  const group = name => document.querySelector('[data-chipgroup="' + name + '"]');
+  const checkedRadio = name => document.querySelector('input[name="' + name + '"]:checked');
+  const clearErr = node => { if (node) node.classList.remove("invalid"); };
+
+  function validateStep(step) {
+    let firstBad = null;
+    const fail = n => { if (n) { n.classList.add("invalid"); if (!firstBad) firstBad = n; } };
+
+    if (step === 1) {
+      if (!nameEl.value.trim()) fail(fieldOf(nameEl));
+      if (!birth.value) fail(fieldOf(birth));
+      if (!checkedRadio("성별")) fail(group("gender"));
+    } else if (step === 2) {
+      if (!region.value || !district.value) fail(fieldOf(region));
+      const job = checkedRadio("직업");
+      if (!job) fail(group("job"));
+      if (job && job.value === "대학생" && !univ.value.trim()) fail(fieldOf(univ));
+    } else if (step === 3) {
+      if (!phoneRe.test(phone.value.trim())) fail(fieldOf(phone));
+      if (!emailRe.test(email.value.trim())) fail(fieldOf(email));
+    } else if (step === 4) {
+      if (!story.value.trim()) fail(fieldOf(story));
+    } else if (step === 5) {
+      if (!agree.checked) fail(consentBox);
+    }
+
+    if (firstBad) {
+      const inp = firstBad.querySelector("input:not([type=hidden]), select, textarea");
+      if (inp) setTimeout(() => inp.focus({ preventScroll: true }), 60);
+    }
+    return !firstBad;
+  }
+
+  function next() {
+    if (current >= 1 && current <= TOTAL && !validateStep(current)) return;
+    goTo(current + 1);
+  }
+  function prev() { goTo(current - 1); }
+
+  // 입력 시 오류 해제
+  [nameEl, birth, region, district, univ, phone, email, story].forEach(el => {
+    el.addEventListener("input", () => clearErr(fieldOf(el)));
+    el.addEventListener("change", () => clearErr(fieldOf(el)));
+  });
+  $$('input[name="성별"]').forEach(r => r.addEventListener("change", () => clearErr(group("gender"))));
+  agree.addEventListener("change", () => clearErr(consentBox));
+
+  // 지역 → 시·군·구
+  region.addEventListener("change", () => {
+    const list = DISTRICTS[region.value] || [];
+    district.innerHTML = '<option value="" selected disabled>시·군·구</option>' + list.map(d => "<option>" + d + "</option>").join("");
+    district.disabled = false;
+    clearErr(fieldOf(region));
+    if (current === 2) setHeight();
+  });
+
+  // 직업 → 대학명 조건부
+  $$('input[name="직업"]').forEach(r => {
+    r.addEventListener("change", () => {
+      clearErr(group("job"));
+      const isUniv = r.value === "대학생" && r.checked;
+      univWrap.classList.toggle("show", isUniv);
+      if (!isUniv) { univ.value = ""; clearErr(fieldOf(univ)); }
+      if (current === 2) setHeight();
+    });
+  });
+
+  // 전화번호 자동 하이픈
+  phone.addEventListener("input", () => {
+    let v = phone.value.replace(/\D/g, "").slice(0, 11);
+    if (v.length < 4) phone.value = v;
+    else if (v.length < 8) phone.value = v.slice(0, 3) + "-" + v.slice(3);
+    else phone.value = v.slice(0, 3) + "-" + v.slice(3, 7) + "-" + v.slice(7);
+  });
+
+  // 글자 수
+  story.addEventListener("input", () => {
+    const n = story.value.trim().length;
+    count.textContent = n.toLocaleString() + "자";
+    count.classList.toggle("warn", n > 0);
+  });
+
+  // 내비게이션
+  $$('[data-action="next"]').forEach(b => b.addEventListener("click", next));
+  $$('[data-action="prev"]').forEach(b => b.addEventListener("click", prev));
+  $("#startBtn").addEventListener("click", () => goTo(1));
+
+  // Enter 키
+  form.addEventListener("keydown", e => {
+    if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+      e.preventDefault();
+      if (current === TOTAL) { form.requestSubmit ? form.requestSubmit() : submitBtn.click(); }
+      else if (current >= 1) next();
+    }
+  });
+
+  // 제출
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    if (current !== TOTAL) { next(); return; }
+    if (!validateStep(TOTAL)) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "제출 중...";
+    runner.style.left = "100%"; // 결승점 통과!
+
+    const job = checkedRadio("직업");
+    const gender = checkedRadio("성별");
+    const data = {
+      name: nameEl.value.trim(),
+      birthYear: birth.value,
+      gender: gender ? gender.value : "",
+      region: region.value,
+      district: district.value,
+      job: job ? job.value : "",
+      university: univ.value.trim(),
+      phone: phone.value.trim(),
+      email: email.value.trim(),
+      story: story.value.trim(),
+      agreePrivacy: agree.checked ? "동의함" : "",
+      userAgent: navigator.userAgent,
+      submittedAt: new Date().toISOString()
+    };
+
+    if (APPS_SCRIPT_URL) {
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(data)
+        });
+      } catch (_) {
+        // 네트워크 오류가 나도 완료 화면은 그대로 보여줍니다.
+      }
+    }
+    setTimeout(() => { doneName.textContent = nameEl.value.trim(); goTo(DONE); }, 850);
+  });
+
+  window.addEventListener("resize", setHeight);
+  goTo(0);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(setHeight);
+})();
+</script>
+</body>
+</html>
