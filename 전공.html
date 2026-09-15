@@ -184,6 +184,7 @@
      질문(quiz) 화면
      ========================================================= */
   .q-count{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--mint);margin:0 0 10px;}
+  .q-img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--line);margin:0 0 16px;background:var(--paper);}
   .q-title{font-size:21px;line-height:1.4;font-weight:800;letter-spacing:-.02em;margin:0 0 20px;}
   .opts{display:flex;flex-direction:column;gap:10px;}
   .opt{
@@ -349,6 +350,7 @@
       <!-- 2. 질문 (동적 렌더) -->
       <section class="screen" data-screen="quiz">
         <p class="q-count" id="qCount">질문 1 / 7</p>
+        <img class="q-img" id="qImg" src="" alt="" />
         <h2 class="q-title" id="qTitle">질문</h2>
         <div class="opts" id="opts"></div>
       </section>
@@ -517,43 +519,43 @@ const CONFIG = {
 
   /* 7문항 — 각 보기의 type이 위 RESULTS 키와 연결됩니다 */
   QUESTIONS: [
-    { q:"새 학기, 시간표 짤 때 나는?", options:[
+    { q:"새 학기, 시간표 짤 때 나는?", img:"images/major-quiz/q1.jpg", options:[
       { emoji:"🧭", label:"관심 가는 거 일단 여러 개 담아둠", type:"explorer" },
       { emoji:"📐", label:"졸업요건·계획부터 확인하고 딱 맞게", type:"strategist" },
       { emoji:"🎨", label:"남들 잘 안 듣는 특이한 수업 골라봄", type:"pioneer" },
       { emoji:"🌙", label:"고민만 하다 막판에 겨우 확정", type:"harmonizer" },
     ]},
-    { q:"진로 얘기가 나오면 속마음은?", options:[
+    { q:"진로 얘기가 나오면 속마음은?", img:"images/major-quiz/q2.jpg", options:[
       { emoji:"🧭", label:"아직 정하긴 이르지, 더 봐야지", type:"explorer" },
       { emoji:"📐", label:"계획은 있는데 잘 되고 있나 싶음", type:"strategist" },
       { emoji:"🎨", label:"내 식대로 가고 싶은데 이해받기 어려움", type:"pioneer" },
       { emoji:"🌙", label:"하고 싶은 건 있는데 말로 못 꺼냄", type:"harmonizer" },
     ]},
-    { q:"과제나 프로젝트를 할 때 나는?", options:[
+    { q:"과제나 프로젝트를 할 때 나는?", img:"images/major-quiz/q3.jpg", options:[
       { emoji:"🧭", label:"이것저것 시도하다 방향을 잡음", type:"explorer" },
       { emoji:"📐", label:"일정표 짜고 순서대로 진행", type:"strategist" },
       { emoji:"🎨", label:"남들과 다른 접근으로 튀게", type:"pioneer" },
       { emoji:"🌙", label:"완벽하게 하려다 시작이 늦음", type:"harmonizer" },
     ]},
-    { q:"친구들이 나한테 자주 하는 말은?", options:[
+    { q:"친구들이 나한테 자주 하는 말은?", img:"images/major-quiz/q4.jpg", options:[
       { emoji:"🧭", label:"“관심사 진짜 넓다”", type:"explorer" },
       { emoji:"📐", label:"“넌 참 계획적이야”", type:"strategist" },
       { emoji:"🎨", label:"“생각이 남다르네”", type:"pioneer" },
       { emoji:"🌙", label:"“속을 잘 모르겠어, 근데 깊어”", type:"harmonizer" },
     ]},
-    { q:"쉬는 날, 갑자기 생긴 자유시간엔?", options:[
+    { q:"쉬는 날, 갑자기 생긴 자유시간엔?", img:"images/major-quiz/q5.jpg", options:[
       { emoji:"🧭", label:"안 해본 거 하나 질러봄", type:"explorer" },
       { emoji:"📐", label:"밀린 거 정리하고 다음 주 준비", type:"strategist" },
       { emoji:"🎨", label:"나만의 취미에 몰입", type:"pioneer" },
       { emoji:"🌙", label:"그냥 생각 정리하며 쉼", type:"harmonizer" },
     ]},
-    { q:"미래를 떠올리면 가장 가까운 문장은?", options:[
+    { q:"미래를 떠올리면 가장 가까운 문장은?", img:"images/major-quiz/q6.jpg", options:[
       { emoji:"🧭", label:"“정해진 길 없어도 괜찮아, 일단 가보자”", type:"explorer" },
       { emoji:"📐", label:"“천천히라도 내 자리를 만들어가는 중”", type:"strategist" },
       { emoji:"🎨", label:"“남들이 뭐라 해도 내 방식이 맞다고 믿어”", type:"pioneer" },
       { emoji:"🌙", label:"“아직 못 꺼냈지만, 분명 원하는 게 있어”", type:"harmonizer" },
     ]},
-    { q:"지금 나에게 가장 필요한 건?", options:[
+    { q:"지금 나에게 가장 필요한 건?", img:"images/major-quiz/q7.jpg", options:[
       { emoji:"🧭", label:"다양한 선택지를 직접 경험해볼 기회", type:"explorer" },
       { emoji:"📐", label:"계획을 점검해줄 구체적인 피드백", type:"strategist" },
       { emoji:"🎨", label:"내 강점을 살릴 나만의 방향", type:"pioneer" },
@@ -647,6 +649,7 @@ function startTicker(){
 function renderQuestion(){
   const i=state.qIndex, item=CONFIG.QUESTIONS[i], total=CONFIG.QUESTIONS.length;
   $("#qCount").textContent=`질문 ${i+1} / ${total}`;
+  $("#qImg").src=item.img||"";
   $("#qTitle").textContent=item.q;
   progressNum.textContent=`${i+1}/${total}`;
   progressFill.style.width=`${((i+1)/total)*100}%`;
