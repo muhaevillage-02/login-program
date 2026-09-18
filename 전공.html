@@ -183,6 +183,7 @@
   /* =========================================================
      질문(quiz) 화면
      ========================================================= */
+  .intro-hero{display:block;width:100%;border-radius:var(--radius-sm);border:1px solid var(--line);margin:0 0 18px;}
   .q-count{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--mint);margin:0 0 10px;}
   .q-img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--line);margin:0 0 16px;background:var(--paper);}
   .q-title{font-size:21px;line-height:1.4;font-weight:800;letter-spacing:-.02em;margin:0 0 20px;}
@@ -249,6 +250,9 @@
   .field-err{display:none;color:var(--danger);font-size:12.5px;font-weight:600;margin-top:6px;}
   .field.has-err .input,.field.has-err .segment label{border-color:var(--danger);}
   .field.has-err .field-err{display:block;}
+  .field--highlight{background:var(--mint-tint-2);border:1.5px solid var(--mint-tint);border-radius:14px;padding:14px 14px 12px;}
+  .field--highlight.has-err{border-color:var(--danger);background:var(--surface);}
+  .field-tip{font-size:12px;font-weight:600;color:var(--mint-deep);margin:7px 2px 0;}
 
   .consent{
     display:flex;gap:11px;align-items:flex-start;
@@ -316,6 +320,7 @@
 
       <!-- 0. 인트로 -->
       <section class="screen is-active" data-screen="intro">
+        <img class="intro-hero" src="images/major-quiz/intro-hero.jpg" alt="지금 전공, 잘 맞는 걸까? 미술학과 실용음악과 유아교육과 체육학과 요리사 의과 법학과" />
         <p class="eyebrow">나에게 딱 맞는 전공테스트</p>
         <div class="hero-count">
           <span class="num" id="heroCount">0</span>
@@ -420,9 +425,25 @@
           <p class="field-err">현재 상황을 선택해주세요.</p>
         </div>
 
-        <div class="field" data-field="concern">
-          <label for="f-concern">지금 가장 고민되는 것<span class="hint">선택</span></label>
-          <textarea class="input" id="f-concern" placeholder="편하게 적어주세요. 익명으로 연구에만 활용돼요."></textarea>
+        <div class="field field--highlight" data-field="concern">
+          <label for="f-concern">지금 가장 고민되는 것<span class="req">*</span></label>
+          <textarea class="input" id="f-concern"></textarea>
+          <p class="field-tip">솔직한 고민을 적을수록 리워드 지급 확률이 높아져요!</p>
+          <p class="field-err">지금 가장 고민되는 것을 입력해주세요.</p>
+        </div>
+
+        <div class="field" data-field="source">
+          <label for="f-source">신청계기<span class="req">*</span></label>
+          <select class="input" id="f-source">
+            <option value="" disabled selected>선택해주세요</option>
+            <option>인스타 SNS</option>
+            <option>학과 공지</option>
+            <option>대학교 추천</option>
+            <option>기업 연계</option>
+            <option>지인 추천</option>
+            <option>외부 사이트</option>
+          </select>
+          <p class="field-err">신청계기를 선택해주세요.</p>
         </div>
 
         <div class="field" data-field="consent" style="margin-bottom:8px;">
@@ -430,7 +451,7 @@
             <input type="checkbox" id="f-consent" />
             <span class="consent__text">
               <b>[필수] 개인정보 수집·이용에 동의합니다.</b>
-              <span class="consent__meta">수집 항목: 이름, 나이, 연락처, 지역, 직업 상태, 고민 내용 / 이용 목적: 리포트 전달 및 연구 활용 / 보유 기간: 목적 달성 시까지</span>
+              <span class="consent__meta">수집 항목: 이름, 나이, 연락처, 지역, 직업 상태, 고민 내용, 신청계기 / 이용 목적: 리포트 전달 및 연구 활용 / 보유 기간: 목적 달성 시까지</span>
             </span>
           </label>
           <p class="field-err">개인정보 수집·이용에 동의해주세요.</p>
@@ -734,6 +755,7 @@ function validateForm(){
   const district=$("#f-district").value.trim();
   const status=$("#f-status").value;
   const concern=$("#f-concern").value.trim();
+  const source=$("#f-source").value;
   const consent=$("#f-consent").checked;
 
   const errors=[];
@@ -746,10 +768,12 @@ function validateForm(){
   setErr("region", !region); if(!region) errors.push("region");
   setErr("district", !district); if(!district) errors.push("district");
   setErr("status", !status); if(!status) errors.push("status");
+  setErr("concern", !concern); if(!concern) errors.push("concern");
+  setErr("source", !source); if(!source) errors.push("source");
   setErr("consent", !consent); if(!consent) errors.push("consent");
 
   return { ok:errors.length===0, first:errors[0],
-    data:{ name, age, phone, region, district, status, concern } };
+    data:{ name, age, phone, region, district, status, concern, source } };
 }
 async function sendToEndpoint(record){
   if(!CONFIG.SUBMIT_ENDPOINT) return;

@@ -29,7 +29,7 @@ function doPost(e) {
         '제출 일시',
         '이름', '나이', '연락처',
         '거주 지역', '거주 시/군/구', '현재 상황',
-        '고민되는 것',
+        '고민되는 것', '신청계기',
         '테스트 결과', '결과 키',
         '문항별 응답'
       ];
@@ -41,7 +41,7 @@ function doPost(e) {
       sheet.setFrozenRows(1);
       sheet.setColumnWidth(1, 150);
       sheet.setColumnWidth(8, 300);
-      sheet.setColumnWidth(11, 260);
+      sheet.setColumnWidth(12, 260);
     }
 
     sheet.appendRow([
@@ -53,6 +53,7 @@ function doPost(e) {
       data.district       || '',
       data.status          || '',
       data.concern          || '',
+      data.source            || '',
       data.resultType        || '',
       data.resultKey          || '',
       Array.isArray(data.answers) ? data.answers.join(', ') : ''
