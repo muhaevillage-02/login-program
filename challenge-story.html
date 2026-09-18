@@ -54,7 +54,7 @@
     background-attachment: fixed;
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
     color: var(--ink);
-    line-height: 1.65;
+    line-height: 1.55;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
@@ -83,6 +83,27 @@
   .topbar-right { color: var(--ink-hint); }
   .topbar-right strong { color: var(--blue); }
 
+  /* 실시간 참여 배지 (떠있는 느낌) */
+  .live-badge {
+    position: fixed; top: 62px; right: 16px; z-index: 60;
+    display: flex; align-items: center; gap: 8px;
+    background: #fff; border: 1px solid var(--border); border-radius: 999px;
+    padding: 9px 16px 9px 12px; box-shadow: var(--shadow-md);
+    font-size: 12.5px; font-weight: 600; color: var(--ink-body);
+    animation: badgeFloat 3.6s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .live-dot {
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    background: var(--blue); box-shadow: 0 0 0 0 rgba(28,127,235,.4);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  .live-badge strong { color: var(--blue-deep); font-weight: 800; }
+  @keyframes badgeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+  @media (max-width: 640px) {
+    .live-badge { top: auto; bottom: 18px; right: 14px; font-size: 11.5px; padding: 8px 14px 8px 10px; }
+  }
+
   /* HEADER */
   .header {
     background: linear-gradient(180deg, var(--bg-blue-soft) 0%, #FFFFFF 100%);
@@ -106,13 +127,13 @@
   }
   .header-title {
     font-size: 32px; font-weight: 800; color: var(--ink);
-    margin: 22px 0 12px; letter-spacing: -0.6px; line-height: 1.35;
+    margin: 22px 0 12px; letter-spacing: -0.8px; line-height: 1.28;
   }
   .header-title .accent {
     background: linear-gradient(90deg, var(--blue), var(--cyan));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  .header-sub { font-size: 15px; color: var(--ink-soft); margin: 0; line-height: 1.75; }
+  .header-sub { font-size: 15px; color: var(--ink-soft); margin: 0; line-height: 1.58; }
   .header-meta {
     display: flex; justify-content: center; gap: 22px;
     margin-top: 26px;
@@ -141,7 +162,7 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 16px;
   }
-  .info-eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 3px; }
+  .info-eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); margin-bottom: 3px; }
   .info-title { font-size: 18px; font-weight: 800; color: var(--ink); margin: 0; letter-spacing: -0.2px; }
   .info-body { padding: 24px 28px; }
   .info-note { font-size: 13.5px; color: var(--ink-soft); margin: 14px 0 0; padding: 11px 14px; background: var(--bg-blue-soft); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; }
@@ -200,7 +221,7 @@
   .section-num.done svg { display: block; }
   .section-num.done .num-text { display: none; }
   .section-titles { flex: 1; min-width: 0; }
-  .section-meta { font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-hint); margin-bottom: 4px; }
+  .section-meta { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-hint); margin-bottom: 4px; }
   .section-title { font-size: 18.5px; font-weight: 800; color: var(--ink); margin: 0; letter-spacing: -0.2px; }
   .section-body { padding: 26px 28px; }
   .section-desc {
@@ -234,7 +255,7 @@
     background: rgba(255,255,255,.28); color: #fff;
     display: flex; align-items: center; justify-content: center; font-size: 12px;
   }
-  .letter-hint { padding: 14px 18px 0; margin: 0; font-size: 13px; color: var(--letter-label); opacity: .82; line-height: 1.6; }
+  .letter-hint { padding: 14px 18px 0; margin: 0; font-size: 13px; color: var(--letter-label); opacity: .82; line-height: 1.5; }
   .letter-chips { padding: 12px 18px 0; }
   .letter-body { padding: 16px 18px 18px 34px; position: relative; }
   .letter-rules { position: absolute; inset: 16px 18px 18px 26px; pointer-events: none; display: flex; flex-direction: column; }
@@ -269,7 +290,7 @@
   .guide {
     background: var(--bg-soft); border: 1px dashed var(--border-strong);
     padding: 10px 14px; border-radius: 8px;
-    font-size: 13px; color: var(--ink-soft); margin-top: 9px; line-height: 1.65;
+    font-size: 13px; color: var(--ink-soft); margin-top: 9px; line-height: 1.5;
   }
 
   input[type="text"], input[type="tel"], input[type="email"], textarea, select {
@@ -326,8 +347,8 @@
     border: 1px solid var(--border); border-radius: 16px;
     padding: 16px 16px 18px; background: var(--bg-soft); margin-bottom: 16px;
   }
-  .consent-card-title { font-size: 11px; font-weight: 800; color: var(--ink-soft); margin-bottom: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
-  .consent-card-body { font-size: 12.5px; color: var(--ink-soft); line-height: 1.8; margin-bottom: 14px; }
+  .consent-card-title { font-size: 11px; font-weight: 800; color: var(--ink-soft); margin-bottom: 8px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .consent-card-body { font-size: 12.5px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 14px; }
   .agree {
     display: flex; align-items: center; gap: 12px; cursor: pointer;
     padding: 14px 16px; background: var(--card); border: 1.5px solid var(--border); border-radius: 12px;
@@ -352,7 +373,7 @@
     background: var(--card); border: 1px dashed var(--border-strong); border-radius: 16px;
   }
   .proceed-area.done { display: none; }
-  .proceed-note { color: var(--ink-soft); font-size: 13.5px; margin: 0 0 16px; line-height: 1.7; }
+  .proceed-note { color: var(--ink-soft); font-size: 13.5px; margin: 0 0 16px; line-height: 1.5; }
 
   /* BUTTONS */
   .cta-btn {
@@ -376,9 +397,9 @@
   }
   .submit-note {
     color: var(--ink-hint);
-    font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;
+    font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px;
   }
-  .submit-line { margin-bottom: 20px; color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
+  .submit-line { margin-bottom: 20px; color: var(--ink-soft); font-size: 14px; line-height: 1.55; }
   .submit-line strong { color: var(--ink); }
 
   /* FOOTER */
@@ -389,7 +410,7 @@
   }
   .footer-msg { font-size: 16px; color: var(--ink); margin-bottom: 12px; font-weight: 700; }
   .footer-msg .accent { color: var(--blue-deep); }
-  .footer-sub { font-size: 13px; line-height: 1.7; margin-bottom: 22px; }
+  .footer-sub { font-size: 13px; line-height: 1.55; margin-bottom: 22px; }
   .footer-contact { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; font-size: 13px; margin-bottom: 22px; }
   .footer-contact a { color: var(--blue-deep); text-decoration: none; font-weight: 600; }
   .footer-contact a:hover { text-decoration: underline; }
@@ -451,10 +472,10 @@
   .modal-tag {
     display: inline-block; background: var(--blue-light); color: var(--blue-deep);
     font-size: 11px; padding: 4px 12px; border-radius: 999px;
-    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 800; margin-bottom: 14px;
+    letter-spacing: 0.06em; text-transform: uppercase; font-weight: 800; margin-bottom: 14px;
   }
   .modal h3 { font-size: 21px; margin: 0 0 12px; font-weight: 800; color: var(--ink); }
-  .modal p { font-size: 14px; color: var(--ink-soft); line-height: 1.8; margin: 0 0 22px; text-align: left; }
+  .modal p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0 0 22px; text-align: left; }
   .modal p .name { color: var(--blue-deep); font-weight: 800; }
   .modal .cta-btn { width: 100%; }
 
@@ -467,6 +488,9 @@
 
 <!-- 진행률 바 -->
 <div class="progress-rail"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- 실시간 참여 배지 -->
+<div class="live-badge" id="liveBadge"><span class="live-dot"></span>지금 <strong id="liveCount">40</strong>명이 고민을 적고있어요~!</div>
 
 <!-- TOP BAR -->
 <div class="topbar">
@@ -902,6 +926,12 @@
 (function () {
   const $  = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+
+  // 실시간 참여 배지: 방문할 때마다 30~65명 사이 랜덤
+  (function () {
+    const liveCount = $("#liveCount");
+    if (liveCount) liveCount.textContent = Math.floor(Math.random() * (65 - 30 + 1)) + 30;
+  })();
 
   /* 구글 시트로 응답을 전송하려면 여기에 Apps Script 웹 앱 URL을 붙여넣으세요.
      설정 방법: 저장소 루트의 apps-script-challenge-story.gs 파일 상단 주석 참고.
