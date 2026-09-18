@@ -31,17 +31,20 @@ function doPost(e) {
         '거주 지역', '거주 시/군/구',
         '직업', '대학명',
         '전화번호', '이메일',
+        '신청계기',
         '도전 스토리',
+        '어려움 카테고리', '앞으로의 어려움',
         '개인정보 동의', 'User-Agent'
       ];
       sheet.appendRow(headers);
       sheet.getRange(1, 1, 1, headers.length)
            .setFontWeight('bold')
-           .setBackground('#EC5A2B')
-           .setFontColor('#FFFFFF');
+           .setBackground('#FFE600')
+           .setFontColor('#1F1B0C');
       sheet.setFrozenRows(1);
       sheet.setColumnWidth(1, 150);
-      sheet.setColumnWidth(11, 320);
+      sheet.setColumnWidth(12, 320);
+      sheet.setColumnWidth(14, 320);
     }
 
     sheet.appendRow([
@@ -55,9 +58,12 @@ function doPost(e) {
       data.university              || '',
       data.phone                     || '',
       data.email                       || '',
-      data.story                         || '',
-      data.agreePrivacy                    || '',
-      data.userAgent                         || ''
+      data.motivation                    || '',
+      data.story                           || '',
+      data.difficultyCategories              || '',
+      data.difficultyStory                     || '',
+      data.agreePrivacy                          || '',
+      data.userAgent                               || ''
     ]);
 
     return ContentService
