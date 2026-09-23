@@ -18,6 +18,7 @@
     --mint:#0A9E78; --mint-deep:#0B8A69; --mint-tint:#E9F5F0; --mint-tint-2:#F1F8F5;
     --paper:#F2F6F4; --ink:#14241E; --ink-60:#586A63; --ink-40:#8A9A93;
     --amber:#BE7327; --amber-tint:#F6ECDD;
+    --blue:#2F6FA6; --blue-tint:#E8F1F8;
     --surface:#FFFFFF; --line:#E1E9E5; --line-strong:#CFDAD5; --danger:#C2492E;
     --radius:16px; --radius-sm:12px; --maxw:480px;
     --font-sans:'Pretendard',system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
@@ -117,6 +118,12 @@
   h2.title{font-size:22px;line-height:1.35;font-weight:800;letter-spacing:-.02em;margin:0 0 14px;}
   .lead{font-size:15.5px;line-height:1.62;color:var(--ink-60);margin:0 0 16px;}
   .lead strong{color:var(--ink);font-weight:700;}
+  .lead strong.emph{
+    color:var(--mint-deep);font-weight:800;
+    background:linear-gradient(transparent 60%, var(--mint-tint) 60%);
+    -webkit-box-decoration-break:clone;box-decoration-break:clone;
+    padding:0 2px;
+  }
   .emoji-lead{font-size:40px;line-height:1;margin:2px 0 16px;}
 
   /* 버튼 */
@@ -125,7 +132,7 @@
     width:100%;border:0;border-radius:14px;
     background:var(--mint);color:#fff;
     font-size:16px;font-weight:700;letter-spacing:-.01em;
-    padding:16px 20px;transition:background var(--dur) ease;
+    padding:16px 20px;transition:background var(--dur) ease,opacity .35s ease;
   }
   .btn:hover{background:var(--mint-deep);}
   .btn:active{transform:translateY(1px);}
@@ -178,7 +185,11 @@
   }
   .hook-note strong{color:var(--mint-deep);font-weight:700;}
   .gift-line{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:14px;color:var(--ink-60);line-height:1.55;}
-  .gift-line .ic{font-size:18px;line-height:1.4;}
+  .gift-line .ic-group{display:inline-flex;gap:2px;flex:0 0 auto;}
+  .gift-line .ic{font-size:18px;line-height:1.4;display:inline-block;}
+  .ic.float{animation:iconFloat 2.6s ease-in-out infinite;}
+  .ic.float.float--d2{animation-delay:.5s;}
+  @keyframes iconFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
 
   /* =========================================================
      질문(quiz) 화면
@@ -187,6 +198,11 @@
   .q-count{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--mint);margin:0 0 10px;}
   .q-img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--line);margin:0 0 16px;background:var(--paper);}
   .q-title{font-size:21px;line-height:1.4;font-weight:800;letter-spacing:-.02em;margin:0 0 20px;}
+  .q-title .hl{
+    background:linear-gradient(transparent 58%, var(--mint-tint-2) 58%);
+    -webkit-box-decoration-break:clone;box-decoration-break:clone;
+    padding:0 2px;
+  }
   .opts{display:flex;flex-direction:column;gap:10px;}
   .opt{
     display:flex;align-items:center;gap:12px;width:100%;text-align:left;
@@ -201,26 +217,22 @@
   .opt.is-selected .op-check{border-color:var(--mint);background:var(--mint);box-shadow:inset 0 0 0 3px var(--surface);}
 
   /* =========================================================
-     리워드 화면
+     리워드 화면 (스토리 이미지 스크롤)
      ========================================================= */
-  .reward-hd{margin-bottom:6px;}
-  .rewards{display:flex;flex-direction:column;gap:12px;margin-top:18px;}
-  .reward{
-    display:flex;gap:14px;align-items:flex-start;
-    background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;
+  .story-list{margin:0 -24px;display:flex;flex-direction:column;}
+  .story-list img{display:block;width:100%;}
+  .scroll-cue{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    margin:2px 0 0;font-size:12.5px;font-weight:600;color:var(--ink-40);
+    animation:scrollCue 1.6s ease-in-out infinite;
   }
-  .reward--hot{border-color:var(--amber-tint);background:var(--amber-tint);border-left:4px solid var(--amber);}
-  .reward__ic{
-    flex:0 0 auto;width:48px;height:48px;border-radius:12px;background:var(--mint-tint);
-    display:flex;align-items:center;justify-content:center;font-size:24px;
+  @keyframes scrollCue{0%,100%{transform:translateY(0);opacity:.6;}50%{transform:translateY(4px);opacity:1;}}
+  .btn.is-locked{opacity:0;pointer-events:none;}
+  .btn.is-unlocked{animation:ctaPulse 1.7s ease-in-out infinite;}
+  @keyframes ctaPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(10,158,120,.45);}
+    50%{box-shadow:0 0 0 9px rgba(10,158,120,0);}
   }
-  .reward--hot .reward__ic{background:#fff;}
-  .reward__body{flex:1;min-width:0;}
-  .reward__eyebrow{font-size:12px;font-weight:700;color:var(--mint);margin:0 0 3px;}
-  .reward--hot .reward__eyebrow{color:var(--amber);}
-  .reward__name{font-size:16px;font-weight:800;letter-spacing:-.01em;margin:0 0 5px;line-height:1.3;}
-  .reward__desc{font-size:13px;line-height:1.5;color:var(--ink-60);margin:0;}
-  .reward-foot{margin-top:16px;text-align:center;font-size:13px;color:var(--ink-40);}
 
   /* =========================================================
      폼 화면
@@ -270,14 +282,27 @@
      결과 화면
      ========================================================= */
   .result-emoji{font-size:64px;line-height:1;text-align:center;margin:8px 0 14px;}
+  .result-block{margin:0 0 20px;}
+  .result-block__label{font-size:13px;font-weight:700;color:var(--mint);margin:0 0 10px;}
+  .result-traits{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .result-traits li{
+    background:var(--paper);border:1px solid var(--line);border-radius:12px;
+    padding:12px 14px;font-size:14px;line-height:1.4;font-weight:700;color:var(--ink);
+    letter-spacing:-.01em;white-space:nowrap;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;
+  }
+  .result-traits li::-webkit-scrollbar{display:none;}
+  .result-caution{display:flex;gap:11px;align-items:center;background:var(--blue-tint);border-radius:16px;padding:16px 18px;margin-bottom:22px;}
+  .result-caution .ic{font-size:18px;flex:0 0 auto;line-height:1;}
+  .result-caution b{display:block;font-size:13px;color:var(--blue);margin-bottom:3px;}
+  .result-caution span{font-size:14px;line-height:1.55;color:var(--ink);}
   .result-type{text-align:center;}
   .result-type .kicker{font-size:13px;font-weight:700;color:var(--mint);margin:0 0 6px;}
   .result-type .name{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 4px;}
   .result-type .one{font-size:15px;color:var(--ink-60);margin:0 0 22px;}
   .result-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px;}
   .result-card p{margin:0;font-size:14.5px;line-height:1.66;color:var(--ink);}
-  .result-hint{display:flex;gap:11px;align-items:flex-start;background:var(--mint-tint);border-radius:16px;padding:16px 18px;margin-bottom:22px;}
-  .result-hint .ic{font-size:18px;flex:0 0 auto;}
+  .result-hint{display:flex;gap:11px;align-items:center;background:var(--mint-tint);border-radius:16px;padding:16px 18px;margin-bottom:22px;}
+  .result-hint .ic{font-size:18px;flex:0 0 auto;line-height:1;}
   .result-hint b{display:block;font-size:13px;color:var(--mint-deep);margin-bottom:3px;}
   .result-hint span{font-size:14px;line-height:1.55;color:var(--ink);}
   .result-actions{display:flex;flex-direction:column;gap:10px;}
@@ -290,7 +315,7 @@
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
   /* 데스크톱 여백 정리 */
-  @media (min-width:520px){ .body{padding:32px 28px 22px;} .foot{padding-left:28px;padding-right:28px;} .bar{padding:0 24px;} }
+  @media (min-width:520px){ .body{padding:32px 28px 22px;} .foot{padding-left:28px;padding-right:28px;} .bar{padding:0 24px;} .story-list{margin:0 -28px;} }
   /* 작은 화면: 프레임을 꽉 채워 앱처럼 */
   @media (max-width:520px){
     .app{padding:0;}
@@ -346,10 +371,10 @@
           <li>누가 내 현실적인 고민 좀 듣고 속 시원하게 풀어주면 안 되나?</li>
         </ul>
         <div class="hook-note">
-          여러분이 들려주는 <strong>이야기(login)</strong> 하나하나가<br>답답한 현실을 바꾸는 진짜 힘이 됩니다.
+          여러분이 들려주는 <strong>이야기</strong> 하나하나가<br>막막하기만 한 현실을 바꾸는 가장 큰 힘이 됩니다.
         </div>
-        <div class="gift-line"><span class="ic">🎁</span><span>목소리를 듣기 전, 팍팍한 일상에 작은 숨통이 트이길 바라며 선물을 준비했어요.</span></div>
-        <div class="gift-line"><span class="ic">⚡</span><span>딱 1분이면 충분해요.</span></div>
+        <div class="gift-line"><span class="ic-group"><span class="ic float">🎁</span><span class="ic float float--d2">🎉</span></span><span>목소리를 듣기 전, 팍팍한 일상에 작은 숨통이 트이길 바라며 선물을 준비했어요.</span></div>
+        <div class="gift-line"><span class="ic-group"><span class="ic float">👥</span><span class="ic float float--d2">📝</span></span><span>여러분의 이야기를 듣고 '청년정책' 제안으로도 현실을 개선합니다.</span></div>
       </section>
 
       <!-- 2. 질문 (동적 렌더) -->
@@ -360,15 +385,9 @@
         <div class="opts" id="opts"></div>
       </section>
 
-      <!-- 3. 리워드 -->
+      <!-- 3. 리워드(스토리 이미지) -->
       <section class="screen" data-screen="reward">
-        <div class="reward-hd">
-          <p class="eyebrow">REWARD</p>
-          <h2 class="title">🎁 내 유형에 맞는 선물은?</h2>
-          <p class="lead">테스트를 완료한 분께 진심을 담은 <strong>3가지 리워드 중 단 하나</strong>를 드려요.</p>
-        </div>
-        <div class="rewards" id="rewards"></div>
-        <p class="reward-foot">당첨 리워드는 신청서에 남겨주신 연락처로 안내됩니다.</p>
+        <div class="story-list" id="storyList"></div>
       </section>
 
       <!-- 4. 폼 -->
@@ -468,11 +487,28 @@
           <p class="name" id="rName">탐색가형</p>
           <p class="one" id="rOne">가능성을 열어두는 사람</p>
         </div>
+        <div class="result-block">
+          <p class="result-block__label">💬 혹시 이런 모습, 나?</p>
+          <ul class="result-traits" id="rTraits"></ul>
+        </div>
+
         <div class="result-card"><p id="rDesc"></p></div>
+
+        <div class="result-hint">
+          <span class="ic">🌟</span>
+          <span><b>나의 강점</b><span id="rStrength"></span></span>
+        </div>
+
         <div class="result-hint">
           <span class="ic">🧩</span>
           <span><b>이런 방향이 잘 맞아요</b><span id="rHint"></span></span>
         </div>
+
+        <div class="result-caution">
+          <span class="ic">🔎</span>
+          <span><b>이것만 기억해요</b><span id="rCaution"></span></span>
+        </div>
+
         <p class="result-foot">· 모든 응답은 익명 처리되며 연구 목적으로만 사용됩니다.<br>· Login 공식 웹페이지에서 상세 안내를 확인할 수 있습니다.</p>
       </section>
 
@@ -515,27 +551,60 @@ const CONFIG = {
     "서울 광진구 · 21세 · 방금 완료",
   ],
 
-  /* 리워드 3종 */
-  REWARDS: [
-    { hot:true,  eyebrow:"초대박 찬스", emoji:"📱", name:"갓생러의 완성, 애플 아이패드", desc:"어떤 고민이든 무적의 치트키가 되어줄 단 하나의 완벽한 장비." },
-    { hot:false, eyebrow:"고민 해결",   emoji:"💊", name:"맞춤형 인사이트 PDF",       desc:"취준·직장생활·멘탈케어·트렌드 등 복잡한 머릿속을 시원하게 뚫어줄 핵심 요약 처방전." },
-    { hot:false, eyebrow:"취향 저격",   emoji:"✨", name:"배경화면 & 디지털 굿즈",     desc:"내 무드에 찰떡같이 어울리는 폰·아이패드 배경화면과 디지털 문방구 세트." },
+  /* 리워드 안내 스토리 이미지 (순서대로 표시, 끝까지 스크롤해야 다음 버튼이 열림) */
+  STORY_IMAGES: [
+    "images/major-quiz/story/01.jpg",
+    "images/major-quiz/story/02.jpg",
+    "images/major-quiz/story/03.jpg",
+    "images/major-quiz/story/04.jpg",
+    "images/major-quiz/story/05.jpg",
+    "images/major-quiz/story/06.jpg",
+    "images/major-quiz/story/07.jpg",
+    "images/major-quiz/story/08.jpg",
   ],
 
   /* 결과 유형 (원하는 유형/문구로 교체) */
   RESULTS: {
     explorer:  { emoji:"🧭", name:"탐색가형", one:"가능성을 열어두는 사람",
-      desc:"아직 한 길로 정하진 않았지만, 그건 방향이 없어서가 아니라 여러 길을 진지하게 재보고 있어서예요. 지금의 애매함은 곧 선택의 폭이 넓다는 뜻이기도 해요.",
-      hint:"다양한 경험을 짧게 여러 번 해보며 나와 맞는 결을 빠르게 찾아가는 방식이 잘 맞아요." },
+      traits:[
+        "선택지는 항상 여러 개 쥐고 있어요",
+        "새로운 건 재기 전에 일단 발부터 담가봐요",
+        "\"뭐가 되고 싶은 거야?\" 많이 들어봤죠",
+      ],
+      desc:"아직 한 길로 정하진 않았지만, 그건 방향이 없어서가 아니라 여러 길을 진지하게 재보고 있어서예요. 지금의 애매함은 곧 선택의 폭이 넓다는 뜻이기도 해요. 남들보다 결정이 늦어 보여도, 그만큼 더 많은 경우의 수를 직접 겪어보고 고르는 사람이라 오히려 후회가 적은 편이에요.",
+      strength:"새로운 환경에 대한 적응력과 호기심이에요. 남들이 주저하는 낯선 자리에서도 일단 부딪혀보는 게 특기라, 기회가 왔을 때 망설이지 않고 잡아요.",
+      hint:"다양한 경험을 짧게 여러 번 해보며 나와 맞는 결을 빠르게 찾아가는 방식이 잘 맞아요.",
+      caution:"다만 선택지를 넓히는 데만 익숙해지면 '마무리'가 약해질 수 있어요. 하나를 끝까지 파보는 경험을 의도적으로 한 번쯤 만들어보면 좋아요." },
     strategist:{ emoji:"📐", name:"전략가형", one:"차근차근 쌓는 사람",
-      desc:"계획을 세우고 하나씩 밟아가는 게 편한 타입이에요. 가끔 ‘이 속도가 맞나’ 싶어 불안할 때가 있지만, 그 꾸준함이 결국 가장 큰 무기가 됩니다.",
-      hint:"목표를 잘게 쪼개고 기록으로 관리하면 확신이 쌓이는 구조를 만들 수 있어요." },
+      traits:[
+        "이번 달 계획표가 머릿속에 이미 있어요",
+        "일정 틀어지면 유독 스트레스 받아요",
+        "\"진짜 계획적이다\" 소리 자주 들어요",
+      ],
+      desc:"계획을 세우고 하나씩 밟아가는 게 편한 타입이에요. 가끔 ‘이 속도가 맞나’ 싶어 불안할 때가 있지만, 그 꾸준함이 결국 가장 큰 무기가 됩니다. 화려하진 않아도 매일 조금씩 쌓아온 게 있어서, 정말 중요한 순간엔 흔들리지 않고 버텨내는 편이에요.",
+      strength:"성실함과 지속력이에요. 남들이 포기하는 지점에서도 묵묵히 한 걸음씩 나아가는 힘이 있어서, 길게 봤을 때 가장 단단한 결과를 만들어내요.",
+      hint:"목표를 잘게 쪼개고 기록으로 관리하면 확신이 쌓이는 구조를 만들 수 있어요.",
+      caution:"다만 계획대로 안 풀릴 때 자책이 심해질 수 있어요. 계획은 '가이드'일 뿐, 틀어져도 괜찮다는 걸 스스로에게 자주 말해주세요." },
     pioneer:   { emoji:"🎨", name:"개척가형", one:"내 색깔로 가는 사람",
-      desc:"남들과 같은 길보다 내 방식이 더 끌리는 타입이에요. 개성이 분명한 만큼, 그걸 ‘어떻게 써먹을지’만 잡히면 훨씬 더 강해질 수 있어요.",
-      hint:"내 강점을 눈에 보이는 결과물(포트폴리오)로 만들면, 색깔 자체가 무기가 돼요." },
+      traits:[
+        "다 하는 방식이면 오히려 하기 싫어져요",
+        "남들 안 하는 방식이라 은근 뿌듯해요",
+        "내 스타일대로 밀어붙인 적 있어요",
+      ],
+      desc:"남들과 같은 길보다 내 방식이 더 끌리는 타입이에요. 개성이 분명한 만큼, 그걸 ‘어떻게 써먹을지’만 잡히면 훨씬 더 강해질 수 있어요. 정해진 틀 안에서는 답답함을 느끼지만, 스스로 규칙을 만들 수 있는 자리에서는 누구보다 몰입하고 빛나는 사람이에요.",
+      strength:"독창성과 실행력이에요. 남이 안 가본 길이라도 일단 내 방식으로 밀어붙이는 뚝심이 있어서, 새로운 기준을 만들어내는 사람이 될 가능성이 커요.",
+      hint:"내 강점을 눈에 보이는 결과물(포트폴리오)로 만들면, 색깔 자체가 무기가 돼요.",
+      caution:"다만 혼자 밀어붙이다 보면 주변과 합을 맞추는 게 뒷전이 될 수 있어요. 가끔은 내 방식을 설명하고 설득하는 시간도 필요해요." },
     harmonizer:{ emoji:"🌙", name:"조율가형", one:"깊게 고민하는 사람",
-      desc:"겉으론 잔잔해 보여도 속으론 꽤 많은 걸 재고 있는 타입이에요. 아직 밖으로 안 꺼냈을 뿐, 원하는 건 분명히 있어요.",
-      hint:"마음속 우선순위를 밖으로 꺼내 정리해보면, 방향이 한결 또렷해져요." },
+      traits:[
+        "웃고 있어도 머릿속은 늘 복잡해요",
+        "고민은 말보다 혼자 정리가 편해요",
+        "\"생각이 많다\" 소리 자주 들어요",
+      ],
+      desc:"겉으론 잔잔해 보여도 속으론 꽤 많은 걸 재고 있는 타입이에요. 아직 밖으로 안 꺼냈을 뿐, 원하는 건 분명히 있어요. 신중한 만큼 실수는 적지만, 그 신중함 때문에 정작 타이밍을 놓치는 경우가 있어서 아쉬울 때가 있죠.",
+      strength:"깊이 있는 공감력과 신중함이에요. 남들이 놓치는 디테일과 감정의 결을 세심하게 읽어내는 힘이 있어서, 사람과 관계를 다루는 일에서 특히 빛나요.",
+      hint:"마음속 우선순위를 밖으로 꺼내 정리해보면, 방향이 한결 또렷해져요.",
+      caution:"다만 생각이 많아질수록 행동이 늦어질 수 있어요. 완벽한 타이밍을 기다리기보다 '일단 작게라도 시작'하는 연습이 도움이 돼요." },
   },
 
   /* 7문항 — 각 보기의 type이 위 RESULTS 키와 연결됩니다 */
@@ -615,7 +684,7 @@ function setBar(mode){
   brand.style.display = (mode==="hook"||inQuiz) ? "none" : "inline-flex";
   progress.style.display = inQuiz ? "flex" : "none";
   progress.setAttribute("aria-hidden", inQuiz ? "false":"true");
-  barTag.hidden = !(mode==="intro"||mode==="hook");
+  barTag.hidden = mode!=="intro";
 }
 
 function showScreen(name){
@@ -631,9 +700,13 @@ function showScreen(name){
   footNote.hidden = true;
 
   if(name==="intro"){ primaryBtn.textContent="시작하기"; primaryBtn.disabled=false; }
-  if(name==="hook"){ primaryBtn.textContent="테스트 시작하기"; primaryBtn.disabled=false; footNote.hidden=false; footNote.textContent="1분이면 끝나요"; }
+  if(name==="hook"){ primaryBtn.textContent="테스트 시작하기"; primaryBtn.disabled=false; footNote.hidden=false; footNote.textContent="1분이면 간단 테스트 완료!"; }
   if(name==="quiz"){ renderQuestion(); }
-  if(name==="reward"){ primaryBtn.textContent="결과 & 리워드 신청하기"; primaryBtn.disabled=false; }
+  if(name==="reward"){
+    primaryBtn.textContent="결과 & 리워드 신청하기";
+    lockRewardCTA();
+    renderStory();
+  }
   if(name==="form"){ primaryBtn.textContent="지금 바로 신청하기"; primaryBtn.disabled=false; }
   if(isResult){ renderResult(); }
 
@@ -671,7 +744,7 @@ function renderQuestion(){
   const i=state.qIndex, item=CONFIG.QUESTIONS[i], total=CONFIG.QUESTIONS.length;
   $("#qCount").textContent=`질문 ${i+1} / ${total}`;
   $("#qImg").src=item.img||"";
-  $("#qTitle").textContent=item.q;
+  $("#qTitle").innerHTML=`<span class="hl">${item.q}</span>`;
   progressNum.textContent=`${i+1}/${total}`;
   progressFill.style.width=`${((i+1)/total)*100}%`;
 
@@ -719,25 +792,57 @@ function renderResult(){
   $("#rName").textContent=r.name;
   $("#rOne").textContent=r.one;
   $("#rDesc").textContent=r.desc;
+  $("#rStrength").textContent=r.strength;
   $("#rHint").textContent=r.hint;
-}
-
-/* ---------- 리워드 렌더 ---------- */
-function renderRewards(){
-  const wrap=$("#rewards"); wrap.innerHTML="";
-  CONFIG.REWARDS.forEach(rw=>{
-    const el=document.createElement("div");
-    el.className="reward"+(rw.hot?" reward--hot":"");
-    el.innerHTML=`
-      <div class="reward__ic">${rw.emoji}</div>
-      <div class="reward__body">
-        <p class="reward__eyebrow">${rw.eyebrow}</p>
-        <p class="reward__name">${rw.name}</p>
-        <p class="reward__desc">${rw.desc}</p>
-      </div>`;
-    wrap.appendChild(el);
+  $("#rCaution").textContent=r.caution;
+  const traitsEl=$("#rTraits"); traitsEl.innerHTML="";
+  (r.traits||[]).forEach(t=>{
+    const li=document.createElement("li");
+    li.textContent=t;
+    traitsEl.appendChild(li);
   });
 }
+
+/* ---------- 리워드 스토리 렌더 & 스크롤 잠금해제 ---------- */
+let storyRendered=false;
+function renderStory(){
+  if(storyRendered) return;
+  const wrap=$("#storyList"); wrap.innerHTML="";
+  CONFIG.STORY_IMAGES.forEach((src,i)=>{
+    const img=document.createElement("img");
+    img.alt=`리워드 안내 ${i+1}/${CONFIG.STORY_IMAGES.length}`;
+    img.addEventListener("load", checkRewardScroll);
+    img.src=src;
+    wrap.appendChild(img);
+  });
+  storyRendered=true;
+}
+const STORY_UNLOCK_AT_IMG = 6; // 이 번째 이미지가 보이기 시작하면 버튼 노출 (1~5는 숨김)
+function lockRewardCTA(){
+  primaryBtn.disabled=true;
+  primaryBtn.classList.add("is-locked");
+  primaryBtn.classList.remove("is-unlocked");
+  footNote.hidden=false;
+  footNote.textContent="↓ 조금 더 읽어보면 다음으로 넘어갈 수 있어요";
+}
+function unlockRewardCTA(){
+  if(!primaryBtn.disabled) return;
+  primaryBtn.disabled=false;
+  primaryBtn.classList.remove("is-locked");
+  primaryBtn.classList.add("is-unlocked");
+  footNote.hidden=true;
+}
+function checkRewardScroll(){
+  if(window.__screen!=="reward") return;
+  const imgs=$("#storyList").querySelectorAll("img");
+  const idx=STORY_UNLOCK_AT_IMG-1;
+  if(imgs.length<=idx){ unlockRewardCTA(); return; }
+  const target=imgs[idx];
+  const targetTop = target.getBoundingClientRect().top - bodyEl.getBoundingClientRect().top + bodyEl.scrollTop;
+  const viewBottom = bodyEl.scrollTop + bodyEl.clientHeight;
+  if(viewBottom >= targetTop) unlockRewardCTA();
+}
+bodyEl.addEventListener("scroll", checkRewardScroll, { passive:true });
 
 /* ---------- 폼 검증 & 제출 ---------- */
 function setErr(fieldName, on){
@@ -844,7 +949,6 @@ $("#shareBtn").addEventListener("click",shareTest);
 $("#restartBtn").addEventListener("click",restart);
 
 /* ---------- 초기화 ---------- */
-renderRewards();
 showScreen("intro");
 animateCount($("#heroCount"), CONFIG.START_COUNT);
 startTicker();
