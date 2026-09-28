@@ -227,7 +227,6 @@
     animation:scrollCue 1.6s ease-in-out infinite;
   }
   @keyframes scrollCue{0%,100%{transform:translateY(0);opacity:.6;}50%{transform:translateY(4px);opacity:1;}}
-  .btn.is-locked{opacity:0;pointer-events:none;}
   .btn.is-unlocked{animation:ctaPulse 1.7s ease-in-out infinite;}
   @keyframes ctaPulse{
     0%,100%{box-shadow:0 0 0 0 rgba(10,158,120,.45);}
@@ -282,15 +281,6 @@
      결과 화면
      ========================================================= */
   .result-emoji{font-size:64px;line-height:1;text-align:center;margin:8px 0 14px;}
-  .result-block{margin:0 0 20px;}
-  .result-block__label{font-size:13px;font-weight:700;color:var(--mint);margin:0 0 10px;}
-  .result-traits{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;}
-  .result-traits li{
-    background:var(--paper);border:1px solid var(--line);border-radius:12px;
-    padding:12px 14px;font-size:14px;line-height:1.4;font-weight:700;color:var(--ink);
-    letter-spacing:-.01em;white-space:nowrap;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;
-  }
-  .result-traits li::-webkit-scrollbar{display:none;}
   .result-caution{display:flex;gap:11px;align-items:center;background:var(--blue-tint);border-radius:16px;padding:16px 18px;margin-bottom:22px;}
   .result-caution .ic{font-size:18px;flex:0 0 auto;line-height:1;}
   .result-caution b{display:block;font-size:13px;color:var(--blue);margin-bottom:3px;}
@@ -305,6 +295,7 @@
   .result-hint .ic{font-size:18px;flex:0 0 auto;line-height:1;}
   .result-hint b{display:block;font-size:13px;color:var(--mint-deep);margin-bottom:3px;}
   .result-hint span{font-size:14px;line-height:1.55;color:var(--ink);}
+  .result-hint .result-sub{display:block;font-size:14.5px;font-weight:800;color:var(--ink);margin-bottom:4px;}
   .result-actions{display:flex;flex-direction:column;gap:10px;}
   .result-foot{margin-top:18px;font-size:11.5px;line-height:1.6;color:var(--ink-40);}
   .toast{
@@ -487,28 +478,29 @@
           <p class="name" id="rName">탐색가형</p>
           <p class="one" id="rOne">가능성을 열어두는 사람</p>
         </div>
-        <div class="result-block">
-          <p class="result-block__label">💬 혹시 이런 모습, 나?</p>
-          <ul class="result-traits" id="rTraits"></ul>
-        </div>
-
         <div class="result-card"><p id="rDesc"></p></div>
 
         <div class="result-hint">
           <span class="ic">🌟</span>
-          <span><b>나의 강점</b><span id="rStrength"></span></span>
-        </div>
-
-        <div class="result-hint">
-          <span class="ic">🧩</span>
-          <span><b>이런 방향이 잘 맞아요</b><span id="rHint"></span></span>
+          <span><b>장점</b><strong class="result-sub" id="rStrengthTitle"></strong><span id="rStrength"></span></span>
         </div>
 
         <div class="result-caution">
           <span class="ic">🔎</span>
-          <span><b>이것만 기억해요</b><span id="rCaution"></span></span>
+          <span><b>보완점</b><span id="rWeakness"></span></span>
         </div>
 
+        <p class="result-foot">· 모든 응답은 익명 처리되며 연구 목적으로만 사용됩니다.<br>· Login 공식 웹페이지에서 상세 안내를 확인할 수 있습니다.</p>
+      </section>
+
+      <!-- 6. 신청 완료 -->
+      <section class="screen" data-screen="done">
+        <div class="result-emoji" id="dEmoji">🎉</div>
+        <div class="result-type">
+          <p class="kicker">신청이 완료됐어요</p>
+          <p class="name" id="dName">탐색가형</p>
+          <p class="one">리워드 안내는 남겨주신 연락처로 전달드릴게요.</p>
+        </div>
         <p class="result-foot">· 모든 응답은 익명 처리되며 연구 목적으로만 사용됩니다.<br>· Login 공식 웹페이지에서 상세 안내를 확인할 수 있습니다.</p>
       </section>
 
@@ -566,45 +558,25 @@ const CONFIG = {
   /* 결과 유형 (원하는 유형/문구로 교체) */
   RESULTS: {
     explorer:  { emoji:"🧭", name:"탐색가형", one:"가능성을 열어두는 사람",
-      traits:[
-        "선택지는 항상 여러 개 쥐고 있어요",
-        "새로운 건 재기 전에 일단 발부터 담가봐요",
-        "\"뭐가 되고 싶은 거야?\" 많이 들어봤죠",
-      ],
-      desc:"아직 한 길로 정하진 않았지만, 그건 방향이 없어서가 아니라 여러 길을 진지하게 재보고 있어서예요. 지금의 애매함은 곧 선택의 폭이 넓다는 뜻이기도 해요. 남들보다 결정이 늦어 보여도, 그만큼 더 많은 경우의 수를 직접 겪어보고 고르는 사람이라 오히려 후회가 적은 편이에요.",
-      strength:"새로운 환경에 대한 적응력과 호기심이에요. 남들이 주저하는 낯선 자리에서도 일단 부딪혀보는 게 특기라, 기회가 왔을 때 망설이지 않고 잡아요.",
-      hint:"다양한 경험을 짧게 여러 번 해보며 나와 맞는 결을 빠르게 찾아가는 방식이 잘 맞아요.",
-      caution:"다만 선택지를 넓히는 데만 익숙해지면 '마무리'가 약해질 수 있어요. 하나를 끝까지 파보는 경험을 의도적으로 한 번쯤 만들어보면 좋아요." },
+      desc:"아직 한 가지 길을 정하지 않았지만, 방향이 없는 게 아니라 여러 가능성을 직접 경험해보며 나에게 맞는 길을 찾아가는 유형입니다.",
+      strengthTitle:"새로운 환경에 대한 적응력과 호기심",
+      strengthBody:"낯선 분야도 일단 경험해보며 기회를 잡고 새로운 가능성을 발견하는 데 강합니다.",
+      weakness:"선택지를 넓히는 것에서 끝나지 않는 것이 중요해요. 여러 가지를 경험하는 것도 좋지만, 때로는 하나를 정하고 끝까지 해보는 경험도 필요합니다." },
     strategist:{ emoji:"📐", name:"전략가형", one:"차근차근 쌓는 사람",
-      traits:[
-        "이번 달 계획표가 머릿속에 이미 있어요",
-        "일정 틀어지면 유독 스트레스 받아요",
-        "\"진짜 계획적이다\" 소리 자주 들어요",
-      ],
-      desc:"계획을 세우고 하나씩 밟아가는 게 편한 타입이에요. 가끔 ‘이 속도가 맞나’ 싶어 불안할 때가 있지만, 그 꾸준함이 결국 가장 큰 무기가 됩니다. 화려하진 않아도 매일 조금씩 쌓아온 게 있어서, 정말 중요한 순간엔 흔들리지 않고 버텨내는 편이에요.",
-      strength:"성실함과 지속력이에요. 남들이 포기하는 지점에서도 묵묵히 한 걸음씩 나아가는 힘이 있어서, 길게 봤을 때 가장 단단한 결과를 만들어내요.",
-      hint:"목표를 잘게 쪼개고 기록으로 관리하면 확신이 쌓이는 구조를 만들 수 있어요.",
-      caution:"다만 계획대로 안 풀릴 때 자책이 심해질 수 있어요. 계획은 '가이드'일 뿐, 틀어져도 괜찮다는 걸 스스로에게 자주 말해주세요." },
+      desc:"목표를 정하고 계획을 세운 뒤 하나씩 꾸준하게 쌓아가는 유형입니다.",
+      strengthTitle:"성실함과 지속력",
+      strengthBody:"남들이 포기하는 순간에도 꾸준히 한 걸음씩 나아가며 시간이 지날수록 단단한 결과를 만들어냅니다.",
+      weakness:"계획대로 되지 않았다고 스스로를 너무 몰아붙이지 마세요. 계획은 정답이 아니라 방향을 잡아주는 가이드예요. 조금 돌아가거나 계획이 바뀌어도 괜찮습니다." },
     pioneer:   { emoji:"🎨", name:"개척가형", one:"내 색깔로 가는 사람",
-      traits:[
-        "다 하는 방식이면 오히려 하기 싫어져요",
-        "남들 안 하는 방식이라 은근 뿌듯해요",
-        "내 스타일대로 밀어붙인 적 있어요",
-      ],
-      desc:"남들과 같은 길보다 내 방식이 더 끌리는 타입이에요. 개성이 분명한 만큼, 그걸 ‘어떻게 써먹을지’만 잡히면 훨씬 더 강해질 수 있어요. 정해진 틀 안에서는 답답함을 느끼지만, 스스로 규칙을 만들 수 있는 자리에서는 누구보다 몰입하고 빛나는 사람이에요.",
-      strength:"독창성과 실행력이에요. 남이 안 가본 길이라도 일단 내 방식으로 밀어붙이는 뚝심이 있어서, 새로운 기준을 만들어내는 사람이 될 가능성이 커요.",
-      hint:"내 강점을 눈에 보이는 결과물(포트폴리오)로 만들면, 색깔 자체가 무기가 돼요.",
-      caution:"다만 혼자 밀어붙이다 보면 주변과 합을 맞추는 게 뒷전이 될 수 있어요. 가끔은 내 방식을 설명하고 설득하는 시간도 필요해요." },
+      desc:"남들과 똑같은 길보다는 내 방식과 나만의 기준으로 길을 만들어가는 유형입니다.",
+      strengthTitle:"독창성과 실행력",
+      strengthBody:"남들이 가지 않은 방식이라도 자신만의 아이디어와 방식으로 밀고 나가는 힘이 있습니다.",
+      weakness:"혼자만의 방식에 머물지 않는 것도 중요해요. 내 생각을 밀고 나가는 것만큼 다른 사람에게 설명하고 함께 맞춰가는 과정도 필요합니다." },
     harmonizer:{ emoji:"🌙", name:"조율가형", one:"깊게 고민하는 사람",
-      traits:[
-        "웃고 있어도 머릿속은 늘 복잡해요",
-        "고민은 말보다 혼자 정리가 편해요",
-        "\"생각이 많다\" 소리 자주 들어요",
-      ],
-      desc:"겉으론 잔잔해 보여도 속으론 꽤 많은 걸 재고 있는 타입이에요. 아직 밖으로 안 꺼냈을 뿐, 원하는 건 분명히 있어요. 신중한 만큼 실수는 적지만, 그 신중함 때문에 정작 타이밍을 놓치는 경우가 있어서 아쉬울 때가 있죠.",
-      strength:"깊이 있는 공감력과 신중함이에요. 남들이 놓치는 디테일과 감정의 결을 세심하게 읽어내는 힘이 있어서, 사람과 관계를 다루는 일에서 특히 빛나요.",
-      hint:"마음속 우선순위를 밖으로 꺼내 정리해보면, 방향이 한결 또렷해져요.",
-      caution:"다만 생각이 많아질수록 행동이 늦어질 수 있어요. 완벽한 타이밍을 기다리기보다 '일단 작게라도 시작'하는 연습이 도움이 돼요." },
+      desc:"겉으로는 차분해 보여도 속으로는 많은 것을 생각하고 비교하며 신중하게 나만의 답을 찾아가는 유형입니다.",
+      strengthTitle:"깊이 있는 공감력과 신중함",
+      strengthBody:"다른 사람이 지나치는 감정이나 디테일까지 살피고 사람과 관계를 세심하게 이해하는 힘이 있습니다.",
+      weakness:"생각만 하다가 타이밍을 놓치지 않는 것이 중요해요. 완벽하게 준비된 순간을 기다리기보다 작게라도 먼저 시작해보는 연습이 도움이 됩니다." },
   },
 
   /* 7문항 — 각 보기의 type이 위 RESULTS 키와 연결됩니다 */
@@ -694,21 +666,22 @@ function showScreen(name){
   setBar(name);
 
   // CTA 구성
-  const isResult = name==="result";
-  primaryBtn.style.display = isResult ? "none" : "flex";
-  resultActions.style.display = isResult ? "flex" : "none";
+  const isDone = name==="done";
+  primaryBtn.style.display = isDone ? "none" : "flex";
+  resultActions.style.display = isDone ? "flex" : "none";
   footNote.hidden = true;
 
   if(name==="intro"){ primaryBtn.textContent="시작하기"; primaryBtn.disabled=false; }
   if(name==="hook"){ primaryBtn.textContent="테스트 시작하기"; primaryBtn.disabled=false; footNote.hidden=false; footNote.textContent="1분이면 간단 테스트 완료!"; }
   if(name==="quiz"){ renderQuestion(); }
+  if(name==="result"){ primaryBtn.textContent="🎁 리워드 확인하러 가기"; primaryBtn.disabled=false; renderResult(); }
   if(name==="reward"){
-    primaryBtn.textContent="결과 & 리워드 신청하기";
+    primaryBtn.textContent="신청하기";
     lockRewardCTA();
     renderStory();
   }
   if(name==="form"){ primaryBtn.textContent="지금 바로 신청하기"; primaryBtn.disabled=false; }
-  if(isResult){ renderResult(); }
+  if(isDone){ renderDone(); }
 
   window.__screen = name;
 }
@@ -762,14 +735,14 @@ function renderQuestion(){
     });
     opts.appendChild(b);
   });
-  primaryBtn.textContent = (i===total-1) ? "선물 확인하기" : "다음";
+  primaryBtn.textContent = (i===total-1) ? "결과 확인하기" : "다음";
   primaryBtn.disabled = state.answers[i]===null;
 }
 function nextFromQuiz(){
   const total=CONFIG.QUESTIONS.length;
   if(state.answers[state.qIndex]===null) return;
   if(state.qIndex < total-1){ state.qIndex++; renderQuestion(); }
-  else { computeResult(); showScreen("reward"); }
+  else { computeResult(); showScreen("result"); }
 }
 function prevFromQuiz(){
   if(state.qIndex>0){ state.qIndex--; renderQuestion(); }
@@ -792,48 +765,53 @@ function renderResult(){
   $("#rName").textContent=r.name;
   $("#rOne").textContent=r.one;
   $("#rDesc").textContent=r.desc;
-  $("#rStrength").textContent=r.strength;
-  $("#rHint").textContent=r.hint;
-  $("#rCaution").textContent=r.caution;
-  const traitsEl=$("#rTraits"); traitsEl.innerHTML="";
-  (r.traits||[]).forEach(t=>{
-    const li=document.createElement("li");
-    li.textContent=t;
-    traitsEl.appendChild(li);
-  });
+  $("#rStrengthTitle").textContent=r.strengthTitle;
+  $("#rStrength").textContent=r.strengthBody;
+  $("#rWeakness").textContent=r.weakness;
+}
+function renderDone(){
+  const r=CONFIG.RESULTS[state.result]||Object.values(CONFIG.RESULTS)[0];
+  $("#dEmoji").textContent="🎉";
+  $("#dName").textContent=r.name;
 }
 
 /* ---------- 리워드 스토리 렌더 & 스크롤 잠금해제 ---------- */
 let storyRendered=false;
+let storyLoadedCount=0;
 function renderStory(){
   if(storyRendered) return;
   const wrap=$("#storyList"); wrap.innerHTML="";
   CONFIG.STORY_IMAGES.forEach((src,i)=>{
     const img=document.createElement("img");
     img.alt=`리워드 안내 ${i+1}/${CONFIG.STORY_IMAGES.length}`;
-    img.addEventListener("load", checkRewardScroll);
+    const onSettled=()=>{ storyLoadedCount++; checkRewardScroll(); };
+    img.addEventListener("load", onSettled);
+    img.addEventListener("error", onSettled);
     img.src=src;
     wrap.appendChild(img);
   });
   storyRendered=true;
 }
-const STORY_UNLOCK_AT_IMG = 6; // 이 번째 이미지가 보이기 시작하면 버튼 노출 (1~5는 숨김)
+const STORY_UNLOCK_AT_IMG = 8; // 이 번째 이미지가 보이기 시작하면 버튼 노출 (1~7페이지는 숨김)
 function lockRewardCTA(){
   primaryBtn.disabled=true;
-  primaryBtn.classList.add("is-locked");
+  primaryBtn.style.display="none";
   primaryBtn.classList.remove("is-unlocked");
   footNote.hidden=false;
-  footNote.textContent="↓ 조금 더 읽어보면 다음으로 넘어갈 수 있어요";
+  footNote.textContent="↓ 끝까지 읽으면 신청하기 버튼이 나타나요";
 }
 function unlockRewardCTA(){
   if(!primaryBtn.disabled) return;
   primaryBtn.disabled=false;
-  primaryBtn.classList.remove("is-locked");
+  primaryBtn.style.display="flex";
   primaryBtn.classList.add("is-unlocked");
   footNote.hidden=true;
 }
 function checkRewardScroll(){
   if(window.__screen!=="reward") return;
+  // 모든 이미지가 실제로 로드(레이아웃 확정)되기 전에는 위치 계산이 부정확해
+  // 조기 해제될 수 있으므로, 전부 로드되기 전까지는 판단을 보류한다.
+  if(storyLoadedCount < CONFIG.STORY_IMAGES.length) return;
   const imgs=$("#storyList").querySelectorAll("img");
   const idx=STORY_UNLOCK_AT_IMG-1;
   if(imgs.length<=idx){ unlockRewardCTA(); return; }
@@ -906,7 +884,7 @@ async function submitForm(){
   primaryBtn.disabled=true; primaryBtn.textContent="신청 중…";
   await sendToEndpoint(record);
   primaryBtn.disabled=false;
-  showScreen("result");
+  showScreen("done");
 }
 
 /* ---------- 공유 / 토스트 ---------- */
@@ -937,6 +915,7 @@ primaryBtn.addEventListener("click",()=>{
   if(s==="intro") showScreen("hook");
   else if(s==="hook") showScreen("quiz");
   else if(s==="quiz") nextFromQuiz();
+  else if(s==="result") showScreen("reward");
   else if(s==="reward") showScreen("form");
   else if(s==="form") submitForm();
 });
