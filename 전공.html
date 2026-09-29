@@ -211,7 +211,6 @@
     transition:border-color var(--dur) ease,background var(--dur) ease;
   }
   .opt:hover{border-color:var(--line-strong);}
-  .opt .op-emoji{font-size:20px;flex:0 0 auto;}
   .opt .op-check{margin-left:auto;flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:2px solid var(--line-strong);transition:all var(--dur) ease;}
   .opt.is-selected{border-color:var(--mint);background:var(--mint-tint);}
   .opt.is-selected .op-check{border-color:var(--mint);background:var(--mint);box-shadow:inset 0 0 0 3px var(--surface);}
@@ -232,6 +231,14 @@
     0%,100%{box-shadow:0 0 0 0 rgba(10,158,120,.45);}
     50%{box-shadow:0 0 0 9px rgba(10,158,120,0);}
   }
+  .unlock-badge{
+    display:flex;align-items:center;gap:6px;width:fit-content;margin:0 auto 10px;
+    background:var(--danger);color:#fff;font-size:13px;font-weight:800;letter-spacing:-.01em;
+    padding:7px 14px;border-radius:99px;
+    box-shadow:0 8px 18px -8px rgba(194,73,46,.6);
+    animation:badgePop .45s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes badgePop{0%{transform:scale(.6);opacity:0;}70%{transform:scale(1.08);opacity:1;}100%{transform:scale(1);opacity:1;}}
 
   /* =========================================================
      폼 화면
@@ -385,7 +392,7 @@
       <section class="screen" data-screen="form">
         <p class="eyebrow">STEP · LAST</p>
         <h2 class="title">📋 마지막 단계예요</h2>
-        <p class="lead">입력해주신 정보로 <strong>당첨 리워드 안내</strong>를 드려요. 정확히 적어주셔야 받으실 수 있으니 한 번 더 확인해주세요.</p>
+        <p class="lead">입력해주신 정보로 <strong>리워드 당첨 여부 안내</strong>를 드립니다. 정확히 적어주셔야 받으실 수 있으니 한 번 더 확인해주세요.</p>
 
         <div class="field" data-field="name">
           <label for="f-name">성함<span class="req">*</span></label>
@@ -461,7 +468,7 @@
             <input type="checkbox" id="f-consent" />
             <span class="consent__text">
               <b>[필수] 개인정보 수집·이용에 동의합니다.</b>
-              <span class="consent__meta">수집 항목: 이름, 나이, 연락처, 지역, 직업 상태, 고민 내용, 신청계기 / 이용 목적: 리포트 전달 및 연구 활용 / 보유 기간: 목적 달성 시까지</span>
+              <span class="consent__meta">성함, 나이, 연락처, 거주 지역, 현재 상황, 고민 내용, 신청 계기를 남겨주시면 리워드 전달과 리포트 제작을 위한 연구로 사용되며, 프로젝트 종료 이후 즉각 처리됩니다.</span>
             </span>
           </label>
           <p class="field-err">개인정보 수집·이용에 동의해주세요.</p>
@@ -493,21 +500,11 @@
         <p class="result-foot">· 모든 응답은 익명 처리되며 연구 목적으로만 사용됩니다.<br>· Login 공식 웹페이지에서 상세 안내를 확인할 수 있습니다.</p>
       </section>
 
-      <!-- 6. 신청 완료 -->
-      <section class="screen" data-screen="done">
-        <div class="result-emoji" id="dEmoji">🎉</div>
-        <div class="result-type">
-          <p class="kicker">신청이 완료됐어요</p>
-          <p class="name" id="dName">탐색가형</p>
-          <p class="one">리워드 안내는 남겨주신 연락처로 전달드릴게요.</p>
-        </div>
-        <p class="result-foot">· 모든 응답은 익명 처리되며 연구 목적으로만 사용됩니다.<br>· Login 공식 웹페이지에서 상세 안내를 확인할 수 있습니다.</p>
-      </section>
-
     </div><!-- /body -->
 
     <!-- 하단 고정 CTA (매 화면 같은 위치) -->
     <div class="foot" id="foot">
+      <p class="unlock-badge" id="unlockBadge" hidden>🎁 선착순 20명 무료 제공</p>
       <button class="btn" id="primaryBtn" type="button">시작하기</button>
       <p class="btn-note" id="footNote" hidden></p>
       <div id="resultActions" style="display:none;flex-direction:column;gap:10px;">
@@ -582,46 +579,46 @@ const CONFIG = {
   /* 7문항 — 각 보기의 type이 위 RESULTS 키와 연결됩니다 */
   QUESTIONS: [
     { q:"새 학기, 시간표 짤 때 나는?", img:"images/major-quiz/q1.jpg", options:[
-      { emoji:"🧭", label:"관심 가는 거 일단 여러 개 담아둠", type:"explorer" },
-      { emoji:"📐", label:"졸업요건·계획부터 확인하고 딱 맞게", type:"strategist" },
-      { emoji:"🎨", label:"남들 잘 안 듣는 특이한 수업 골라봄", type:"pioneer" },
-      { emoji:"🌙", label:"고민만 하다 막판에 겨우 확정", type:"harmonizer" },
+      { label:"관심 가는 거 일단 여러 개 담아둠", type:"explorer" },
+      { label:"졸업요건·계획부터 확인하고 딱 맞게", type:"strategist" },
+      { label:"남들 잘 안 듣는 특이한 수업 골라봄", type:"pioneer" },
+      { label:"고민만 하다 막판에 겨우 확정", type:"harmonizer" },
     ]},
     { q:"진로 얘기가 나오면 속마음은?", img:"images/major-quiz/q2.jpg", options:[
-      { emoji:"🧭", label:"아직 정하긴 이르지, 더 봐야지", type:"explorer" },
-      { emoji:"📐", label:"계획은 있는데 잘 되고 있나 싶음", type:"strategist" },
-      { emoji:"🎨", label:"내 식대로 가고 싶은데 이해받기 어려움", type:"pioneer" },
-      { emoji:"🌙", label:"하고 싶은 건 있는데 말로 못 꺼냄", type:"harmonizer" },
+      { label:"아직 정하긴 이르지, 더 봐야지", type:"explorer" },
+      { label:"계획은 있는데 잘 되고 있나 싶음", type:"strategist" },
+      { label:"내 식대로 가고 싶은데 이해받기 어려움", type:"pioneer" },
+      { label:"하고 싶은 건 있는데 말로 못 꺼냄", type:"harmonizer" },
     ]},
     { q:"과제나 프로젝트를 할 때 나는?", img:"images/major-quiz/q3.jpg", options:[
-      { emoji:"🧭", label:"이것저것 시도하다 방향을 잡음", type:"explorer" },
-      { emoji:"📐", label:"일정표 짜고 순서대로 진행", type:"strategist" },
-      { emoji:"🎨", label:"남들과 다른 접근으로 튀게", type:"pioneer" },
-      { emoji:"🌙", label:"완벽하게 하려다 시작이 늦음", type:"harmonizer" },
+      { label:"이것저것 시도하다 방향을 잡음", type:"explorer" },
+      { label:"일정표 짜고 순서대로 진행", type:"strategist" },
+      { label:"남들과 다른 접근으로 튀게", type:"pioneer" },
+      { label:"완벽하게 하려다 시작이 늦음", type:"harmonizer" },
     ]},
     { q:"친구들이 나한테 자주 하는 말은?", img:"images/major-quiz/q4.jpg", options:[
-      { emoji:"🧭", label:"“관심사 진짜 넓다”", type:"explorer" },
-      { emoji:"📐", label:"“넌 참 계획적이야”", type:"strategist" },
-      { emoji:"🎨", label:"“생각이 남다르네”", type:"pioneer" },
-      { emoji:"🌙", label:"“속을 잘 모르겠어, 근데 깊어”", type:"harmonizer" },
+      { label:"“관심사 진짜 넓다”", type:"explorer" },
+      { label:"“넌 참 계획적이야”", type:"strategist" },
+      { label:"“생각이 남다르네”", type:"pioneer" },
+      { label:"“속을 잘 모르겠어, 근데 깊어”", type:"harmonizer" },
     ]},
     { q:"쉬는 날, 갑자기 생긴 자유시간엔?", img:"images/major-quiz/q5.jpg", options:[
-      { emoji:"🧭", label:"안 해본 거 하나 질러봄", type:"explorer" },
-      { emoji:"📐", label:"밀린 거 정리하고 다음 주 준비", type:"strategist" },
-      { emoji:"🎨", label:"나만의 취미에 몰입", type:"pioneer" },
-      { emoji:"🌙", label:"그냥 생각 정리하며 쉼", type:"harmonizer" },
+      { label:"안 해본 거 하나 질러봄", type:"explorer" },
+      { label:"밀린 거 정리하고 다음 주 준비", type:"strategist" },
+      { label:"나만의 취미에 몰입", type:"pioneer" },
+      { label:"그냥 생각 정리하며 쉼", type:"harmonizer" },
     ]},
     { q:"미래를 떠올리면 가장 가까운 문장은?", img:"images/major-quiz/q6.jpg", options:[
-      { emoji:"🧭", label:"“정해진 길 없어도 괜찮아, 일단 가보자”", type:"explorer" },
-      { emoji:"📐", label:"“천천히라도 내 자리를 만들어가는 중”", type:"strategist" },
-      { emoji:"🎨", label:"“남들이 뭐라 해도 내 방식이 맞다고 믿어”", type:"pioneer" },
-      { emoji:"🌙", label:"“아직 못 꺼냈지만, 분명 원하는 게 있어”", type:"harmonizer" },
+      { label:"“정해진 길 없어도 괜찮아, 일단 가보자”", type:"explorer" },
+      { label:"“천천히라도 내 자리를 만들어가는 중”", type:"strategist" },
+      { label:"“남들이 뭐라 해도 내 방식이 맞다고 믿어”", type:"pioneer" },
+      { label:"“아직 못 꺼냈지만, 분명 원하는 게 있어”", type:"harmonizer" },
     ]},
     { q:"지금 나에게 가장 필요한 건?", img:"images/major-quiz/q7.jpg", options:[
-      { emoji:"🧭", label:"다양한 선택지를 직접 경험해볼 기회", type:"explorer" },
-      { emoji:"📐", label:"계획을 점검해줄 구체적인 피드백", type:"strategist" },
-      { emoji:"🎨", label:"내 강점을 살릴 나만의 방향", type:"pioneer" },
-      { emoji:"🌙", label:"복잡한 마음을 정리할 시간과 대화", type:"harmonizer" },
+      { label:"다양한 선택지를 직접 경험해볼 기회", type:"explorer" },
+      { label:"계획을 점검해줄 구체적인 피드백", type:"strategist" },
+      { label:"내 강점을 살릴 나만의 방향", type:"pioneer" },
+      { label:"복잡한 마음을 정리할 시간과 대화", type:"harmonizer" },
     ]},
   ],
 };
@@ -646,7 +643,7 @@ const screens = {};
 document.querySelectorAll(".screen").forEach(s=>screens[s.dataset.screen]=s);
 const brand = $("#brand"), backBtn = $("#backBtn"), progress = $("#progress"),
       progressFill = $("#progressFill"), progressNum = $("#progressNum"), barTag = $("#barTag");
-const primaryBtn = $("#primaryBtn"), footNote = $("#footNote"), resultActions = $("#resultActions");
+const primaryBtn = $("#primaryBtn"), footNote = $("#footNote"), resultActions = $("#resultActions"), unlockBadge = $("#unlockBadge");
 
 // 화면 순서 및 진입 로직
 function setBar(mode){
@@ -666,22 +663,22 @@ function showScreen(name){
   setBar(name);
 
   // CTA 구성
-  const isDone = name==="done";
-  primaryBtn.style.display = isDone ? "none" : "flex";
-  resultActions.style.display = isDone ? "flex" : "none";
+  const isResult = name==="result";
+  primaryBtn.style.display = isResult ? "none" : "flex";
+  resultActions.style.display = isResult ? "flex" : "none";
   footNote.hidden = true;
+  unlockBadge.hidden = true;
 
   if(name==="intro"){ primaryBtn.textContent="시작하기"; primaryBtn.disabled=false; }
   if(name==="hook"){ primaryBtn.textContent="테스트 시작하기"; primaryBtn.disabled=false; footNote.hidden=false; footNote.textContent="1분이면 간단 테스트 완료!"; }
   if(name==="quiz"){ renderQuestion(); }
-  if(name==="result"){ primaryBtn.textContent="🎁 리워드 확인하러 가기"; primaryBtn.disabled=false; renderResult(); }
   if(name==="reward"){
     primaryBtn.textContent="신청하기";
     lockRewardCTA();
     renderStory();
   }
   if(name==="form"){ primaryBtn.textContent="지금 바로 신청하기"; primaryBtn.disabled=false; }
-  if(isDone){ renderDone(); }
+  if(isResult){ renderResult(); }
 
   window.__screen = name;
 }
@@ -726,7 +723,7 @@ function renderQuestion(){
     const b=document.createElement("button");
     b.type="button"; b.className="opt";
     if(state.answers[i]===op.type) b.classList.add("is-selected");
-    b.innerHTML=`<span class="op-emoji">${op.emoji}</span><span>${op.label}</span><span class="op-check" aria-hidden="true"></span>`;
+    b.innerHTML=`<span>${op.label}</span><span class="op-check" aria-hidden="true"></span>`;
     b.addEventListener("click",()=>{
       state.answers[i]=op.type;
       opts.querySelectorAll(".opt").forEach(o=>o.classList.remove("is-selected"));
@@ -735,14 +732,14 @@ function renderQuestion(){
     });
     opts.appendChild(b);
   });
-  primaryBtn.textContent = (i===total-1) ? "결과 확인하기" : "다음";
+  primaryBtn.textContent = (i===total-1) ? "선물 확인하기" : "다음";
   primaryBtn.disabled = state.answers[i]===null;
 }
 function nextFromQuiz(){
   const total=CONFIG.QUESTIONS.length;
   if(state.answers[state.qIndex]===null) return;
   if(state.qIndex < total-1){ state.qIndex++; renderQuestion(); }
-  else { computeResult(); showScreen("result"); }
+  else { computeResult(); showScreen("reward"); }
 }
 function prevFromQuiz(){
   if(state.qIndex>0){ state.qIndex--; renderQuestion(); }
@@ -769,11 +766,6 @@ function renderResult(){
   $("#rStrength").textContent=r.strengthBody;
   $("#rWeakness").textContent=r.weakness;
 }
-function renderDone(){
-  const r=CONFIG.RESULTS[state.result]||Object.values(CONFIG.RESULTS)[0];
-  $("#dEmoji").textContent="🎉";
-  $("#dName").textContent=r.name;
-}
 
 /* ---------- 리워드 스토리 렌더 & 스크롤 잠금해제 ---------- */
 let storyRendered=false;
@@ -797,6 +789,7 @@ function lockRewardCTA(){
   primaryBtn.disabled=true;
   primaryBtn.style.display="none";
   primaryBtn.classList.remove("is-unlocked");
+  unlockBadge.hidden=true;
   footNote.hidden=false;
   footNote.textContent="↓ 끝까지 읽으면 신청하기 버튼이 나타나요";
 }
@@ -805,6 +798,7 @@ function unlockRewardCTA(){
   primaryBtn.disabled=false;
   primaryBtn.style.display="flex";
   primaryBtn.classList.add("is-unlocked");
+  unlockBadge.hidden=false;
   footNote.hidden=true;
 }
 function checkRewardScroll(){
@@ -884,7 +878,7 @@ async function submitForm(){
   primaryBtn.disabled=true; primaryBtn.textContent="신청 중…";
   await sendToEndpoint(record);
   primaryBtn.disabled=false;
-  showScreen("done");
+  showScreen("result");
 }
 
 /* ---------- 공유 / 토스트 ---------- */
@@ -915,7 +909,6 @@ primaryBtn.addEventListener("click",()=>{
   if(s==="intro") showScreen("hook");
   else if(s==="hook") showScreen("quiz");
   else if(s==="quiz") nextFromQuiz();
-  else if(s==="result") showScreen("reward");
   else if(s==="reward") showScreen("form");
   else if(s==="form") submitForm();
 });
