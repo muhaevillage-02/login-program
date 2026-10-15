@@ -1,0 +1,1183 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html,body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>미우새 공모전</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700;800&display=swap">
+<style>
+@font-face{font-family:'GumiIndustry';src:local('구미첨단산업체 TTF'),local('GumiIndustry'),local('GumiIndustryTTF'),local('Gumi Industry'),local('GumiAdvancedIndustrialComplex'),local('구미첨단산업체'),url(assets/font-01.woff) format('woff');font-weight:400;font-style:normal;font-display:swap}
+/* Layout: 화이트 내비 → 옐로 히어로(문구 | 정보 카드 | 캐릭터) → 공모 내용 3카드 → 심사 4카드 → 혜택 3카드 → 3단계 → FAQ → 옐로 CTA 띠. 신청 단계는 가운데 640px 단일 컬럼. 단일 라이트 테마. */
+:root{
+  --yellow:#FFDE3B; --yellow-deep:#FFC700; --yellow-pale:#FFF8D9; --amber:#D48A00;
+  --ink:#1B1B1B; --text:#2B2B2B; --muted:#757575; --line:#ECEBE6; --card:#FFFFFF;
+  --bg:#FFFFFF; --grey:#F4F4F2; --blue:#3C7BF6; --blue-pale:#EDF3FF;
+  --gold:#F6C33B; --silver:#B9C3D3; --bronze:#E3A06A;
+  --danger:#D93025; --danger-bg:#FDEDEA; --ok:#178A4C;
+  --shadow:0 2px 4px rgba(27,27,27,.03),0 10px 28px -10px rgba(27,27,27,.12);
+  --font:"GumiIndustry","Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --r-xl:28px; --r-lg:22px; --r-md:16px; --r-sm:12px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-weight:400;font-synthesis:none;font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,dl,dd,ol,ul,figure{margin:0}
+ol,ul{padding:0;list-style:none}
+h1,h2,h3,strong,b,dt,legend,label,button{font-weight:400}
+body.ff h1,body.ff h2,body.ff h3,body.ff strong,body.ff b,body.ff .btn,body.ff .hb{font-weight:800}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+img{display:block;max-width:100%;height:auto}
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ico{width:22px;height:22px;flex:none}
+
+/* buttons */
+.btn{appearance:none;border:0;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 26px;border-radius:999px;font-size:17px;line-height:1.2;letter-spacing:-.01em;transition:transform .15s ease,opacity .15s ease,box-shadow .15s ease}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
+.btn-dark{background:var(--ink);color:#FFFFFF}
+.btn-dark:hover{box-shadow:0 8px 20px -8px rgba(27,27,27,.5)}
+.btn-yellow{background:var(--yellow);color:var(--ink)}
+.btn-line{background:#FFFFFF;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn-line:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn-lg{min-height:62px;font-size:18px;padding:0 32px}
+.btn-sm{min-height:44px;font-size:15px;padding:0 20px}
+.btn .arr{width:18px;height:18px}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top, 0px);z-index:30;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:20px;min-height:66px}
+.logo{display:inline-flex;align-items:center;gap:10px;white-space:nowrap;background:none;border:0;padding:0;cursor:pointer;font-size:20px;color:var(--ink);letter-spacing:-.03em}
+.logo-mark{width:40px;height:40px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;overflow:hidden;flex:none}
+.logo-mark img{width:34px;margin-top:6px}
+.menu{display:none;gap:30px;margin-left:auto;margin-right:12px}
+.menu button{background:none;border:0;padding:6px 0;cursor:pointer;font-size:15px;color:var(--text)}
+.menu button:hover{color:var(--ink);text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+.nav .btn{margin-left:auto;min-height:44px;padding:0 18px;font-size:15px}
+@media (min-width:1000px){.menu{display:flex}.nav .btn{margin-left:0}}
+.nav-back{display:none}
+body:not([data-view="intro"]) .menu,body:not([data-view="intro"]) .nav .btn{display:none}
+@media (max-width:520px){.logo{font-size:17px;gap:8px}.logo-mark{width:34px;height:34px}.logo-mark img{width:29px}.nav .btn{padding:0 14px;font-size:14px}.nav .btn .arr{display:none}}
+
+/* hero */
+.hero{background:var(--yellow);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-10%;bottom:-30px;width:70%;height:120px;background:var(--yellow-deep);opacity:.35;transform:rotate(-4deg);border-radius:40px}
+.hero-grid{position:relative;z-index:1;display:grid;gap:24px;padding-block:36px 40px;grid-template-areas:"copy" "duck" "card"}
+@media (min-width:1000px){.hero-grid{grid-template-columns:minmax(0,1.25fr) minmax(300px,.8fr) minmax(0,.95fr);grid-template-areas:"copy card duck";align-items:center;gap:36px;padding-block:56px 64px}}
+.hero-copy{grid-area:copy;display:flex;flex-direction:column;align-items:flex-start;gap:16px;min-width:0}
+.tagline{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--ink);border-radius:999px;padding:7px 16px;font-size:14px;color:var(--ink);background:rgba(255,255,255,.35)}
+.tagline i{width:9px;height:9px;border-radius:50%;background:#F29A00;display:block}
+.hero h1{font-size:clamp(40px,9.6vw,54px);line-height:1.12;letter-spacing:-.04em;color:var(--ink);text-wrap:balance}
+.hero-sub{font-size:clamp(19px,3.6vw,24px);line-height:1.45;color:var(--ink);letter-spacing:-.02em}
+.hero-desc{font-size:15px;color:#4A4430;line-height:1.7;max-width:30em}
+.hero-copy .btn{margin-top:10px}
+.info{grid-area:card;background:#FFFFFF;border-radius:var(--r-lg);box-shadow:0 18px 40px -18px rgba(120,90,0,.35);padding:8px 22px;min-width:0}
+.info li{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-top:1px solid var(--line)}
+.info li:first-child{border-top:0}
+.info-ico{width:44px;height:44px;border-radius:50%;background:var(--yellow-pale);color:var(--ink);display:grid;place-items:center;flex:none}
+.info-ico svg{width:22px;height:22px}
+.info .k{font-size:13px;color:var(--muted);margin-bottom:3px}
+.info .v{font-size:17px;color:var(--ink);line-height:1.45;letter-spacing:-.02em}
+.info .v small{font-size:14px;color:var(--muted)}
+.info .v-note{font-size:13px;color:var(--muted);margin-top:2px}
+.info .v.long{font-size:15px}
+.duck-hero{grid-area:duck;position:relative;justify-self:center;width:min(78vw,330px)}
+.duck-hero img{width:100%;filter:drop-shadow(0 18px 18px rgba(120,90,0,.22))}
+.duck-note{position:absolute;right:-6px;top:4%;font-size:16px;line-height:1.3;color:var(--ink);transform:rotate(-12deg);text-align:center}
+.duck-note::after{content:"";display:block;width:40px;height:2px;background:var(--ink);margin:6px auto 0;transform:rotate(-8deg)}
+.spark{position:absolute;left:4%;top:4%;width:46px;height:46px;color:var(--ink)}
+@media (min-width:1000px){.duck-hero{width:100%;max-width:380px;justify-self:end}.duck-note{right:-28px;font-size:18px}}
+@media (max-width:999px){.duck-hero{width:min(64vw,280px)}.duck-note{right:-18%;top:2%}}
+
+/* sections */
+.sec{padding-block:clamp(56px,8vw,96px)}
+.sec-pale{background:var(--yellow-pale)}
+.sec-grey{background:var(--grey)}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--ink);margin-bottom:14px}
+.eyebrow span{color:var(--blue);font-size:14px}
+h2{font-size:clamp(26px,4.4vw,38px);line-height:1.3;letter-spacing:-.035em;color:var(--ink);text-wrap:balance}
+.lead{color:var(--muted);font-size:15px;line-height:1.75;margin-top:16px;max-width:34em}
+.lead+.lead{margin-top:8px}
+
+/* 02 about */
+.about{display:grid;gap:32px}
+@media (min-width:1000px){.about{grid-template-columns:minmax(0,.95fr) minmax(0,1.65fr);gap:40px;align-items:start}}
+.qcards{display:grid;gap:14px}
+@media (min-width:700px){.qcards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.qcard{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 20px 24px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;min-width:0;overflow:hidden}
+.qnum{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:16px;background:var(--yellow);color:var(--ink)}
+.qcard:nth-child(2) .qnum{background:var(--blue);color:#FFFFFF}
+.qcard img{position:absolute;right:12px;top:12px;width:74px}
+.qcard h3{font-size:19px;line-height:1.35;color:var(--ink);letter-spacing:-.03em;margin-top:14px}
+.qcard p{font-size:14px;color:var(--muted);line-height:1.7}
+.okbar{margin-top:20px;background:var(--blue-pale);border-radius:var(--r-lg);display:flex;align-items:center;gap:18px;padding:18px 22px 18px 14px;min-width:0}
+.okbar img{width:130px;flex:none;margin-block:-10px}
+.okbar p{font-size:16px;color:#1E3A73;line-height:1.55}
+.okbar small{display:block;margin-top:6px;font-size:13px;color:#5C6F94}
+@media (max-width:640px){.okbar{flex-direction:column;align-items:flex-start;padding:18px}.okbar img{width:110px;margin:0}}
+
+/* 03 criteria */
+.crit{display:grid;gap:32px}
+@media (min-width:1000px){.crit{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:40px;align-items:center}}
+.ccards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:700px){.ccards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.ccard{background:var(--card);border-radius:var(--r-lg);padding:24px 14px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:var(--shadow);min-width:0}
+.ccard svg{width:32px;height:32px;color:var(--yellow-deep)}
+.ccard p{font-size:15px;color:var(--ink);line-height:1.45;min-height:2.9em;display:flex;align-items:center}
+.ccard b{font-size:34px;line-height:1;color:var(--amber);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ccard b small{font-size:20px}
+
+/* 04 awards */
+.aw-head{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:760px;margin-inline:auto}
+.aw-pill{display:inline-block;background:var(--yellow-pale);color:var(--ink);font-size:15px;padding:8px 20px;border-radius:999px;margin-bottom:16px}
+.aw-head h2{font-size:clamp(28px,5vw,44px)}
+.aw-head h2 em{font-style:normal;background:linear-gradient(180deg,#FFD23F,#F2A100);-webkit-background-clip:text;background-clip:text;color:transparent}
+.aw-head .lead{margin-inline:auto}
+.deco{position:absolute;width:44px;color:var(--yellow-deep)}
+.deco svg{display:block;width:100%;height:auto}
+.deco-l{left:-6px;top:30px}.deco-r{right:-6px;top:64px;transform:scaleX(-1)}
+@media (max-width:700px){.deco{width:30px}.deco-l{left:14%;top:0}.deco-r{right:14%;top:0}}
+.awards{display:flex;flex-direction:column;gap:18px;margin-top:clamp(36px,6vw,56px)}
+.award{position:relative;isolation:isolate;border-radius:var(--r-lg);border:2px solid transparent;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:118px auto auto;grid-template-areas:"medal ." "info info" "perks perks";row-gap:14px;padding:22px 20px 24px;color:var(--ink);min-width:0}
+.medal{grid-area:medal;align-self:start;position:relative;width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-size:27px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.6),inset 0 -5px 0 rgba(0,0,0,.12),0 8px 16px -6px rgba(0,0,0,.35)}
+.medal::before,.medal::after{content:"";position:absolute;bottom:-15px;width:14px;height:22px;z-index:-1;clip-path:polygon(0 0,100% 0,100% 100%,50% 76%,0 100%)}
+.medal::before{left:14px;transform:rotate(14deg)}
+.medal::after{right:14px;transform:rotate(-14deg)}
+.aw-info{grid-area:info;display:flex;flex-direction:column;min-width:0}
+.aw-info h3{font-size:24px;line-height:1.25;letter-spacing:-.04em}
+.cnt{color:#EFA200;margin-left:4px}
+.aw-info .bar{display:block;width:40px;height:2px;margin:14px 0 12px;background:currentColor;opacity:.22}
+.prize-label{font-size:14px;opacity:.75;margin-bottom:4px}
+.prize{display:flex;align-items:baseline;gap:4px;line-height:1}
+.prize .num{font-size:64px;letter-spacing:-.03em}
+.prize .unit{font-size:24px}
+.prize .word{font-size:50px;letter-spacing:-.03em;line-height:1.1}
+.perks{grid-area:perks;display:flex;flex-wrap:wrap;gap:10px;align-content:center;min-width:0}
+.pill{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px 0 12px;border-radius:999px;font-size:17px;white-space:nowrap}
+.pill svg{width:26px;height:26px;flex:none;border-radius:50%;padding:5px}
+.art{position:absolute;right:0;top:0;height:150px;width:auto;max-width:62%;object-fit:contain;object-position:right top;border-top-right-radius:20px;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 32%),linear-gradient(180deg,#000 72%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 32%),linear-gradient(180deg,#000 72%,transparent);mask-composite:intersect;z-index:-1}
+.a1 .art{top:-22px;height:178px;border-radius:0}
+@media (min-width:860px){
+  .award{grid-template-columns:96px minmax(0,260px) minmax(0,1fr);grid-template-rows:auto;grid-template-areas:"medal info perks";align-items:center;column-gap:30px;min-height:250px;padding:30px 36%  30px 40px}
+  .medal{width:88px;height:88px;font-size:38px;align-self:center}
+  .medal::before,.medal::after{width:20px;height:30px;bottom:-22px}
+  .medal::before{left:20px}.medal::after{right:20px}
+  .aw-info h3{font-size:28px}
+  .prize .num{font-size:78px}.prize .unit{font-size:28px}.prize .word{font-size:58px}
+  .perks{flex-direction:column;align-items:flex-start;align-self:stretch;justify-content:center;border-left:1.5px dashed rgba(27,27,27,.16);padding-left:30px;flex-wrap:nowrap}
+  .pill{min-height:56px;font-size:19px;padding:0 24px 0 14px}
+  .art{top:auto;bottom:0;height:100%;max-width:36%;object-position:right bottom;border-radius:0 20px 20px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 30%);mask-image:linear-gradient(90deg,transparent,#000 30%)}
+  .a1 .art{height:113%;border-radius:0 0 20px 0}
+}
+/* 1등 */
+.a1{color:#FFFFFF;background:radial-gradient(70% 110% at 0% 100%,rgba(232,168,0,.30),rgba(232,168,0,0) 62%) padding-box,linear-gradient(#1D170C,#1D170C) padding-box,linear-gradient(135deg,#FFEDA6,#E8A800 32%,#FFF6CF 52%,#C98A00 78%,#FFE27A) border-box;box-shadow:0 26px 50px -24px rgba(201,138,0,.65)}
+.a1 .medal{background:radial-gradient(circle at 32% 26%,#FFF7CF 0,#FFD54A 36%,#E8A800 72%,#C38400);color:#4A3300}
+.a1 .medal::before,.a1 .medal::after{background:#E8473A}
+.a1 .num,.a1 .unit{background:linear-gradient(180deg,#FFF3B8 8%,#FFD23F 48%,#E8A100 92%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.a1 .perks{border-left-color:rgba(255,214,90,.3)}
+.a1 .pill-gold{background:linear-gradient(180deg,#FFE27A,#F5B800);color:var(--ink);box-shadow:0 8px 18px -10px rgba(245,184,0,.8)}
+.a1 .pill-gold svg{background:var(--ink);color:#FFE27A}
+.a1 .pill-dark{background:rgba(255,255,255,.07);color:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(255,214,90,.28)}
+.a1 .pill-dark svg{background:linear-gradient(180deg,#FFE27A,#E8A800);color:var(--ink)}
+.shine{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none;z-index:-2}
+.shine::after{content:"";position:absolute;top:-30%;bottom:-30%;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,236,170,.10) 42%,rgba(255,255,255,.2) 50%,rgba(255,236,170,.10) 58%,transparent);transform:skewX(-14deg);animation:shine 6.5s ease-in-out 1.2s infinite}
+@keyframes shine{0%{left:-60%}32%{left:130%}100%{left:130%}}
+/* 2등 */
+.a2{background:linear-gradient(#F7F7F9,#F7F7F9) padding-box,linear-gradient(135deg,#F4F7FA,#A9B4C5 34%,#FFFFFF 52%,#8693A8 80%,#DCE3EC) border-box;box-shadow:0 18px 36px -24px rgba(80,95,120,.5)}
+.a2 .medal{background:radial-gradient(circle at 32% 26%,#FFFFFF 0,#DDE4ED 36%,#A9B4C5 72%,#86929F);color:#2E3A4C}
+.a2 .medal::before,.a2 .medal::after,.a3 .medal::before,.a3 .medal::after{background:#F5C518}
+.a2 .num,.a2 .unit{background:linear-gradient(180deg,#6B6B6B,#1B1B1B 85%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.a2 .pill{background:#ECEDF0;color:var(--ink)}
+.a2 .pill svg{background:var(--ink);color:#FFFFFF}
+/* 3등 */
+.a3{background:linear-gradient(#FEF7EC,#FEF7EC) padding-box,linear-gradient(135deg,#FBE3CF,#E9B27C 34%,#FFF1E5 52%,#D69A5E 80%,#F3C9A6) border-box;box-shadow:0 18px 36px -24px rgba(165,98,45,.5)}
+.a3 .medal{background:radial-gradient(circle at 32% 26%,#FFE9D6 0,#EDB07E 36%,#C77A42 72%,#A15C2A);color:#4A2810}
+.a3 .prize-label{color:#8E5222;opacity:1}
+.a3 .word{background:linear-gradient(180deg,#C9813F,#7E4415 85%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.aw-img{max-width:960px;margin-inline:auto}
+.aw-img img{width:100%;height:auto}
+
+/* 협력기관 */
+.pt{background:var(--grey);padding-block:clamp(56px,8vw,96px);overflow:hidden}
+.pt-head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.pt-eyebrow{display:flex;align-items:center;gap:14px;font-size:15px;color:var(--amber);margin-bottom:16px}
+.pt-eyebrow::before,.pt-eyebrow::after{content:"";width:36px;height:1.5px;background:currentColor}
+.pt-head .lead{margin-inline:auto;text-align:center}
+.marquee{margin-top:clamp(28px,5vw,44px);display:flex;flex-direction:column;gap:14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.mq-row{overflow:hidden}
+.mq-track{display:flex;gap:14px;width:max-content;animation:mq 42s linear infinite}
+.mq-row.rev .mq-track{animation-direction:reverse;animation-duration:48s}
+.marquee:hover .mq-track{animation-play-state:paused}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 7px))}}
+.mq-item{flex:none;min-width:150px;height:76px;padding:0 26px;border-radius:18px;background:#FFFFFF;display:grid;place-items:center;font-size:18px;color:var(--ink);white-space:nowrap;box-shadow:0 1px 2px rgba(0,0,0,.03),0 8px 22px -14px rgba(0,0,0,.14)}
+.mq-item img{max-height:52px;max-width:130px;object-fit:contain}
+.mq-ph{background:rgba(255,255,255,.6);box-shadow:none;border:1.5px dashed #CFCFC8;color:#A3A39B}
+@media (min-width:800px){.mq-item{min-width:230px;height:104px;padding:0 40px;border-radius:24px;font-size:26px}.mq-item img{max-height:72px;max-width:180px}.marquee{gap:18px}.mq-track{gap:18px}@keyframes mq{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 9px))}}}
+
+/* 05 how */
+.how{display:grid;gap:24px;align-items:center}
+@media (min-width:1000px){.how{grid-template-columns:minmax(0,.7fr) minmax(0,1.8fr);gap:32px}}
+.steps{display:flex;flex-direction:column;gap:10px}
+@media (min-width:700px){.steps{flex-direction:row;align-items:center}}
+.step{flex:1;display:flex;align-items:center;gap:10px;background:var(--card);border-radius:var(--r-md);padding:16px 14px;box-shadow:var(--shadow);min-width:0;font-size:15px;color:var(--ink);white-space:nowrap}
+.step-n{width:36px;height:36px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-size:16px;flex:none}
+.step svg{width:22px;height:22px;flex:none;color:var(--ink)}
+.step-arrow{flex:none;color:var(--blue);display:none}
+@media (min-width:700px){.step-arrow{display:block}}
+
+/* 06 faq */
+.faq{display:grid;gap:28px}
+@media (min-width:1000px){.faq{grid-template-columns:minmax(0,.55fr) minmax(0,1.6fr);gap:40px;align-items:start}}
+.faq-big{font-size:clamp(44px,7vw,60px);line-height:1;color:var(--ink);letter-spacing:-.02em;margin-top:6px}
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-row{border:1px solid var(--line);border-radius:var(--r-md);padding:16px 20px;display:grid;gap:6px;background:var(--card)}
+@media (min-width:800px){.faq-row{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:24px;align-items:center;padding:16px 24px}}
+.faq-row dt{font-size:16px;color:var(--ink);display:flex;gap:10px}
+.faq-row dt::before{content:"Q.";color:var(--ink)}
+.faq-row dd{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* final cta */
+.dock{position:sticky;bottom:0;z-index:25;box-sizing:border-box;height:calc(108px + env(safe-area-inset-bottom, 0px));background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom, 0px));padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.dock-in{max-width:560px;margin-inline:auto;display:flex;flex-direction:column;gap:8px}
+.timer{display:flex;justify-content:center;align-items:baseline;gap:10px;font-size:14px;color:var(--muted);height:26px;line-height:26px;white-space:nowrap}
+.timer-val{font-size:19px;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.timer-val b{color:#E0452B;font-weight:inherit}
+.dock .btn{width:100%;min-height:54px;height:54px}
+.btn[disabled] .arr{display:none}
+.final{position:relative;z-index:26;background:var(--yellow);padding-top:26px;margin-top:calc(-108px - env(safe-area-inset-bottom, 0px))}
+.final-in{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"duck title" "cta cta";align-items:center;gap:14px 16px;padding-bottom:22px}
+.final-duck{grid-area:duck;width:92px}
+.final h2{grid-area:title;font-size:clamp(20px,5.4vw,30px);line-height:1.35}
+.final-cta{grid-area:cta;display:flex;flex-direction:column;gap:8px;min-width:0}
+.final-cta .btn{width:100%}
+.final .timer-label{color:#5C5330}
+.final .timer-val b{color:#C7361F}
+.final-foot{border-top:1px solid rgba(27,27,27,.1);text-align:center;font-size:12px;color:#5C5330;padding-top:12px;padding-bottom:calc(14px + env(safe-area-inset-bottom, 0px));padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.final-foot b{color:var(--ink);letter-spacing:.06em;font-weight:inherit}
+@media (min-width:900px){.final{padding-top:22px}.final-in{grid-template-columns:150px minmax(0,1fr) 380px;grid-template-areas:"duck title cta";gap:28px;padding-bottom:22px}.final-duck{width:140px;align-self:end;margin-bottom:-22px}}
+.foot-band{background:var(--yellow);border-top:1px solid rgba(27,27,27,.08);padding:16px 20px 22px;font-size:13px;color:#5C5330;text-align:center}
+.foot-band b{color:var(--ink);letter-spacing:.06em}
+.host{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--ink);letter-spacing:.1em;margin-bottom:-4px}
+.host span{font-size:12px;letter-spacing:0;color:#5C5330;padding:3px 9px;border:1px solid rgba(27,27,27,.25);border-radius:999px}
+
+
+.link-btn{background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:13px;color:var(--ink)}
+.link-btn.danger{color:var(--danger)}
+.msg{font-size:12px;color:var(--ok)}
+
+/* ---------- 신청 흐름 ---------- */
+.flowbar{background:#FFFFFF;border-bottom:1px solid var(--line)}
+.flowbar-in{max-width:672px;padding-block:14px 16px}
+.stepper{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.stepper li{display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--muted)}
+.stepper li::before{content:"";height:6px;border-radius:999px;background:var(--line)}
+.stepper li.is-done::before{background:var(--ink)}
+.stepper li.is-current::before{background:var(--yellow-deep)}
+.stepper li.is-current,.stepper li.is-done{color:var(--ink)}
+.flow{max-width:672px;padding-block:30px 0}
+.flow-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:26px}
+.flow-head h1{font-size:clamp(24px,5.4vw,32px);line-height:1.3;letter-spacing:-.035em;color:var(--ink);text-wrap:balance}
+.flow-head h1:focus{outline:none}
+.flow-head p{color:var(--muted);font-size:15px;margin-top:8px}
+.flow-head img{width:84px;flex:none;margin-top:-6px}
+.form{display:flex;flex-direction:column;gap:24px}
+.field{display:flex;flex-direction:column;gap:10px;border:0;padding:0;margin:0;min-width:0}
+.field>label,.field legend{font-size:16px;color:var(--ink);padding:0;display:flex;align-items:baseline;gap:8px}
+.hint{font-size:13px;color:var(--muted)}
+.input,.select{width:100%;min-height:58px;border-radius:var(--r-md);border:1.5px solid var(--line);background:#FFFFFF;padding:0 18px;font-size:17px;transition:border-color .15s,box-shadow .15s}
+.input::placeholder,.textarea::placeholder{color:#A8A8A2}
+.input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 4px rgba(255,222,59,.55)}
+.select{appearance:none;-webkit-appearance:none;padding-right:44px;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;cursor:pointer}
+.select:disabled{opacity:.5;cursor:not-allowed}
+.is-invalid .input,.is-invalid .select,.is-invalid .textarea,.is-invalid .chip span,.is-invalid .agree{border-color:var(--danger)}
+.err{color:var(--danger);font-size:14px}
+.err:empty{display:none}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;cursor:pointer}
+.chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chip span{display:flex;align-items:center;justify-content:center;min-height:50px;padding:0 18px;border-radius:var(--r-md);border:1.5px solid var(--line);background:#FFFFFF;font-size:16px;color:var(--ink);transition:background-color .12s,border-color .12s}
+.seg2 .chip span{min-height:58px;font-size:17px}
+.chip:hover span{border-color:#BDBDB6}
+.chip input:checked+span{background:var(--yellow);border-color:var(--ink)}
+.chip input:focus-visible+span{outline:3px solid var(--ink);outline-offset:2px}
+.check{display:flex;gap:12px;align-items:flex-start;cursor:pointer;position:relative;font-size:15px;line-height:1.55;color:var(--ink)}
+.check input{position:absolute;opacity:0;width:26px;height:26px;margin:0;cursor:pointer}
+.check .box{flex:none;width:26px;height:26px;border-radius:8px;border:1.5px solid #BDBDB6;background:#FFFFFF;position:relative;margin-top:-1px}
+.check input:checked+.box{background:var(--ink);border-color:var(--ink)}
+.check input:checked+.box::after{content:"";position:absolute;left:8px;top:3px;width:7px;height:12px;border:solid var(--yellow);border-width:0 3px 3px 0;transform:rotate(45deg)}
+.check input:focus-visible+.box{outline:3px solid var(--ink);outline-offset:2px}
+.agree{border:1.5px solid var(--line);border-radius:var(--r-md);padding:16px 18px;display:flex;flex-direction:column;gap:10px;background:#FFFFFF}
+.agree summary{cursor:pointer;font-size:13px;color:var(--muted);padding-left:38px}
+.agree table{margin-top:10px;width:100%;border-collapse:collapse;font-size:13px}
+.agree th,.agree td{border-top:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+.agree th{width:30%;white-space:nowrap;color:var(--muted)}
+.actions{position:sticky;bottom:0;z-index:5;display:flex;gap:10px;padding-top:18px;padding-bottom:calc(16px + env(safe-area-inset-bottom, 0px));margin-top:28px;background:linear-gradient(to top,#FFFFFF 78%,rgba(255,255,255,0))}
+.actions .btn-line{flex:none;min-width:96px}
+.actions .grow{flex:1}
+.notice{border-radius:var(--r-md);padding:12px 16px;font-size:14px;line-height:1.6;background:var(--yellow-pale);color:#5C4B00;margin-bottom:22px}
+.alert{border-radius:var(--r-md);padding:14px 16px;font-size:15px;background:var(--danger-bg);color:var(--danger);margin-top:16px}
+.alert:empty{display:none}
+.textarea{width:100%;display:block;min-height:360px;border-radius:var(--r-lg);border:1.5px solid var(--line);background:#FFFFFF;padding:20px;font-size:17px;line-height:1.9;resize:none;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.meta-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.saved::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;vertical-align:1px}
+.addr{display:grid;gap:10px}
+@media (min-width:560px){.addr{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.addr label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.save-line{font-size:13px;color:var(--muted);margin:-10px 0 18px}
+.qa{position:relative;background:#FFFFFF;border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 20px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;min-width:0}
+.qa-head{display:flex;justify-content:space-between;align-items:flex-start;min-height:40px}
+.qa-head img{width:76px;margin:-10px -6px -30px 0}
+.qnum.blue{background:var(--blue);color:#FFFFFF}
+.qa-title{font-size:20px;line-height:1.4;color:var(--ink);letter-spacing:-.03em;padding-right:64px}
+.req{color:var(--danger);margin-left:2px}
+.qa-desc{font-size:15px;color:var(--muted);line-height:1.7}
+.qa-tips{display:flex;flex-wrap:wrap;gap:6px}
+.qa-tips li{font-size:13px;color:#1E3A73;background:var(--blue-pale);padding:5px 11px;border-radius:999px}
+.qa-tips li::before{content:"✓ ";color:var(--blue)}
+.qa-len{align-self:flex-start;font-size:13px;color:#2F6B3A;background:#E8F4EA;padding:5px 12px;border-radius:999px}
+.qa .textarea{min-height:190px;border-radius:var(--r-md);padding:16px 18px;font-size:16px;line-height:1.85}
+.qa-count{align-self:flex-end;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.qa-count b{color:var(--danger)}
+.qa-count.ok b{color:var(--ok)}
+.qa-meter{display:flex;align-items:center;gap:10px;margin-top:-4px}
+.qa-meter svg{width:20px;height:20px;flex:none;color:var(--ink)}
+.qa-bar{flex:1;height:6px;border-radius:999px;background:#F1ECE6;overflow:hidden}
+.qa-bar i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#E8875A,#CF4A33);transition:width .2s ease,background .2s ease}
+.qa-count.ok~.qa-meter .qa-bar i{background:linear-gradient(90deg,#5CCB86,#2E9E5B)}
+.qa .textarea.under{border-color:#E9A592}
+.is-invalid.qa{border-color:var(--danger)}
+.pv-q{padding:18px 20px;background:#FFFFFF}
+.pv-q+.pv-q{border-top:1px solid var(--line)}
+.pv-q-title{font-size:14px;color:var(--blue);margin-bottom:8px}
+.pv-q-text{white-space:pre-wrap;font-size:16px;line-height:1.85;color:var(--ink)}
+.pv-info{border:1.5px solid var(--line);border-radius:var(--r-lg);padding:4px 20px}
+.pv-info-head{display:flex;justify-content:space-between;align-items:center;padding:14px 0 6px;font-size:16px;color:var(--ink)}
+.pv-info dl{display:grid;grid-template-columns:auto minmax(0,1fr)}
+.pv-info dt,.pv-info dd{padding:11px 0;border-top:1px solid var(--line);font-size:15px}
+.pv-info dt{color:var(--muted);padding-right:18px;white-space:nowrap}
+.pv-info dd{text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
+.pv-work{margin-top:14px;border-radius:var(--r-lg);overflow:hidden;border:1.5px solid var(--ink)}
+.pv-work-head{background:var(--yellow);padding:16px 20px}
+.pv-work-head span{display:block;font-size:12px;color:#6E6230}
+.pv-work-head h2{font-size:22px}
+.pv-story{padding:20px;white-space:pre-wrap;font-size:16px;line-height:1.9;max-height:60vh;overflow:auto;background:#FFFFFF}
+.pv-meta{padding:10px 20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);text-align:right;background:#FFFFFF}
+.confirm{border-radius:var(--r-lg);background:var(--grey);padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.confirm>p:first-child{font-size:16px;color:var(--ink)}
+.is-invalid.confirm{box-shadow:inset 0 0 0 1.5px var(--danger)}
+.sheet{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center}
+.sheet-dim{position:absolute;inset:0;background:rgba(20,20,20,.5)}
+.sheet-panel{position:relative;width:100%;max-width:640px;max-height:92vh;overflow:auto;overscroll-behavior:contain;background:#FFFFFF;border-radius:24px 24px 0 0;padding-top:22px;padding-left:max(18px, env(safe-area-inset-left, 0px));padding-right:max(18px, env(safe-area-inset-right, 0px));animation:sheetUp .25s ease both}
+@media (min-width:700px){.sheet{align-items:center;padding:24px}.sheet-panel{border-radius:24px;max-height:88vh;padding-left:26px;padding-right:26px}}
+@keyframes sheetUp{from{transform:translateY(24px);opacity:.6}to{transform:none;opacity:1}}
+.sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.sheet-head h2{font-size:clamp(21px,4.4vw,26px)}
+.sheet-head h2:focus{outline:none}
+.sheet-x{flex:none;width:40px;height:40px;border-radius:50%;border:0;background:var(--grey);cursor:pointer;display:grid;place-items:center;color:var(--ink)}
+.sheet-sub{color:var(--muted);font-size:14px;margin:6px 0 18px}
+.sheet .pv-story{max-height:none}
+.sheet-actions{position:sticky;bottom:0;display:flex;gap:10px;background:#FFFFFF;padding-top:14px;padding-bottom:calc(16px + env(safe-area-inset-bottom, 0px));margin-top:14px}
+.sheet-actions .btn-line{flex:none;min-width:104px}
+.sheet-actions .grow{flex:1}
+body.locked{overflow:hidden}
+.done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding-block:34px 24px}
+.done-duck{width:190px;height:190px;border-radius:50%;background:var(--yellow);display:grid;place-items:center}
+.done-duck img{width:140px;margin-top:8px}
+.done h1{font-size:clamp(24px,5.6vw,32px);line-height:1.3;letter-spacing:-.035em;color:var(--ink);text-wrap:balance}
+.done h1:focus{outline:none}
+.done-text{color:var(--muted);font-size:16px}
+.done-notice{font-size:15px;color:var(--ink);background:var(--yellow-pale);padding:12px 18px;border-radius:var(--r-md)}
+.done-already{font-size:14px;background:var(--grey);padding:8px 14px;border-radius:999px;color:var(--ink)}
+.receipt{width:100%;margin-top:10px;text-align:left;border-radius:var(--r-lg);background:#FFFFFF;box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden}
+.receipt-no{padding:18px 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:var(--yellow-pale);border-bottom:1.5px dashed #E9D58A}
+.receipt-no small{display:block;font-size:12px;color:#6E6230}
+.receipt-no strong{font-size:clamp(22px,6vw,28px);color:var(--ink);letter-spacing:.02em;font-variant-numeric:tabular-nums;user-select:all}
+.receipt dl{display:grid;grid-template-columns:auto minmax(0,1fr);padding:4px 20px 10px}
+.receipt dt,.receipt dd{padding:11px 0;border-top:1px solid var(--line);font-size:15px}
+.receipt dl > :nth-child(1),.receipt dl > :nth-child(2){border-top:0}
+.receipt dt{color:var(--muted);padding-right:18px;white-space:nowrap}
+.receipt dd{text-align:right;color:var(--ink)}
+.done .btn{margin-top:10px}
+
+.view{animation:viewIn .28s ease both}
+@keyframes viewIn{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.shine{display:none}.mq-track{flex-wrap:wrap;width:auto;justify-content:center;animation:none}.mq-track [data-dup]{display:none}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arr" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="flowbar" id="flowbar" hidden>
+  <div class="wrap flowbar-in">
+    <ol class="stepper" id="stepper" aria-label="신청 단계">
+      <li data-s="1">1 신청 정보</li>
+      <li data-s="2">2 나의 이야기</li>
+      <li data-s="3">3 제출 완료</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============ PAGE 01 · 소개 ============ -->
+<main id="view-intro" class="view">
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="host"><span>주최</span>LOGIN LAB</p>
+        <p class="tagline"><i aria-hidden="true"></i>미우새 — 미워했던 나를 다시 읽는 시간</p>
+        <h1 tabindex="-1">미우새<br>청년 성장 공모전</h1>
+        <p class="hero-sub">미운 오리였던 그때의 나,<br>지금의 나, 그리고 내가 되고 싶은 백조</p>
+        <p class="hero-desc">과거의 경험을 돌아보고, 지금의 나를 이해하며 앞으로 어떤 사람으로 성장하고 싶은지 이야기해주세요.</p>
+        <button type="button" class="btn btn-dark btn-lg" id="hero-cta" data-go="apply" data-label="무료로 공모전 신청하기"><span class="cta-label">무료로 공모전 신청하기</span><svg class="arr"><use href="#i-arr"/></svg></button>
+      </div>
+      <ul class="info">
+          <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><div><p class="k">접수 마감</p><p class="v">2026. 10. 31 <small>(토)</small></p></div></li>
+          <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4a1 1 0 0 0 1 1h3l7 4V5L8 9H5a1 1 0 0 0-1 1z"/><path d="M18.5 9.5a3.5 3.5 0 0 1 0 5"/></svg></span><div><p class="k">합격자 발표</p><p class="v">2026. 11. 2 <small>(월)</small></p><p class="v-note">홈페이지 및 개별 연락</p></div></li>
+          <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.6-4 4.6-6 8-6s6.4 2 8 6"/></svg></span><div><p class="k">참가 대상</p><p class="v long">자신의 가능성을 발견하고 성장하고 싶은 만 20~26세</p></div></li>
+          <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l3.6 12L12 8l4.4 10L20 6M3 11h18M3 14.5h18"/></svg></span><div><p class="k">참가비</p><p class="v">무료</p></div></li>
+          <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h5"/></svg></span><div><p class="k">공모 형태</p><p class="v long">나의 경험과 성장에 대한 이야기 작성</p></div></li>
+        </ul>
+      <figure class="duck-hero" aria-hidden="true">
+        <svg class="spark" viewBox="0 0 48 48"><path d="M14 6l4 12M30 4l-2 13M40 16l-9 8" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/></svg>
+        <img src="assets/img-02.webp" alt="">
+        <span class="duck-note">지금의<br>이야기가<br>내일의 나를<br>만듭니다!</span>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" id="about">
+    <div class="wrap">
+      <div class="about">
+        <div>
+          <p class="eyebrow"><span>02</span>공모 내용</p>
+          <h2>나의 미운오리 시절부터,<br>내가 꿈꾸는 백조까지</h2>
+          <p class="lead">우리는 살아오면서 다양한 경험을 합니다. 남들과 비교했던 순간도, 예상하지 못한 어려움도, 스스로 성장했다고 느끼는 순간도 있죠.</p>
+          <p class="lead">세 가지 이야기를 중심으로 자유롭게 작성해주세요.</p>
+        </div>
+        <ol class="qcards">
+          <li class="qcard"><img src="assets/img-03.webp" alt="" aria-hidden="true"><span class="qnum">01</span><h3>미운 오리였던<br>나의 시절</h3><p>스스로 부족하다고 느꼈거나, 남들과 비교했던 경험은 무엇인가요?</p></li>
+          <li class="qcard"><img src="assets/img-04.webp" alt="" aria-hidden="true"><span class="qnum">02</span><h3>지금의 나는<br>어떤 사람인가요?</h3><p>그 경험을 지나온 지금, 새롭게 알게 된 나의 모습은 무엇인가요?</p></li>
+          <li class="qcard"><img src="assets/img-05.webp" alt="" aria-hidden="true"><span class="qnum">03</span><h3>나는 어떤 백조가<br>되고 싶나요?</h3><p>아직 발견하지 못한 나의 강점과 가능성 중 무엇을 키워보고 싶나요?</p></li>
+        </ol>
+      </div>
+      <div class="okbar">
+        <img src="assets/img-06.webp" alt="" aria-hidden="true">
+        <p>특별한 실패나 극적인 성장 경험이 없어도 괜찮습니다.<br>지금의 고민이나 가능성에 대한 생각도 좋은 이야기가 될 수 있어요.<small>세 가지 질문에 차례로 답하면 나의 이야기가 완성돼요.</small></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-pale" id="criteria">
+    <div class="wrap crit">
+      <div>
+        <p class="eyebrow"><span>03</span>심사 기준</p>
+        <h2>잘 쓴 글보다 나를 돌아보고, 앞으로의 가능성을 생각하는 과정을 중요하게 평가합니다.</h2>
+        <p class="lead">경험이 얼마나 극적인지, 얼마나 성공했는지는 평가 기준이 아니에요.</p>
+      </div>
+      <ul class="ccards">
+        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.4-4.5-9.4-9.2C1.2 8.4 3.4 5 6.8 5c2 0 3.5 1.1 4.3 2.5h1.8C13.7 6.1 15.2 5 17.2 5c3.4 0 5.6 3.4 4.2 6.8C19.4 16.5 12 21 12 21z"/></svg><p>경험의 진정성과<br>구체성</p><b>30<small>%</small></b></li>
+        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7.5" r="4.5"/><path d="M3.5 21c.8-5 4.4-8 8.5-8s7.7 3 8.5 8z"/></svg><p>현재의 나에 대한<br>자기이해</p><b>30<small>%</small></b></li>
+        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="13" width="5" height="8" rx="1.5"/><rect x="9.5" y="8" width="5" height="13" rx="1.5"/><rect x="16" y="3" width="5" height="18" rx="1.5"/></svg><p>앞으로의 가능성과<br>성장 방향</p><b>30<small>%</small></b></li>
+        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><circle cx="8" cy="11" r="1.4" fill="#FFFFFF"/><circle cx="12" cy="11" r="1.4" fill="#FFFFFF"/><circle cx="16" cy="11" r="1.4" fill="#FFFFFF"/></svg><p>이야기<br>전달력</p><b>10<small>%</small></b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="pt" id="partners">
+    <div class="wrap pt-head">
+      <p class="pt-eyebrow">협력기관</p>
+      <h2>협력기관과 함께 여는<br>청년 성장 공모전</h2>
+      <p class="lead">수상자에게는 협력기관이 제공하는 컨설팅·멘토링·코칭 프로그램으로 실제 성장의 기회를 드립니다.</p>
+      <ul class="sr" id="partner-list"></ul>
+    </div>
+    <div class="marquee" id="marquee" aria-hidden="true" hidden>
+      <div class="mq-row"><div class="mq-track" id="mq1"></div></div>
+      <div class="mq-row rev"><div class="mq-track" id="mq2"></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="awards">
+    <div class="wrap">
+      <figure class="aw-img">
+        <img src="assets/img-07.webp" width="1165" height="1239" alt="수상 혜택. 당신의 다음 성장을 위한 기회. 여러 협력기관과 함께 청년들의 자기이해와 성장 기회를 지원합니다. 1등 대상: 상금 50만원, 직무·취업 컨설팅, 1:1 멘토링. 2등 우수상 5명: 상금 30만원, 자소서 참석권. 3등 장려상 15명: 강점 발견 코칭권.">
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec sec-grey" id="how">
+    <div class="wrap how">
+      <div>
+        <p class="eyebrow"><span>05</span>참여 방법</p>
+        <h2>3단계로 간편하게 참여하세요.</h2>
+      </div>
+      <ol class="steps">
+        <li class="step"><span class="step-n">1</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h5"/></svg>신청 정보 입력</li>
+        <li class="step-arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></li>
+        <li class="step"><span class="step-n">2</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>나의 이야기 작성</li>
+        <li class="step-arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></li>
+        <li class="step"><span class="step-n">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg>최종 제출 완료</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="faq">
+    <div class="wrap faq">
+      <div>
+        <p class="eyebrow"><span>06</span>자주 묻는 질문</p>
+        <p class="faq-big">FAQ</p>
+        <p class="lead">궁금한 점을 확인해보세요.</p>
+      </div>
+      <dl class="faq-list">
+        <div class="faq-row"><dt>글을 잘 쓰지 않아도 참여할 수 있나요?</dt><dd>네. 글쓰기 실력보다 자신의 경험과 생각을 표현하는 것이 중요합니다.</dd></div>
+        <div class="faq-row"><dt>AI로 문장을 다듬어도 되나요?</dt><dd>아니요. AI를 통한 작성 및 문장 수정·교정은 허용되지 않습니다.</dd></div>
+        <div class="faq-row"><dt>제출한 이야기가 외부에 공개되나요?</dt><dd>아니요. 제출된 작품은 외부에 공개되지 않으며 심사 목적으로만 활용됩니다.</dd></div>
+        <div class="faq-row"><dt>작품 제출 후 수정할 수 있나요?</dt><dd>아니요. 최종 제출 후에는 수정할 수 없습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+
+<div class="dock" id="dock">
+    <div class="dock-in">
+      <p class="timer"><span class="timer-label">접수 마감까지</span><span class="timer-val" data-timer-val>10.31(토) 23:59</span></p>
+      <button type="button" class="btn btn-dark" data-go="apply" data-label="무료로 공모전 신청하기"><span class="cta-label">무료로 공모전 신청하기</span><svg class="arr"><use href="#i-arr"/></svg></button>
+    </div>
+  </div>
+</main>
+
+  <section class="final" id="final" data-intro>
+    <div class="wrap final-in">
+      <img class="final-duck" src="assets/img-08.webp" alt="" aria-hidden="true">
+      <h2>지금, 나의 이야기로<br>공모전에 참여해보세요!</h2>
+      <div class="final-cta">
+        <p class="timer"><span class="timer-label">접수 마감까지</span><span class="timer-val" data-timer-val>10.31(토) 23:59</span></p>
+        <button type="button" class="btn btn-dark btn-lg" id="final-cta" data-go="apply" data-label="내 이야기로 공모전 참여하기"><span class="cta-label">내 이야기로 공모전 참여하기</span><svg class="arr"><use href="#i-arr"/></svg></button>
+      </div>
+    </div>
+    <p class="final-foot">주최 <b>LOGIN LAB</b> · 미우새 — 미워했던 나를 다시 읽는 시간</p>
+  </section>
+
+
+
+<!-- ============ PAGE 02 · 신청 정보 ============ -->
+<section id="view-apply" class="view" hidden>
+  <div class="wrap flow">
+    <div class="flow-head">
+      <div><h1 tabindex="-1">신청 정보</h1><p>입력하신 정보는 공모전 운영 및 안내 연락에 사용됩니다.</p></div>
+      <img src="assets/img-04.webp" alt="" aria-hidden="true">
+    </div>
+    <p class="save-line" data-save-status role="status">입력한 내용은 이 기기에 자동으로 임시저장돼요.</p>
+    <p class="notice" data-backend-notice hidden></p>
+    <form class="form" id="form-apply" novalidate>
+      <div class="field" data-field="name">
+        <label for="f-name">이름</label>
+        <input class="input" id="f-name" name="name" type="text" autocomplete="name" maxlength="30" placeholder="홍길동" aria-describedby="err-name">
+        <p class="err" id="err-name" aria-live="polite"></p>
+      </div>
+      <div class="field" data-field="birth">
+        <label for="f-birth">생년월일 <span class="hint">만 20~26세</span></label>
+        <input class="input" id="f-birth" name="birth" type="text" inputmode="numeric" autocomplete="bday" maxlength="10" placeholder="YYYY.MM.DD" aria-describedby="err-birth">
+        <p class="err" id="err-birth" aria-live="polite"></p>
+      </div>
+      <div class="field" data-field="phone">
+        <label for="f-phone">연락처</label>
+        <input class="input" id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="13" placeholder="010-0000-0000" aria-describedby="err-phone">
+        <p class="err" id="err-phone" aria-live="polite"></p>
+      </div>
+      <fieldset class="field" data-field="region" aria-describedby="err-region">
+        <legend>거주 지역</legend>
+        <div class="addr">
+          <div><label for="f-si">시·도</label><input class="input" id="f-si" type="text" autocomplete="address-level1" maxlength="20" placeholder="예: 서울특별시"></div>
+          <div><label for="f-gu">시·군·구</label><input class="input" id="f-gu" type="text" autocomplete="address-level2" maxlength="20" placeholder="예: 마포구"></div>
+          <div><label for="f-dong">읍·면·동</label><input class="input" id="f-dong" type="text" autocomplete="address-level3" maxlength="20" placeholder="예: 서교동"></div>
+        </div>
+        <p class="err" id="err-region" aria-live="polite"></p>
+      </fieldset>
+      <fieldset class="field" data-field="status" aria-describedby="err-status">
+        <legend>지금의 나는?</legend>
+        <div class="chips" id="chips-status"></div>
+        <p class="err" id="err-status" aria-live="polite"></p>
+      </fieldset>
+      <fieldset class="field" data-field="source" aria-describedby="err-source">
+        <legend>알게 된 경로</legend>
+        <div class="chips" id="chips-source"></div>
+        <p class="err" id="err-source" aria-live="polite"></p>
+      </fieldset>
+      <div class="field" data-field="consent">
+        <div class="agree">
+          <label class="check"><input type="checkbox" id="f-consent" aria-describedby="err-consent"><span class="box" aria-hidden="true"></span><span>[필수] 개인정보 수집·이용에 동의합니다.</span></label>
+          <details>
+            <summary>내용 보기</summary>
+            <table>
+              <tr><th>수집 항목</th><td>이름, 생년월일, 연락처, 거주 지역, 지금의 나, 알게 된 경로</td></tr>
+              <tr><th>이용 목적</th><td>공모전 접수·심사, 결과 안내 및 운영 연락</td></tr>
+              <tr><th>보유 기간</th><td id="privacy-retention"></td></tr>
+              <tr><th>동의 거부</th><td>거부할 수 있으며, 거부 시 참여가 제한됩니다.</td></tr>
+            </table>
+          </details>
+        </div>
+        <p class="err" id="err-consent" aria-live="polite"></p>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-line" data-go="intro">이전</button>
+        <button type="submit" class="btn btn-dark grow">다음으로<svg class="arr"><use href="#i-arr"/></svg></button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ PAGE 03 · 나의 이야기 작성 ============ -->
+<section id="view-write" class="view" hidden>
+  <div class="wrap flow">
+    <div class="flow-head">
+      <div><h1 tabindex="-1">미운 오리였던 나, 지금의 나, 그리고 내가 되고 싶은 백조</h1><p>지나온 나의 경험과 앞으로의 가능성을 자유롭게 들려주세요.</p></div>
+      <img src="assets/img-08.webp" alt="" aria-hidden="true">
+    </div>
+    <p class="save-line" data-save-status role="status">입력한 내용은 이 기기에 자동으로 임시저장돼요.</p>
+    <p class="notice" data-backend-notice hidden></p>
+    <form class="form" id="form-write" novalidate>
+      <div class="field" data-field="title">
+        <label for="f-title">이야기 제목</label>
+        <input class="input" id="f-title" name="title" type="text" maxlength="80" placeholder="나의 이야기에 제목을 붙여 주세요" autocomplete="off" aria-describedby="err-title">
+        <p class="err" id="err-title" aria-live="polite"></p>
+      </div>
+      <section class="qa" data-field="q1" aria-labelledby="q1-title">
+        <div class="qa-head"><span class="qnum">01</span><img src="assets/img-03.webp" alt="" aria-hidden="true"></div>
+        <h2 class="qa-title" id="q1-title">그때의 나는 어떤 모습이었나요?<span class="req" aria-hidden="true">*</span></h2>
+        <p class="qa-desc">스스로 부족하다고 느꼈거나 남들과 비교했던 경험 하나를 골라 구체적으로 적어 주세요. 그때 어떤 상황이었고, 어떤 생각과 감정이 들었는지 솔직하게 써 주시면 됩니다.</p>
+        <ul class="qa-tips" aria-label="이렇게 쓰면 좋아요"><li>언제·어디서</li><li>무슨 일이 있었는지</li><li>그때의 생각과 감정</li></ul>
+        <span class="qa-len" data-len></span>
+        <textarea class="textarea qa-text" id="f-q1" data-q="q1" maxlength="2000" placeholder="거창하거나 특별한 경험이 아니어도 괜찮습니다." aria-labelledby="q1-title" aria-describedby="q1-count err-q1"></textarea>
+        <p class="qa-count" id="q1-count" aria-live="polite"></p>
+        <div class="qa-meter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.6L16.5 4.1a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z" fill="currentColor"/><path d="M4 20l4.4-1.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="qa-bar"><i id="q1-bar"></i></span></div>
+        <p class="err" id="err-q1" aria-live="polite"></p>
+      </section>
+      <section class="qa" data-field="q2" aria-labelledby="q2-title">
+        <div class="qa-head"><span class="qnum blue">02</span><img src="assets/img-04.webp" alt="" aria-hidden="true"></div>
+        <h2 class="qa-title" id="q2-title">지금의 나는 어떤 사람인가요?<span class="req" aria-hidden="true">*</span></h2>
+        <p class="qa-desc">그 경험을 지나온 지금, 무엇이 달라졌나요? 달라진 생각이나 행동, 새롭게 알게 된 나의 모습을 실제 있었던 일과 함께 적어 주세요.</p>
+        <ul class="qa-tips" aria-label="이렇게 쓰면 좋아요"><li>달라진 생각·행동</li><li>그걸 느낀 실제 순간</li><li>새로 알게 된 나의 모습</li></ul>
+        <span class="qa-len" data-len></span>
+        <textarea class="textarea qa-text" id="f-q2" data-q="q2" maxlength="2000" placeholder="작은 변화라도 괜찮습니다." aria-labelledby="q2-title" aria-describedby="q2-count err-q2"></textarea>
+        <p class="qa-count" id="q2-count" aria-live="polite"></p>
+        <div class="qa-meter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.6L16.5 4.1a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z" fill="currentColor"/><path d="M4 20l4.4-1.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="qa-bar"><i id="q2-bar"></i></span></div>
+        <p class="err" id="err-q2" aria-live="polite"></p>
+      </section>
+      <section class="qa" data-field="q3" aria-labelledby="q3-title">
+        <div class="qa-head"><span class="qnum">03</span><img src="assets/img-05.webp" alt="" aria-hidden="true"></div>
+        <h2 class="qa-title" id="q3-title">앞으로 어떤 백조가 되고 싶나요?<span class="req" aria-hidden="true">*</span></h2>
+        <p class="qa-desc">앞으로 되고 싶은 모습과, 알아가고 키워보고 싶은 나의 강점·가능성을 적어 주세요. 그 모습에 가까워지기 위해 해보고 싶은 일이 있다면 함께 써 주세요.</p>
+        <ul class="qa-tips" aria-label="이렇게 쓰면 좋아요"><li>되고 싶은 모습</li><li>키우고 싶은 강점·가능성</li><li>해보고 싶은 첫 행동</li></ul>
+        <span class="qa-len" data-len></span>
+        <textarea class="textarea qa-text" id="f-q3" data-q="q3" maxlength="2000" placeholder="막연한 바람이어도 괜찮습니다. 떠오르는 대로 적어 주세요." aria-labelledby="q3-title" aria-describedby="q3-count err-q3"></textarea>
+        <p class="qa-count" id="q3-count" aria-live="polite"></p>
+        <div class="qa-meter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.6L16.5 4.1a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z" fill="currentColor"/><path d="M4 20l4.4-1.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="qa-bar"><i id="q3-bar"></i></span></div>
+        <p class="err" id="err-q3" aria-live="polite"></p>
+      </section>
+      <div class="field confirm" data-field="checks" role="group" aria-labelledby="checks-title">
+        <p id="checks-title">제출 전 확인해 주세요</p>
+        <label class="check"><input type="checkbox" data-check="noAI"><span class="box" aria-hidden="true"></span><span>AI로 작성하거나 문장을 수정·교정하지 않았습니다.</span></label>
+        <label class="check"><input type="checkbox" data-check="notPublic"><span class="box" aria-hidden="true"></span><span>작품은 외부에 공개되지 않고 심사에만 활용됨을 확인했습니다.</span></label>
+        <label class="check"><input type="checkbox" data-check="noEdit"><span class="box" aria-hidden="true"></span><span>최종 제출 후에는 수정할 수 없음을 확인했습니다.</span></label>
+        <p class="err" id="err-checks" aria-live="polite"></p>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-line" data-go="apply">이전</button>
+        <button type="submit" class="btn btn-dark grow">최종 제출하기</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- 최종 제출 전 전체 미리보기 -->
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-dim" data-close></div>
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <div class="sheet-head">
+      <h2 id="sheet-title" tabindex="-1">제출 전 전체 작품 확인</h2>
+      <button type="button" class="sheet-x" data-close aria-label="닫기"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></button>
+    </div>
+    <p class="sheet-sub">최종 제출 후에는 수정할 수 없어요.</p>
+    <div class="pv-info">
+      <div class="pv-info-head"><span>신청 정보</span></div>
+      <dl id="pv-info"></dl>
+    </div>
+    <article class="pv-work">
+      <div class="pv-work-head"><span>나의 이야기</span><h2 id="pv-title"></h2></div>
+      <div class="pv-story" id="pv-story"></div>
+      <p class="pv-meta" id="pv-meta"></p>
+    </article>
+    <p class="alert" id="submit-error" role="alert"></p>
+    <div class="sheet-actions">
+      <button type="button" class="btn btn-line" data-close id="btn-edit">수정하기</button>
+      <button type="button" class="btn btn-dark grow" id="btn-submit">이대로 제출하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAGE 04 · 접수 완료 ============ -->
+<section id="view-done" class="view" hidden>
+  <div class="wrap flow">
+    <div class="done">
+      <div class="done-duck" aria-hidden="true"><img src="assets/img-09.webp" alt=""></div>
+      <h1 tabindex="-1">미우새 공모전 신청이 완료되었습니다!</h1>
+      <p class="done-already" id="done-already" hidden>이미 접수한 작품이에요. 제출 후에는 수정할 수 없어요.</p>
+      <div class="done-text"><p>당신의 이야기를 들려주셔서 감사합니다.</p><p>여러분의 경험과 앞으로의 가능성을 응원합니다.</p></div>
+      <p class="done-notice">합격자 발표는 <b>2026년 11월 2일(월)</b>, 홈페이지 및 개별 연락으로 안내드려요.</p>
+      <section class="receipt" aria-label="접수 정보">
+        <div class="receipt-no">
+          <div><small>접수번호</small><strong id="r-no"></strong></div>
+          <div style="display:flex;align-items:center;gap:8px"><span class="msg" id="copy-msg" role="status"></span><button type="button" class="btn btn-line btn-sm" id="btn-copy">복사</button></div>
+        </div>
+        <dl>
+          <dt>참가자 이름</dt><dd id="r-name"></dd>
+          <dt>작품 제목</dt><dd id="r-title"></dd>
+          <dt>접수 일시</dt><dd id="r-at"></dd>
+        </dl>
+      </section>
+      <button type="button" class="btn btn-dark btn-lg" data-go="intro">처음으로 돌아가기</button>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+'use strict';
+
+/* 구미첨단산업체를 못 불러온 경우(대체 글꼴)에만 굵기를 보정 */
+(function(){
+  var b = document.body;
+  if (!document.fonts || !document.fonts.load){ b.classList.add('ff'); return; }
+  document.fonts.load('16px "GumiIndustry"', '가').then(function(f){ if (!f || !f.length) b.classList.add('ff'); }, function(){ b.classList.add('ff'); });
+})();
+
+/* ===== 운영 설정 — 확정된 정보만 넣어 주세요 ===== */
+var CONFIG = {
+  deadline: '2026-10-31',          // 접수 마감일(한국 시간). 지나면 신청 버튼이 닫혀요.
+  partners: [                     // 협력이 확정된 기관만. 비어 있으면 흐르는 띠를 숨겨요.
+    { name:'SOL', src:'assets/img-10.png' },
+    { name:'we', src:'assets/img-11.png' },
+    { name:'NYX', src:'assets/img-12.png' },
+    { name:'mood', src:'assets/img-13.png' },
+    { name:'JON', src:'assets/img-14.png' },
+    { name:'BrightForge Studio', src:'assets/img-15.png' },
+    { name:'AxisSpring Consulting', src:'assets/img-16.png' },
+    { name:'Novera Works', src:'assets/img-17.png' }
+  ],
+  privacyRetention: '공모전 종료 및 결과 안내 완료 후 지체 없이 파기',
+  submitUrl: '',                   // ← 구글 Apps Script '웹 앱 URL'을 따옴표 안에 붙여넣으세요 (예: 'https://script.google.com/macros/s/…/exec')
+  answerMin: 150,                  // 질문별 최소 글자 수(공백 포함)
+  answerRec: [300, 500]            // 질문별 권장 글자 수
+};
+
+var STATUSES = ['대학생','휴학생','취준생','직장인','프리랜서','기타'];
+var SOURCES = ['인스타그램','지인추천','커뮤니티','학교·청년기관','기타'];
+var VIEWS = ['intro','apply','write','done'];
+var QKEYS = ['q1','q2','q3'];
+var QTITLES = { q1:'그때의 나는 어떤 모습이었나요?', q2:'지금의 나는 어떤 사람인가요?', q3:'앞으로 어떤 백조가 되고 싶나요?' };
+var DRAFT_KEY = 'miusae-draft-v1';
+
+function $(s, r){ return (r || document).querySelector(s); }
+function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+function pad(n){ return String(n).padStart(2, '0'); }
+
+var state = { view:'intro', flowStep:null, form:{ name:'', birth:'', phone:'', sido:'', sigungu:'', dong:'', status:'', source:'', consent:false }, title:'', answers:{ q1:'', q2:'', q3:'' }, savedAt:0, checks:{ noAI:false, notPublic:false, noEdit:false } };
+var backend = { kind:'pending' };
+var existingReceipt = null, storageOK = true, closed = false, submitting = false;
+
+/* 시간(한국) */
+var KST_FMT = new Intl.DateTimeFormat('en-CA', { timeZone:'Asia/Seoul', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hourCycle:'h23' });
+function kst(d){ var o = {}; KST_FMT.formatToParts(d || new Date()).forEach(function(p){ o[p.type] = p.value; }); return { y:+o.year, m:+o.month, d:+o.day, hh:o.hour === '24' ? '00' : o.hour, mm:o.minute }; }
+function fmtKST(ms){ var p = kst(new Date(ms)); return p.y + '.' + pad(p.m) + '.' + pad(p.d) + ' ' + p.hh + ':' + p.mm; }
+function deadlineMs(){ var a = CONFIG.deadline.split('-').map(Number); return Date.UTC(a[0], a[1]-1, a[2], 14, 59, 59); } // 마감일 23:59:59 (한국 시간)
+function daysLeft(){ var t = kst(); var a = CONFIG.deadline.split('-').map(Number); return Math.round((Date.UTC(a[0], a[1]-1, a[2]) - Date.UTC(t.y, t.m-1, t.d)) / 86400000); }
+function manAge(y, m, d){ var t = kst(); var a = t.y - y; if (t.m < m || (t.m === m && t.d < d)) a--; return a; }
+
+/* 입력 포맷 */
+function digits(v){ return String(v || '').replace(/\D/g, ''); }
+function fmtBirth(v){ var d = digits(v).slice(0, 8); if (d.length > 6) return d.slice(0,4) + '.' + d.slice(4,6) + '.' + d.slice(6); if (d.length > 4) return d.slice(0,4) + '.' + d.slice(4); return d; }
+function normPhone(v){ var d = digits(v); if (d.indexOf('82') === 0 && d.length >= 11) d = '0' + d.slice(2); return d.slice(0, 11); }
+function fmtPhone(v){ var d = normPhone(v); if (d.length < 4) return d; if (d.length < 8) return d.slice(0,3) + '-' + d.slice(3); if (d.length === 10) return d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6); return d.slice(0,3) + '-' + d.slice(3,7) + '-' + d.slice(7); }
+
+/* 검증 */
+var V = {
+  name: function(){ var v = state.form.name.trim(); if (!v) return '이름을 입력해 주세요.'; if (v.length < 2) return '이름을 2자 이상 입력해 주세요.'; if (!/^[가-힣a-zA-Z\s·.\-]+$/.test(v)) return '이름은 한글 또는 영문으로 입력해 주세요.'; return ''; },
+  birth: function(){
+    var d = digits(state.form.birth);
+    if (!d) return '생년월일을 입력해 주세요.';
+    if (d.length !== 8) return '생년월일 8자리를 입력해 주세요. 예: 2001.03.15';
+    var y = +d.slice(0,4), m = +d.slice(4,6), dd = +d.slice(6,8), dt = new Date(Date.UTC(y, m-1, dd));
+    if (y < 1900 || dt.getUTCFullYear() !== y || dt.getUTCMonth() !== m-1 || dt.getUTCDate() !== dd) return '존재하지 않는 날짜예요.';
+    var age = manAge(y, m, dd);
+    if (age < 20 || age > 26) return '참가 대상은 만 20~26세예요. (입력 기준 만 ' + age + '세)';
+    return '';
+  },
+  phone: function(){ var d = normPhone(state.form.phone); if (!d) return '휴대전화 번호를 입력해 주세요.'; if (!/^01[016789]\d{7,8}$/.test(d)) return '휴대전화 번호를 정확히 입력해 주세요.'; return ''; },
+  region: function(){ var f = state.form; if (!f.sido.trim()) return '시·도를 입력해 주세요.'; if (!f.sigungu.trim()) return '시·군·구를 입력해 주세요.'; if (!f.dong.trim()) return '읍·면·동을 입력해 주세요.'; return ''; },
+  status: function(){ return state.form.status ? '' : '해당하는 항목을 선택해 주세요.'; },
+  source: function(){ return state.form.source ? '' : '알게 된 경로를 선택해 주세요.'; },
+  consent: function(){ return state.form.consent ? '' : '개인정보 수집·이용에 동의해 주세요.'; },
+  title: function(){ return state.title.trim() ? '' : '이야기 제목을 입력해 주세요.'; },
+  q1: function(){ return checkAnswer('q1'); },
+  q2: function(){ return checkAnswer('q2'); },
+  q3: function(){ return checkAnswer('q3'); },
+  checks: function(){ return allChecked() ? '' : '제출 전 확인 항목 3개에 모두 체크해 주세요.'; }
+};
+var APPLY_KEYS = ['name','birth','phone','region','status','source','consent'];
+var WRITE_KEYS = ['title','q1','q2','q3','checks'];
+function countOf(k){ return Array.from(state.answers[k].trim()).length; }
+function checkAnswer(k){ var n = countOf(k); if (!n) return '답변을 작성해 주세요.'; if (n < CONFIG.answerMin) return '최소 ' + CONFIG.answerMin + '자 이상 작성해 주세요. (지금 ' + n + '자)'; return ''; }
+var FOCUS_TARGET = { name:'#f-name', birth:'#f-birth', phone:'#f-phone', region:function(){ return !state.form.sido.trim() ? '#f-si' : !state.form.sigungu.trim() ? '#f-gu' : '#f-dong'; }, status:'#chips-status input', source:'#chips-source input', consent:'#f-consent', title:'#f-title', q1:'#f-q1', q2:'#f-q2', q3:'#f-q3', checks:'[data-check]' };
+var shown = {};
+function setErr(key, msg){
+  var el = $('#err-' + key); if (el) el.textContent = msg;
+  var field = $('[data-field="' + key + '"]'); if (field) field.classList.toggle('is-invalid', !!msg);
+  shown[key] = !!msg;
+  if (field) $$('input,select,textarea', field).forEach(function(c){ if (msg) c.setAttribute('aria-invalid', 'true'); else c.removeAttribute('aria-invalid'); });
+}
+function check(key){ setErr(key, V[key]()); }
+function recheck(key){ if (shown[key]) check(key); }
+function validateAll(keys){
+  var first = null;
+  keys.forEach(function(k){ var msg = V[k](); setErr(k, msg); if (msg && !first) first = k; });
+  if (first){
+    var t = FOCUS_TARGET[first]; if (typeof t === 'function') t = t();
+    var el = $(t);
+    if (el){ el.focus({ preventScroll:true }); ($('[data-field="' + first + '"]') || el).scrollIntoView({ block:'center', behavior:'smooth' }); }
+  }
+  return !first;
+}
+function applyValid(){ return APPLY_KEYS.every(function(k){ return !V[k](); }); }
+
+/* 임시저장 */
+var saveTimer = null;
+function hasDraft(){ var f = state.form, a = state.answers; return !!(f.name || f.birth || f.phone || f.sido || f.sigungu || f.dong || f.status || f.source || state.title || a.q1 || a.q2 || a.q3); }
+function saveNow(){
+  clearTimeout(saveTimer); saveTimer = null;
+  if (!hasDraft()) return;
+  try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ v:2, flowStep:state.flowStep, form:state.form, title:state.title, answers:state.answers, savedAt:Date.now() })); state.savedAt = Date.now(); storageOK = true; }
+  catch (e) { storageOK = false; }
+  renderSaveStatus();
+}
+function scheduleSave(){ clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 450); }
+function loadDraft(){ try { var raw = localStorage.getItem(DRAFT_KEY); return raw ? JSON.parse(raw) : null; } catch (e) { storageOK = false; return null; } }
+function clearDraft(){
+  try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+  state.form = { name:'', birth:'', phone:'', sido:'', sigungu:'', dong:'', status:'', source:'', consent:false };
+  state.title = ''; state.answers = { q1:'', q2:'', q3:'' }; state.savedAt = 0; state.flowStep = null;
+  state.checks = { noAI:false, notPublic:false, noEdit:false };
+  hydrateInputs();
+}
+function renderSaveStatus(){
+  var txt, ok = false;
+  if (!storageOK) txt = '이 브라우저에서는 임시저장이 안 돼요. 제출 전까지 창을 닫지 마세요.';
+  else if (state.savedAt){ txt = '임시저장됨 · ' + new Date(state.savedAt).toLocaleTimeString('ko-KR', { hour:'numeric', minute:'2-digit' }) + ' · 새로고침해도 내용이 남아 있어요.'; ok = true; }
+  else txt = '입력한 내용은 이 기기에 자동으로 임시저장돼요.';
+  $$('[data-save-status]').forEach(function(el){ el.textContent = txt; el.classList.toggle('saved', ok); });
+}
+
+/* 폼 구성 */
+function buildChips(sel, name, list){
+  var box = $(sel);
+  list.forEach(function(v, i){
+    var l = document.createElement('label'); l.className = 'chip';
+    var inp = document.createElement('input'); inp.type = 'radio'; inp.name = name; inp.value = v; inp.id = 'f-' + name + '-' + i;
+    var s = document.createElement('span'); s.textContent = v;
+    l.appendChild(inp); l.appendChild(s); box.appendChild(l);
+  });
+}
+function setRadio(name, value){ $$('input[name="' + name + '"]').forEach(function(r){ r.checked = r.value === value; }); }
+function hydrateInputs(){
+  var f = state.form;
+  $('#f-name').value = f.name; $('#f-birth').value = fmtBirth(f.birth); $('#f-phone').value = fmtPhone(f.phone);
+  $('#f-si').value = f.sido || ''; $('#f-gu').value = f.sigungu || ''; $('#f-dong').value = f.dong || '';
+  setRadio('status', f.status); setRadio('source', f.source);
+  $('#f-consent').checked = !!f.consent;
+  $('#f-title').value = state.title; QKEYS.forEach(function(k){ $('#f-' + k).value = state.answers[k]; });
+  $$('[data-check]').forEach(function(c){ c.checked = !!state.checks[c.dataset.check]; });
+  renderCount(); updateSubmitEnabled();
+}
+function renderCount(){ QKEYS.forEach(renderQCount); }
+function renderQCount(k){
+  var n = countOf(k), min = CONFIG.answerMin, r0 = CONFIG.answerRec[0], r1 = CONFIG.answerRec[1];
+  var el = $('#' + k + '-count'), txt;
+  if (n < min) txt = '<b>' + n.toLocaleString('ko-KR') + '자</b> · ' + (min - n) + '자 더 필요';
+  else if (n < r0) txt = '<b>' + n.toLocaleString('ko-KR') + '자</b> · 권장 분량까지 ' + (r0 - n) + '자';
+  else if (n <= r1) txt = '<b>' + n.toLocaleString('ko-KR') + '자</b> · 권장 분량이에요';
+  else txt = '<b>' + n.toLocaleString('ko-KR') + '자</b> · 충분해요';
+  el.innerHTML = txt; el.classList.toggle('ok', n >= min);
+  $('#' + k + '-bar').style.width = (n < min ? n / min * 100 : 100) + '%';
+  $('#f-' + k).classList.toggle('under', n > 0 && n < min);
+}
+function autoGrow(){ $$('.qa-text').forEach(function(ta){ if (ta.offsetParent === null) return; ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 4) + 'px'; }); }
+
+/* 화면 전환 */
+function setStepper(view){
+  var cur = view === 'apply' ? 1 : view === 'write' ? 2 : view === 'done' ? 3 : 0;
+  $$('#stepper li').forEach(function(li){
+    var s = +li.dataset.s;
+    li.classList.toggle('is-done', s < cur || view === 'done');
+    li.classList.toggle('is-current', s === cur && view !== 'done');
+    if (s === cur) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+  });
+}
+function showView(name){
+  state.view = name;
+  VIEWS.forEach(function(v){ $('#view-' + v).hidden = v !== name; });
+  document.body.dataset.view = name;
+  $('#flowbar').hidden = name === 'intro';
+  $('#dock').hidden = name !== 'intro';
+  $('#final').hidden = name !== 'intro';
+  setStepper(name);
+  if (name === 'apply' || name === 'write'){ state.flowStep = name; saveNow(); }
+  refreshCtas();
+  renderBackendNotice();
+  window.scrollTo(0, 0);
+  if (name !== 'intro'){ var h = $('#view-' + name + ' h1'); if (h) h.focus({ preventScroll:true }); }
+  if (name === 'write') requestAnimationFrame(autoGrow);
+}
+function startApply(){
+  if (existingReceipt){ showDone(existingReceipt, true); return; }
+  if (closed) return;
+  showView('apply');
+}
+function refreshCtas(){
+  var label = null;
+  if (existingReceipt) label = '내 접수 확인하기';
+  else if (closed) label = '접수가 마감되었어요';
+  $$('[data-go="apply"][data-label]').forEach(function(b){
+    var l = b.querySelector('.cta-label'); if (!l) return;
+    var short = b.closest('.nav') && label ? (existingReceipt ? '내 접수 확인' : '접수 마감') : null;
+    l.textContent = short || label || b.dataset.label;
+    b.disabled = closed && !existingReceipt;
+  });
+}
+function scrollToSection(id){
+  var go = function(){ var el = id === 'top' ? document.body : document.getElementById(id); if (!el) return; var y = id === 'top' ? 0 : el.getBoundingClientRect().top + window.scrollY - 12; window.scrollTo({ top:y, behavior:'smooth' }); };
+  if (state.view !== 'intro'){ showView('intro'); requestAnimationFrame(go); } else go();
+}
+
+/* 미리보기 */
+function renderPreview(){
+  var f = state.form, dl = $('#pv-info'); dl.innerHTML = '';
+  [['이름', f.name.trim()], ['생년월일', fmtBirth(f.birth)], ['연락처', fmtPhone(f.phone)], ['거주 지역', regionText()], ['지금의 나는?', f.status], ['알게 된 경로', f.source]].forEach(function(r){
+    var dt = document.createElement('dt'); dt.textContent = r[0];
+    var dd = document.createElement('dd'); dd.textContent = r[1];
+    dl.appendChild(dt); dl.appendChild(dd);
+  });
+  $('#pv-title').textContent = state.title.trim();
+  var box = $('#pv-story'); box.innerHTML = ''; var total = 0;
+  QKEYS.forEach(function(k, i){
+    var wrap = document.createElement('div'); wrap.className = 'pv-q';
+    var t = document.createElement('p'); t.className = 'pv-q-title'; t.textContent = 'Q' + (i + 1) + ' · ' + QTITLES[k];
+    var x = document.createElement('p'); x.className = 'pv-q-text'; x.textContent = state.answers[k].trim();
+    wrap.appendChild(t); wrap.appendChild(x); box.appendChild(wrap); total += countOf(k);
+  });
+  $('#pv-meta').textContent = '총 ' + total.toLocaleString('ko-KR') + '자 (공백 포함)';
+  $('#submit-error').textContent = '';
+  updateSubmitEnabled();
+}
+var lastFocus = null;
+function openSheet(){
+  renderPreview();
+  lastFocus = document.activeElement;
+  $('#sheet').hidden = false; document.body.classList.add('locked');
+  $('.sheet-panel').scrollTop = 0;
+  $('#sheet-title').focus({ preventScroll:true });
+}
+function closeSheet(){
+  if (submitting) return;
+  $('#sheet').hidden = true; document.body.classList.remove('locked');
+  if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll:true });
+}
+function allChecked(){ return state.checks.noAI && state.checks.notPublic && state.checks.noEdit; }
+function updateSubmitEnabled(){ var b = $('#btn-submit'); if (b) b.disabled = submitting; }
+
+/* 접수 저장 */
+function makeReceiptNo(){
+  var A = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ', out = '', buf = new Uint32Array(5);
+  if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(buf); else for (var i = 0; i < 5; i++) buf[i] = Math.floor(Math.random() * 4294967296);
+  for (var j = 0; j < 5; j++) out += A[buf[j] % A.length];
+  var t = kst(); return 'MIU-' + pad(t.m) + pad(t.d) + '-' + out;
+}
+function buildPayload(){
+  var f = state.form, now = Date.now();
+  var ans = { q1:state.answers.q1.trim(), q2:state.answers.q2.trim(), q3:state.answers.q3.trim() };
+  var story = QKEYS.map(function(k, i){ return '[Q' + (i + 1) + '] ' + QTITLES[k] + '\n' + ans[k]; }).join('\n\n');
+  return { receiptNo:makeReceiptNo(), name:f.name.trim(), birth:fmtBirth(f.birth), phone:fmtPhone(f.phone), regionSido:f.sido.trim(), regionSigungu:f.sigungu.trim(), regionDong:f.dong.trim(), region:regionText(), answers:ans, charCounts:{ q1:countOf('q1'), q2:countOf('q2'), q3:countOf('q3') }, status:f.status, source:f.source, privacyConsent:true, title:state.title.trim(), story:story, charCount:countOf('q1') + countOf('q2') + countOf('q3'), confirmations:{ noAI:true, notPublic:true, noEditAfterSubmit:true }, submittedAt:new Date(now).toISOString(), submittedAtMs:now, submittedAtKST:fmtKST(now) };
+}
+function regionText(){ var f = state.form; return [f.sido, f.sigungu, f.dong].map(function(v){ return (v || '').trim(); }).filter(Boolean).join(' '); }
+function toReceipt(d){ return { receiptNo:d.receiptNo, name:d.name, title:d.title, at:d.submittedAtMs ? fmtKST(d.submittedAtMs) : (d.submittedAtKST || '') }; }
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+function withRetry(fn){ return fn().catch(function(e){ if (e && e.code === 'unavailable') return sleep(500 + Math.random() * 700).then(fn); throw e; }); }
+function submitViaDb(p){
+  var ref = backend.db.doc('submissions/' + backend.uid);
+  return withRetry(function(){ return ref.get(); }).then(function(before){
+    if (before.exists) throw { code:'already', receipt:toReceipt(before.data()) };
+    return withRetry(function(){ return ref.set(p); });
+  }).then(function(){ return withRetry(function(){ return ref.get(); }); })
+  .then(function(after){ if (!after.exists || after.data().receiptNo !== p.receiptNo) throw { code:'unverified' }; return toReceipt(after.data()); });
+}
+function submitViaHttp(p){
+  return fetch(CONFIG.submitUrl, { method:'POST', headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body:JSON.stringify(p) })
+    .then(function(res){ if (!res.ok) throw { code:'http_' + res.status }; return res.json(); })
+    .then(function(j){ if (j && j.code === 'already') throw { code:'already_http' }; if (j && j.code === 'invalid') throw { code:'invalid_http' }; if (!j || j.ok !== true) throw { code:'http_rejected' }; if (j.receiptNo) p.receiptNo = j.receiptNo; return toReceipt(p); });
+}
+function errorMessage(e){
+  var c = e && e.code;
+  if (c === 'no_backend') return '이 화면에서는 아직 제출할 수 없어요. 작성한 내용은 이 기기에 저장돼 있어요.';
+  if (c === 'invalid_argument') return '접수를 저장할 권한이 없어 제출하지 못했어요. 운영진에게 문의해 주세요.';
+  if (c === 'already_http') return '이미 이 연락처로 접수된 작품이 있어요. 최종 제출 후에는 수정할 수 없어요.';
+  if (c === 'invalid_http') return '빠진 항목이 있어 제출하지 못했어요. 신청 정보와 세 가지 답변을 다시 확인해 주세요.';
+  if (c === 'quota_exceeded') return '접수 저장 공간이 가득 차 제출하지 못했어요. 운영진에게 문의해 주세요.';
+  return '제출하지 못했어요. 작성 내용은 그대로 있으니 잠시 후 다시 눌러 주세요.';
+}
+function setBusy(b){ submitting = b; $('#btn-submit').textContent = b ? '제출 중…' : '이대로 제출하기'; $('#btn-edit').disabled = b; updateSubmitEnabled(); }
+function doSubmit(){
+  if (submitting) return;
+  if (Date.now() > deadlineMs()){ closed = true; refreshCtas(); $('#submit-error').textContent = '접수가 마감되어 제출할 수 없어요.'; return; }
+  if (!applyValid()){ $('#sheet').hidden = true; document.body.classList.remove('locked'); showView('apply'); validateAll(APPLY_KEYS); return; }
+  if (WRITE_KEYS.some(function(k){ return V[k](); })){ closeSheet(); validateAll(WRITE_KEYS); return; }
+  $('#submit-error').textContent = '';
+  setBusy(true);
+  backendReady.then(function(){
+    var p = buildPayload();
+    if (backend.kind === 'db') return submitViaDb(p);
+    if (backend.kind === 'http') return submitViaHttp(p);
+    throw { code:'no_backend' };
+  }).then(function(receipt){
+    existingReceipt = receipt; clearDraft(); setBusy(false); closeSheet(); showDone(receipt, false);
+  }).catch(function(e){
+    setBusy(false);
+    if (e && e.code === 'already'){ existingReceipt = e.receipt; clearDraft(); closeSheet(); showDone(e.receipt, true); return; }
+    var box = $('#submit-error'); box.textContent = errorMessage(e); box.scrollIntoView({ block:'center', behavior:'smooth' });
+  });
+}
+function showDone(r, already){
+  $('#r-no').textContent = r.receiptNo || ''; $('#r-name').textContent = r.name || ''; $('#r-title').textContent = r.title || '';
+  $('#r-at').textContent = r.at ? r.at + ' (KST)' : '';
+  $('#done-already').hidden = !already; $('#copy-msg').textContent = '';
+  showView('done');
+}
+
+/* 접수 서버 연결 */
+function renderBackendNotice(){
+  var msg = backend.kind === 'none' ? (backend.reason === 'no_permission' ? '이 계정은 보기 권한만 있어 최종 제출이 안 돼요. 작성한 내용은 이 기기에 저장돼요.' : '이 화면에서는 최종 제출이 안 돼요. 작성한 내용은 이 기기에 저장돼요.') : '';
+  $$('[data-backend-notice]').forEach(function(el){ el.textContent = msg; el.hidden = !msg; });
+}
+var backendReady = (function(){
+  var c = window.claude;
+  if (!c || typeof c.use !== 'function'){ backend = CONFIG.submitUrl ? { kind:'http' } : { kind:'none' }; renderBackendNotice(); return Promise.resolve(); }
+  var db = null, user = null, uid = null;
+  return Promise.all([c.use('db').catch(function(){ return null; }), c.use('user').catch(function(){ return null; })])
+    .then(function(r){ db = r[0]; user = r[1]; return user ? user.id() : null; })
+    .then(function(id){ uid = id; return user ? user.can('data.write') : null; })
+    .then(function(canWrite){
+      if (db && uid) backend = canWrite === false ? { kind:'none', reason:'no_permission' } : { kind:'db', db:db, uid:uid };
+      else backend = CONFIG.submitUrl ? { kind:'http' } : { kind:'none' };
+      renderBackendNotice();
+      if (user && !(CONFIG.partners || []).length) user.isOwner().then(function(o){ if (o) renderPartners(PARTNER_PLACEHOLDERS, true); }).catch(function(){});
+      if (backend.kind === 'db') return db.doc('submissions/' + uid).get().then(function(s){ if (s.exists){ existingReceipt = toReceipt(s.data()); refreshCtas(); } }).catch(function(){});
+    })
+    .catch(function(){ backend = CONFIG.submitUrl ? { kind:'http' } : { kind:'none' }; renderBackendNotice(); });
+})();
+
+/* 협력기관 흐르는 띠 */
+var PARTNER_PLACEHOLDERS = [];
+for (var pi = 0; pi < 8; pi++) PARTNER_PLACEHOLDERS.push({ name:'협력기관 로고' });
+function renderPartners(list, placeholder){
+  var rows = [$('#mq1'), $('#mq2')];
+  var half = Math.ceil(list.length / 2);
+  var parts = list.length >= 6 ? [list.slice(0, half), list.slice(half)] : [list, list.slice().reverse()];
+  parts.forEach(function(items, i){
+    var t = rows[i]; t.innerHTML = '';
+    var seq = items.slice(); while (seq.length < 8) seq = seq.concat(items);
+    [0, 1].forEach(function(copy){ seq.forEach(function(p, k){
+      var el = document.createElement('div'); el.className = 'mq-item' + (placeholder ? ' mq-ph' : '');
+      if (copy || k >= items.length) el.setAttribute('data-dup', '');
+      if (p.src){ var im = document.createElement('img'); im.src = p.src; im.alt = ''; el.appendChild(im); } else el.textContent = p.name || '';
+      t.appendChild(el);
+    }); });
+  });
+  var ul = $('#partner-list'); ul.innerHTML = '';
+  if (!placeholder) list.forEach(function(p){ var li = document.createElement('li'); li.textContent = p.name || ''; ul.appendChild(li); });
+  $('#marquee').hidden = false;
+}
+
+/* 이벤트 */
+document.addEventListener('click', function(e){
+  if (e.target.closest('[data-close]')){ closeSheet(); return; }
+  var s = e.target.closest('[data-scroll]'); if (s){ scrollToSection(s.dataset.scroll); return; }
+  var b = e.target.closest('[data-go]'); if (!b || b.disabled) return;
+  var t = b.dataset.go;
+  if (t === 'apply' && b.dataset.label) startApply();
+  else if (t === 'apply') showView('apply');
+  else if (t === 'write') showView('write');
+  else if (t === 'intro') showView('intro');
+});
+$('#f-name').addEventListener('input', function(e){ state.form.name = e.target.value; recheck('name'); scheduleSave(); });
+$('#f-name').addEventListener('blur', function(){ if (state.form.name) check('name'); });
+$('#f-birth').addEventListener('input', function(e){ var v = fmtBirth(e.target.value); e.target.value = v; state.form.birth = v; recheck('birth'); if (digits(v).length === 8) check('birth'); scheduleSave(); });
+$('#f-birth').addEventListener('blur', function(){ if (state.form.birth) check('birth'); });
+$('#f-phone').addEventListener('input', function(e){ var v = fmtPhone(e.target.value); e.target.value = v; state.form.phone = v; recheck('phone'); scheduleSave(); });
+$('#f-phone').addEventListener('blur', function(){ if (state.form.phone) check('phone'); });
+[['#f-si','sido'],['#f-gu','sigungu'],['#f-dong','dong']].forEach(function(p){ $(p[0]).addEventListener('input', function(e){ state.form[p[1]] = e.target.value; recheck('region'); scheduleSave(); }); });
+$('#f-consent').addEventListener('change', function(e){ state.form.consent = e.target.checked; recheck('consent'); scheduleSave(); });
+$('#form-apply').addEventListener('change', function(e){
+  var t = e.target; if (t.type !== 'radio') return;
+  if (t.name === 'status'){ state.form.status = t.value; recheck('status'); }
+  if (t.name === 'source'){ state.form.source = t.value; recheck('source'); }
+  scheduleSave();
+});
+$('#form-apply').addEventListener('submit', function(e){ e.preventDefault(); if (Date.now() > deadlineMs()){ closed = true; showView('intro'); return; } if (validateAll(APPLY_KEYS)) showView('write'); });
+$('#f-title').addEventListener('input', function(e){ state.title = e.target.value; recheck('title'); scheduleSave(); });
+$$('.qa-text').forEach(function(ta){ ta.addEventListener('input', function(){ var k = ta.dataset.q; state.answers[k] = ta.value; renderQCount(k); recheck(k); autoGrow(); scheduleSave(); }); });
+$('#form-write').addEventListener('submit', function(e){ e.preventDefault(); saveNow(); if (validateAll(WRITE_KEYS)) openSheet(); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !$('#sheet').hidden) closeSheet(); });
+$$('[data-check]').forEach(function(c){ c.addEventListener('change', function(){ state.checks[c.dataset.check] = c.checked; recheck('checks'); }); });
+$('#btn-submit').addEventListener('click', doSubmit);
+$('#btn-copy').addEventListener('click', function(){
+  var no = $('#r-no').textContent, msg = $('#copy-msg');
+  var fallback = function(){ var r = document.createRange(); r.selectNodeContents($('#r-no')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); msg.textContent = '선택됐어요'; };
+  try { navigator.clipboard.writeText(no).then(function(){ msg.textContent = '복사했어요'; }, fallback); } catch (e) { fallback(); }
+});
+window.addEventListener('resize', function(){ if (state.view === 'write') autoGrow(); });
+document.addEventListener('visibilitychange', function(){ if (document.visibilityState === 'hidden' && saveTimer) saveNow(); });
+window.addEventListener('pagehide', function(){ if (saveTimer) saveNow(); });
+
+/* 시작 */
+buildChips('#chips-status', 'status', STATUSES);
+buildChips('#chips-source', 'source', SOURCES);
+$('#privacy-retention').textContent = CONFIG.privacyRetention;
+$$('[data-len]').forEach(function(el){ el.textContent = '최소 ' + CONFIG.answerMin + '자 · 권장 ' + CONFIG.answerRec[0] + '~' + CONFIG.answerRec[1] + '자'; });
+if (CONFIG.partners && CONFIG.partners.length) renderPartners(CONFIG.partners, false);
+closed = Date.now() > deadlineMs();
+var timerId = null;
+function tick(){
+  var diff = deadlineMs() - Date.now();
+  if (diff <= 0){ $$('.timer').forEach(function(el){ el.textContent = '접수가 마감되었어요'; }); if (!closed){ closed = true; refreshCtas(); } clearInterval(timerId); return; }
+  var t = Math.floor(diff / 1000), d = Math.floor(t / 86400); t %= 86400;
+  var h = Math.floor(t / 3600); t %= 3600; var m = Math.floor(t / 60), sec = t % 60;
+  var html = '<b>' + d + '</b>일 <b>' + pad(h) + '</b>:<b>' + pad(m) + '</b>:<b>' + pad(sec) + '</b>';
+  $$('[data-timer-val]').forEach(function(el){ el.innerHTML = html; });
+}
+tick(); timerId = setInterval(tick, 1000);
+var draft = loadDraft();
+if (draft && draft.form){ Object.assign(state.form, draft.form); state.title = draft.title || ''; if (draft.answers) Object.assign(state.answers, draft.answers); else if (draft.story) state.answers.q1 = draft.story; state.savedAt = draft.savedAt || 0; state.flowStep = draft.flowStep || null; }
+hydrateInputs(); renderSaveStatus();
+showView('intro');
+})();
+</script>
+
+</body>
+</html>
