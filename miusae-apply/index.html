@@ -776,8 +776,7 @@ var CONFIG = {
   ],
   privacyRetention: '공모전 종료 및 결과 안내 완료 후 지체 없이 파기',
   submitUrl: 'https://script.google.com/macros/s/AKfycbzBSLz14txsJiShUYLzT6MdZRHaMfT7kpiLgpZ8e7XPH6g60z1Hh0_cngl_sTO1E-5lPA/exec',                   // ← 구글 Apps Script '웹 앱 URL'을 따옴표 안에 붙여넣으세요 (예: 'https://script.google.com/macros/s/…/exec')
-  answerMin: 100,                  // 질문별 최소 글자 수(공백 포함)
-  answerRec: [300, 500]            // 질문별 권장 글자 수
+  answerMin: { q1:100, q2:60, q3:60 }  // 질문별 최소 글자 수(공백 포함)
 };
 
 var STATUSES = ['대학생','휴학생','취준생','직장인','프리랜서','기타'];
@@ -836,7 +835,7 @@ var V = {
 var APPLY_KEYS = ['name','birth','phone','region','status','source','consent'];
 var WRITE_KEYS = ['title','q1','q2','q3','checks'];
 function countOf(k){ return Array.from(state.answers[k].trim()).length; }
-function checkAnswer(k){ var n = countOf(k); if (!n) return '답변을 작성해 주세요.'; if (n < CONFIG.answerMin) return '최소 ' + CONFIG.answerMin + '자 이상 작성해 주세요. (지금 ' + n + '자)'; return ''; }
+function checkAnswer(k){ var n = countOf(k); if (!n) return '답변을 작성해 주세요.'; if (n < CONFIG.answerMin[k]) return '최소 ' + CONFIG.answerMin[k] + '자 이상 작성해 주세요. (지금 ' + n + '자)'; return ''; }
 var FOCUS_TARGET = { name:'#f-name', birth:'#f-birth', phone:'#f-phone', region:function(){ return !state.form.sido.trim() ? '#f-si' : !state.form.sigungu.trim() ? '#f-gu' : '#f-dong'; }, status:'#chips-status input', source:'#chips-source input', consent:'#f-consent', title:'#f-title', q1:'#f-q1', q2:'#f-q2', q3:'#f-q3', checks:'[data-check]' };
 var shown = {};
 function setErr(key, msg){
@@ -909,11 +908,9 @@ function hydrateInputs(){
 }
 function renderCount(){ QKEYS.forEach(renderQCount); }
 function renderQCount(k){
-  var n = countOf(k), min = CONFIG.answerMin, r0 = CONFIG.answerRec[0], r1 = CONFIG.answerRec[1];
+  var n = countOf(k), min = CONFIG.answerMin[k];
   var el = $('#' + k + '-count'), txt;
   if (n < min) txt = '<b>' + n.toLocaleString('ko-KR') + '자</b> · ' + (min - n) + '자 더 필요';
-  else if (n < r0) txt = '<b>' + n.toLocaleString('ko-KR') + '자</b> · 권장 분량까지 ' + (r0 - n) + '자';
-  else if (n <= r1) txt = '<b>' + n.toLocaleString('ko-KR') + '자</b> · 권장 분량이에요';
   else txt = '<b>' + n.toLocaleString('ko-KR') + '자</b> · 충분해요';
   el.innerHTML = txt; el.classList.toggle('ok', n >= min);
   $('#' + k + '-bar').style.width = (n < min ? n / min * 100 : 100) + '%';
@@ -1159,7 +1156,7 @@ window.addEventListener('pagehide', function(){ if (saveTimer) saveNow(); });
 buildChips('#chips-status', 'status', STATUSES);
 buildChips('#chips-source', 'source', SOURCES);
 $('#privacy-retention').textContent = CONFIG.privacyRetention;
-$$('[data-len]').forEach(function(el){ el.textContent = '최소 ' + CONFIG.answerMin + '자 · 권장 ' + CONFIG.answerRec[0] + '~' + CONFIG.answerRec[1] + '자'; });
+$$('[data-len]').forEach(function(el, i){ el.textContent = '최소 ' + CONFIG.answerMin[QKEYS[i]] + '자 이상'; });
 if (CONFIG.partners && CONFIG.partners.length) renderPartners(CONFIG.partners, false);
 closed = Date.now() > deadlineMs();
 var timerId = null;
