@@ -784,6 +784,8 @@ var VIEWS = ['intro','apply','write','done'];
 var QKEYS = ['q1','q2','q3'];
 var QTITLES = { q1:'그때의 나는 어떤 모습이었나요?', q2:'지금의 나는 어떤 사람인가요?', q3:'앞으로 어떤 백조가 되고 싶나요?' };
 var DRAFT_KEY = 'miusae-draft-v1';
+var UTM_KEY = 'miusae-utm-v1';
+var UTM_FIELDS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
 
 function $(s, r){ return (r || document).querySelector(s); }
 function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
@@ -999,6 +1001,16 @@ function closeSheet(){
 function allChecked(){ return state.checks.noAI && state.checks.notPublic && state.checks.noEdit; }
 function updateSubmitEnabled(){ var b = $('#btn-submit'); if (b) b.disabled = submitting; }
 
+/* 광고 유입 경로(UTM) — 링크에 붙어 온 값을 기억해 뒀다가, 나중에 다시 들어와 제출해도 함께 보냄 */
+function readUtm(){
+  var q = new URLSearchParams(location.search), u = {}, found = false;
+  UTM_FIELDS.forEach(function(k){ var v = (q.get(k) || '').trim().slice(0, 200); u[k] = v; if (v) found = true; });
+  if (found){ try { localStorage.setItem(UTM_KEY, JSON.stringify(u)); } catch (e) {} return u; }
+  try { var s = JSON.parse(localStorage.getItem(UTM_KEY) || 'null'); if (s) return s; } catch (e) {}
+  return u;
+}
+var utm = readUtm();
+
 /* 접수 저장 */
 function makeReceiptNo(){
   var A = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ', out = '', buf = new Uint32Array(5);
@@ -1010,7 +1022,7 @@ function buildPayload(){
   var f = state.form, now = Date.now();
   var ans = { q1:state.answers.q1.trim(), q2:state.answers.q2.trim(), q3:state.answers.q3.trim() };
   var story = QKEYS.map(function(k, i){ return '[Q' + (i + 1) + '] ' + QTITLES[k] + '\n' + ans[k]; }).join('\n\n');
-  return { receiptNo:makeReceiptNo(), name:f.name.trim(), birth:fmtBirth(f.birth), phone:fmtPhone(f.phone), regionSido:f.sido.trim(), regionSigungu:f.sigungu.trim(), regionDong:f.dong.trim(), region:regionText(), answers:ans, charCounts:{ q1:countOf('q1'), q2:countOf('q2'), q3:countOf('q3') }, status:f.status, source:f.source, privacyConsent:true, title:state.title.trim(), story:story, charCount:countOf('q1') + countOf('q2') + countOf('q3'), confirmations:{ noAI:true, notPublic:true, noEditAfterSubmit:true }, submittedAt:new Date(now).toISOString(), submittedAtMs:now, submittedAtKST:fmtKST(now) };
+  return { receiptNo:makeReceiptNo(), name:f.name.trim(), birth:fmtBirth(f.birth), phone:fmtPhone(f.phone), regionSido:f.sido.trim(), regionSigungu:f.sigungu.trim(), regionDong:f.dong.trim(), region:regionText(), answers:ans, charCounts:{ q1:countOf('q1'), q2:countOf('q2'), q3:countOf('q3') }, status:f.status, source:f.source, privacyConsent:true, title:state.title.trim(), story:story, charCount:countOf('q1') + countOf('q2') + countOf('q3'), confirmations:{ noAI:true, notPublic:true, noEditAfterSubmit:true }, submittedAt:new Date(now).toISOString(), submittedAtMs:now, submittedAtKST:fmtKST(now), utm:utm };
 }
 function regionText(){ var f = state.form; return [f.sido, f.sigungu, f.dong].map(function(v){ return (v || '').trim(); }).filter(Boolean).join(' '); }
 function toReceipt(d){ return { receiptNo:d.receiptNo, name:d.name, title:d.title, at:d.submittedAtMs ? fmtKST(d.submittedAtMs) : (d.submittedAtKST || '') }; }
