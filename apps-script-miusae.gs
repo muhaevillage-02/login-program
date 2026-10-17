@@ -13,7 +13,8 @@ var HEADERS = [
   "접수시각", "접수번호", "이름", "생년월일", "연락처", "거주지역(시·도)", "시·군·구", "읍·면·동",
   "지금의 나", "알게 된 경로", "개인정보동의", "작품 제목",
   "Q1 답변", "Q2 답변", "Q3 답변", "총 글자수", "Q1 글자수", "Q2 글자수", "Q3 글자수",
-  "AI 미사용 확인", "비공개 확인", "수정불가 확인", "제출시각(KST)"
+  "AI 미사용 확인", "비공개 확인", "수정불가 확인", "제출시각(KST)",
+  "유입 매체(utm_source)", "유입 유형(utm_medium)", "캠페인(utm_campaign)", "광고(utm_content)", "광고 세트(utm_term)"
 ];
 
 function out(obj) {
@@ -32,9 +33,11 @@ function doPost(e) {
     }
 
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(HEADERS);
-      sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight("bold");
+    // 빈 시트이거나, 나중에 추가된 열(UTM 등)의 제목이 비어 있으면 그 칸만 채운다
+    var head = sheet.getRange(1, 1, 1, HEADERS.length);
+    var cur = head.getDisplayValues()[0];
+    if (cur.some(function (v) { return v === ""; })) {
+      head.setValues([HEADERS.map(function (h, i) { return cur[i] || h; })]).setFontWeight("bold");
       sheet.setFrozenRows(1);
     }
 
@@ -49,6 +52,10 @@ function doPost(e) {
       }
     }
 
+    // 링크로 들어온 값이 수식(=, +, -, @ 로 시작)으로 실행되지 않도록 글자로 저장
+    var u = d.utm || {};
+    function txt(v) { v = String(v || ""); return /^[=+\-@]/.test(v) ? "'" + v : v; }
+
     // 전화번호가 숫자로 변환되지 않도록 문자열로 저장
     var row = [
       new Date(), d.receiptNo || "", d.name, "'" + d.birth, "'" + d.phone,
@@ -57,7 +64,8 @@ function doPost(e) {
       a.q1, a.q2, a.q3, d.charCount || "",
       (d.charCounts || {}).q1 || "", (d.charCounts || {}).q2 || "", (d.charCounts || {}).q3 || "",
       c.noAI ? "확인" : "", c.notPublic ? "확인" : "", c.noEditAfterSubmit ? "확인" : "",
-      d.submittedAtKST || ""
+      d.submittedAtKST || "",
+      txt(u.utm_source), txt(u.utm_medium), txt(u.utm_campaign), txt(u.utm_content), txt(u.utm_term)
     ];
     sheet.appendRow(row);
     return out({ ok: true, receiptNo: d.receiptNo });
