@@ -14,7 +14,7 @@ var HEADERS = [
   "지금의 나", "알게 된 경로", "개인정보동의", "작품 제목",
   "Q1 답변", "Q2 답변", "Q3 답변", "총 글자수", "Q1 글자수", "Q2 글자수", "Q3 글자수",
   "AI 미사용 확인", "비공개 확인", "수정불가 확인", "제출시각(KST)",
-  "유입 매체(utm_source)", "유입 유형(utm_medium)", "캠페인(utm_campaign)", "광고(utm_content)", "광고 세트(utm_term)"
+  "유입 매체(utm_source)", "광고 계정(utm_medium)", "캠페인(utm_campaign)", "광고(utm_content)", "광고 세트(utm_term)"
 ];
 
 function out(obj) {
