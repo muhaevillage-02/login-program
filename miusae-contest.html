@@ -384,16 +384,11 @@ input:focus,select:focus,textarea:focus{outline:none; border-color:var(--navy); 
       </div>
       <div class="field">
         <span class="lbl" id="regionLbl">거주 지역<span class="req">*</span></span>
-        <span class="hint">서울·경기 거주자만 참가할 수 있어요</span>
         <div class="row2" role="group" aria-labelledby="regionLbl">
-          <select id="city" aria-label="시·도">
-            <option value="">시·도</option>
-            <option value="서울">서울특별시</option>
-            <option value="경기">경기도</option>
-          </select>
-          <select id="district" aria-label="구·시·군" disabled><option value="">구·시·군</option></select>
+          <input type="text" id="city" placeholder="시·도" aria-label="시·도" autocomplete="address-level1" maxlength="20">
+          <input type="text" id="district" placeholder="시·군·구" aria-label="시·군·구" autocomplete="address-level2" maxlength="20">
         </div>
-        <input type="text" id="dong" placeholder="거주하는 동 (예: 망원동)" aria-label="거주하는 동" maxlength="20">
+        <input type="text" id="dong" placeholder="읍·면·동" aria-label="읍·면·동" autocomplete="address-level3" maxlength="20">
         <div class="err" data-err="region"></div>
       </div>
       <div class="field">
@@ -537,10 +532,6 @@ const CONFIG = {
   sources:  ["인스타", "페이스북", "지인추천", "캠퍼스픽", "대학교 공고", "기타"]
 };
 
-const DISTRICTS = {
-  "서울": ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"],
-  "경기": ["가평군","고양시","과천시","광명시","광주시","구리시","군포시","김포시","남양주시","동두천시","부천시","성남시","수원시","시흥시","안산시","안성시","안양시","양주시","양평군","여주시","연천군","오산시","용인시","의왕시","의정부시","이천시","파주시","평택시","포천시","하남시","화성시"]
-};
 /* ===================================================================== */
 
 const $ = s => document.querySelector(s);
@@ -596,14 +587,6 @@ function chips(el, name, items){
 chips($("#status"), "status", CONFIG.statuses);
 $("#source").innerHTML = `<option value="">선택해 주세요</option>` + CONFIG.sources.map(x=>`<option>${x}</option>`).join("");
 
-function fillDistricts(){
-  const list = DISTRICTS[$("#city").value] || [];
-  const d = $("#district");
-  d.innerHTML = `<option value="">구·시·군</option>` + list.map(x=>`<option>${x}</option>`).join("");
-  d.disabled = !list.length;
-}
-$("#city").addEventListener("change", fillDistricts);
-
 function etcToggle(name, inputId){
   const v = (document.querySelector(`input[name="${name}"]:checked`)||{}).value;
   const inp = $("#"+inputId); inp.hidden = v !== "기타"; if(!inp.hidden) inp.focus();
@@ -633,7 +616,7 @@ function collect(){
   const status = pick("status"), source = $("#source").value;
   const o = {
     name:$("#name").value.trim(), birth:$("#birth").value, phone:$("#phone").value,
-    city:$("#city").value, district:$("#district").value, dong:$("#dong").value.trim(),
+    city:$("#city").value.trim(), district:$("#district").value.trim(), dong:$("#dong").value.trim(),
     status: status==="기타" ? `기타(${$("#statusEtc").value.trim()})` : status,
     source: source==="기타" ? `기타(${$("#sourceEtc").value.trim()})` : source,
     theme: pick("theme"), link:$("#link").value.trim(),
@@ -653,8 +636,7 @@ function saveDraft(){
 function loadDraft(){
   let d; try{ d = JSON.parse(localStorage.getItem(DRAFT_KEY)||"null"); }catch(e){ d=null; }
   if(!d) return;
-  ["name","birth","phone","source","city"].forEach(k=>{ if(d[k]) $("#"+k).value = d[k]; });
-  fillDistricts(); if(d.district) $("#district").value = d.district;
+  ["name","birth","phone","source","city","district"].forEach(k=>{ if(d[k]) $("#"+k).value = d[k]; });
   ["dong","statusEtc","sourceEtc","link","q1","q2","q3"].forEach(k=>{ if(d[k] && $("#"+k)) $("#"+k).value = d[k]; });
   [["status",d.status],["theme",d.theme]].forEach(([n,v])=>{
     const el=[...document.querySelectorAll(`input[name="${n}"]`)].find(x=>x.value===v); if(el) el.checked=true; });
@@ -681,7 +663,7 @@ function validate(step){
     if(age===null) fail("birth","생년월일 8자리를 입력해 주세요. 예) 2003.05.14");
     else if(age<CONFIG.ageMin || age>CONFIG.ageMax) fail("birth",`만 ${CONFIG.ageMin}세~${CONFIG.ageMax}세만 참가할 수 있어요. (현재 만 ${age}세)`);
     if(!/^01[016789]-\d{3,4}-\d{4}$/.test(d.phone)) fail("phone","010-0000-0000 형식으로 입력해 주세요.");
-    if(!d.city || !d.district || !d.dong) fail("region","시·도, 구·시·군을 고르고 동까지 적어 주세요.",["city","district","dong"]);
+    if(!d.city || !d.district || !d.dong) fail("region","시·도, 시·군·구, 읍·면·동을 모두 적어 주세요.",["city","district","dong"]);
     if(!pick("status")) fail("status","지금 상태를 골라 주세요.");
     else if(pick("status")==="기타" && !$("#statusEtc").value.trim()) fail("status","기타 내용을 적어 주세요.",["statusEtc"]);
     if(!$("#source").value) fail("source","알게 된 경로를 골라 주세요.");
