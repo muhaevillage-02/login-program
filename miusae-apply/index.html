@@ -411,6 +411,23 @@ body.locked{overflow:hidden}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.shine{display:none}.mq-track{flex-wrap:wrap;width:auto;justify-content:center;animation:none}.mq-track [data-dup]{display:none}*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1027053313732458');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1027053313732458&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1010,6 +1027,13 @@ function readUtm(){
   return u;
 }
 var utm = readUtm();
+function utmPayload(){ var u = {}; UTM_FIELDS.forEach(function(k){ u[k] = utm[k] || ''; }); if (!u.utm_source) u.utm_source = 'direct'; return u; }
+
+/* Meta 픽셀 전환 이벤트 — 세션당 한 번만 */
+function trackOnce(event, key){
+  try { if (sessionStorage.getItem(key)) return; } catch (e) {}
+  if (window.fbq){ window.fbq('track', event); try { sessionStorage.setItem(key, '1'); } catch (e) {} }
+}
 
 /* 접수 저장 */
 function makeReceiptNo(){
@@ -1022,7 +1046,7 @@ function buildPayload(){
   var f = state.form, now = Date.now();
   var ans = { q1:state.answers.q1.trim(), q2:state.answers.q2.trim(), q3:state.answers.q3.trim() };
   var story = QKEYS.map(function(k, i){ return '[Q' + (i + 1) + '] ' + QTITLES[k] + '\n' + ans[k]; }).join('\n\n');
-  return { receiptNo:makeReceiptNo(), name:f.name.trim(), birth:fmtBirth(f.birth), phone:fmtPhone(f.phone), regionSido:f.sido.trim(), regionSigungu:f.sigungu.trim(), regionDong:f.dong.trim(), region:regionText(), answers:ans, charCounts:{ q1:countOf('q1'), q2:countOf('q2'), q3:countOf('q3') }, status:f.status, source:f.source, privacyConsent:true, title:state.title.trim(), story:story, charCount:countOf('q1') + countOf('q2') + countOf('q3'), confirmations:{ noAI:true, notPublic:true, noEditAfterSubmit:true }, submittedAt:new Date(now).toISOString(), submittedAtMs:now, submittedAtKST:fmtKST(now), utm:utm };
+  return { receiptNo:makeReceiptNo(), name:f.name.trim(), birth:fmtBirth(f.birth), phone:fmtPhone(f.phone), regionSido:f.sido.trim(), regionSigungu:f.sigungu.trim(), regionDong:f.dong.trim(), region:regionText(), answers:ans, charCounts:{ q1:countOf('q1'), q2:countOf('q2'), q3:countOf('q3') }, status:f.status, source:f.source, privacyConsent:true, title:state.title.trim(), story:story, charCount:countOf('q1') + countOf('q2') + countOf('q3'), confirmations:{ noAI:true, notPublic:true, noEditAfterSubmit:true }, submittedAt:new Date(now).toISOString(), submittedAtMs:now, submittedAtKST:fmtKST(now), utm:utmPayload() };
 }
 function regionText(){ var f = state.form; return [f.sido, f.sigungu, f.dong].map(function(v){ return (v || '').trim(); }).filter(Boolean).join(' '); }
 function toReceipt(d){ return { receiptNo:d.receiptNo, name:d.name, title:d.title, at:d.submittedAtMs ? fmtKST(d.submittedAtMs) : (d.submittedAtKST || '') }; }
@@ -1064,6 +1088,7 @@ function doSubmit(){
     if (backend.kind === 'http') return submitViaHttp(p);
     throw { code:'no_backend' };
   }).then(function(receipt){
+    trackOnce('CompleteRegistration', 'miusae_submit_sent');
     existingReceipt = receipt; clearDraft(); setBusy(false); closeSheet(); showDone(receipt, false);
   }).catch(function(e){
     setBusy(false);
@@ -1147,7 +1172,7 @@ $('#form-apply').addEventListener('change', function(e){
   if (t.name === 'source'){ state.form.source = t.value; recheck('source'); }
   scheduleSave();
 });
-$('#form-apply').addEventListener('submit', function(e){ e.preventDefault(); if (Date.now() > deadlineMs()){ closed = true; showView('intro'); return; } if (validateAll(APPLY_KEYS)) showView('write'); });
+$('#form-apply').addEventListener('submit', function(e){ e.preventDefault(); if (Date.now() > deadlineMs()){ closed = true; showView('intro'); return; } if (validateAll(APPLY_KEYS)){ trackOnce('Lead', 'miusae_lead_sent'); showView('write'); } });
 $('#f-title').addEventListener('input', function(e){ state.title = e.target.value; recheck('title'); scheduleSave(); });
 $$('.qa-text').forEach(function(ta){ ta.addEventListener('input', function(){ var k = ta.dataset.q; state.answers[k] = ta.value; renderQCount(k); recheck(k); autoGrow(); scheduleSave(); }); });
 $('#form-write').addEventListener('submit', function(e){ e.preventDefault(); saveNow(); if (validateAll(WRITE_KEYS)) openSheet(); });
