@@ -1029,10 +1029,10 @@ function readUtm(){
 var utm = readUtm();
 function utmPayload(){ var u = {}; UTM_FIELDS.forEach(function(k){ u[k] = utm[k] || ''; }); if (!u.utm_source) u.utm_source = 'direct'; return u; }
 
-/* Meta 픽셀 전환 이벤트 — 세션당 한 번만 */
+/* Meta 픽셀 전환 이벤트 — 같은 브라우저에서 한 번만 (며칠 뒤 다시 와도 유지) */
 function trackOnce(event, key){
-  try { if (sessionStorage.getItem(key)) return; } catch (e) {}
-  if (window.fbq){ window.fbq('track', event); try { sessionStorage.setItem(key, '1'); } catch (e) {} }
+  try { if (localStorage.getItem(key)) return; } catch (e) {}
+  if (window.fbq){ window.fbq('track', event); try { localStorage.setItem(key, '1'); } catch (e) {} }
 }
 
 /* 접수 저장 */
@@ -1089,6 +1089,7 @@ function doSubmit(){
     throw { code:'no_backend' };
   }).then(function(receipt){
     trackOnce('CompleteRegistration', 'miusae_submit_sent');
+    try { localStorage.removeItem(UTM_KEY); } catch (e) {} // 접수 완료 후 UTM만 정리 (이벤트 중복 방지 키는 남김)
     existingReceipt = receipt; clearDraft(); setBusy(false); closeSheet(); showDone(receipt, false);
   }).catch(function(e){
     setBusy(false);
