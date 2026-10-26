@@ -76,6 +76,18 @@ body:not([data-view="intro"]) .menu,body:not([data-view="intro"]) .nav .btn{disp
 .hero-sub{font-size:clamp(19px,3.6vw,24px);line-height:1.45;color:var(--ink);letter-spacing:-.02em}
 .hero-desc{font-size:15px;color:#4A4430;line-height:1.7;max-width:30em}
 .hero-copy .btn{margin-top:10px}
+.hprize{width:100%;max-width:440px;background:var(--ink);color:#FFFFFF;border-radius:var(--r-lg);padding:18px 20px 16px;box-shadow:0 18px 36px -18px rgba(27,27,27,.55)}
+.hprize-top{display:flex;align-items:baseline;gap:10px}
+.hprize-k{font-size:15px;color:rgba(255,255,255,.75)}
+.hprize-v{font-size:46px;line-height:1;letter-spacing:-.02em;color:var(--yellow)}
+.hprize-v small{font-size:22px;margin-left:2px}
+.hprize-list{list-style:none;padding:0;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);display:grid;gap:9px}
+.hprize-list li{display:flex;align-items:center;gap:10px;font-size:15px;line-height:1.35;min-width:0}
+.hprize-list i{flex:none;font-style:normal;font-size:13px;width:42px;text-align:center;padding:3px 0;border-radius:999px;color:var(--ink)}
+.hprize-list .m1{background:var(--gold)}.hprize-list .m2{background:var(--silver)}.hprize-list .m3{background:var(--bronze)}
+.hprize-list em{font-style:normal;margin-left:auto;padding-left:8px;font-size:14px;color:var(--yellow);flex:none}
+.hprize .hprize-more{margin-top:12px;color:rgba(255,255,255,.8)}
+@media (max-width:380px){.hprize-list li{font-size:14px}}
 .info{grid-area:card;background:#FFFFFF;border-radius:var(--r-lg);box-shadow:0 18px 40px -18px rgba(120,90,0,.35);padding:8px 22px;min-width:0}
 .info li{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-top:1px solid var(--line)}
 .info li:first-child{border-top:0}
@@ -92,7 +104,13 @@ body:not([data-view="intro"]) .menu,body:not([data-view="intro"]) .nav .btn{disp
 .duck-note::after{content:"";display:block;width:40px;height:2px;background:var(--ink);margin:6px auto 0;transform:rotate(-8deg)}
 .spark{position:absolute;left:4%;top:4%;width:46px;height:46px;color:var(--ink)}
 @media (min-width:1000px){.duck-hero{width:100%;max-width:380px;justify-self:end}.duck-note{right:-28px;font-size:18px}}
-@media (max-width:999px){.duck-hero{width:min(64vw,280px)}.duck-note{right:-18%;top:2%}}
+@media (max-width:999px){
+  .duck-hero{display:none}
+  .info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px;padding:18px 16px}
+  .info li{padding:0;border-top:0;gap:10px}
+  .info-ico{width:36px;height:36px}.info-ico svg{width:18px;height:18px}
+  .info .v{font-size:15px}
+}
 
 /* sections */
 .sec{padding-block:clamp(56px,8vw,96px)}
@@ -243,21 +261,19 @@ h2{font-size:clamp(26px,4.4vw,38px);line-height:1.3;letter-spacing:-.035em;color
 .faq-row dd{font-size:14px;color:var(--muted);line-height:1.6}
 
 /* 07 lab */
-.lab{display:grid;gap:32px}
-@media (min-width:1000px){.lab{grid-template-columns:minmax(0,.95fr) minmax(0,1.65fr);gap:40px;align-items:start}}
-.lab-tag{display:inline-flex;align-items:center;gap:8px;background:var(--yellow);color:var(--ink);font-size:14px;padding:6px 14px;border-radius:999px;margin-bottom:14px}
-.lab-cards{display:grid;gap:12px}
-@media (min-width:700px){.lab-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.lab-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 20px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;min-width:0}
-.lab-card h3{font-size:17px;line-height:1.5;color:var(--ink);letter-spacing:-.03em}
-.lab-proj{margin-top:auto;border-top:1.5px dashed var(--line);padding-top:12px;font-size:14px;line-height:1.6;color:var(--muted)}
-.lab-proj b{display:block;font-size:12px;color:var(--amber);margin-bottom:2px}
-.lab-proj small{font-size:12px;color:var(--muted);margin-left:4px}
-.lab-bridge{margin-top:20px;background:var(--yellow);border-radius:var(--r-lg);padding:22px 24px}
-.lab-bridge p:first-child{font-size:clamp(19px,3.6vw,24px);line-height:1.4;color:var(--ink);letter-spacing:-.03em}
-.lab-bridge p+p{font-size:14px;color:#4A4430;margin-top:8px;line-height:1.7}
-.lab-foot{margin-top:18px;display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--muted)}
-.lab-foot a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.labx{position:relative;overflow:hidden;isolation:isolate;background:var(--ink);color:#FFFFFF;border-radius:var(--r-xl);padding:clamp(26px,5vw,52px);display:grid;gap:22px}
+.labx::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:var(--yellow);opacity:.14;z-index:-1}
+@media (min-width:1000px){.labx{grid-template-columns:minmax(0,.75fr) minmax(0,1.6fr);gap:48px;align-items:center}}
+.labx .eyebrow{color:rgba(255,255,255,.72)}
+.labx .eyebrow span{color:var(--yellow)}
+.labx-name{font-size:clamp(42px,8vw,64px);line-height:1;letter-spacing:.04em;color:var(--yellow)}
+.labx-sub{margin-top:10px;font-size:15px;color:rgba(255,255,255,.7)}
+.labx h2{color:#FFFFFF}
+.labx-desc{margin-top:12px;font-size:15px;line-height:1.7;color:rgba(255,255,255,.75);max-width:34em}
+.labx-tags{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.labx-tags li{font-size:14px;line-height:1.4;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)}
+.labx-link{display:inline-flex;align-items:center;gap:6px;margin-top:22px;font-size:15px;color:var(--yellow);text-decoration:underline;text-underline-offset:4px}
+.labx-link .arr{width:16px;height:16px}
 
 /* final cta */
 .dock{position:sticky;bottom:0;z-index:25;box-sizing:border-box;height:calc(108px + env(safe-area-inset-bottom, 0px));background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom, 0px));padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
@@ -472,74 +488,29 @@ src="https://www.facebook.com/tr?id=1441218827804393&ev=PageView&noscript=1"
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <p class="host"><span>주최</span>LOGIN LAB<button type="button" class="link-btn" data-scroll="lab">연구소 소개 ↓</button></p>
-        <p class="tagline"><i aria-hidden="true"></i>미우새 — 미워했던 나를 다시 읽는 시간</p>
         <h1 tabindex="-1">미우새<br>청년 성장 공모전</h1>
         <p class="hero-sub">미운 오리였던 그때의 나,<br>지금의 나, 그리고 내가 되고 싶은 백조</p>
-        <p class="hero-desc">과거의 경험을 돌아보고, 지금의 나를 이해하며 앞으로 어떤 사람으로 성장하고 싶은지 이야기해주세요.</p>
+        <div class="hprize" aria-label="수상 혜택 요약">
+          <p class="hprize-top"><span class="hprize-k">총 상금</span><b class="hprize-v hb">200<small>만원</small></b></p>
+          <ul class="hprize-list">
+            <li><i class="m1">1등</i>상금 50만원 + 컨설팅·멘토링</li>
+            <li><i class="m2">2등</i>상금 30만원 + 자소서 첨삭<em>5명</em></li>
+            <li><i class="m3">3등</i>코칭권 + AI 역량 리포트<em>15명</em></li>
+          </ul>
+          <button type="button" class="link-btn hprize-more" data-scroll="awards">혜택 자세히 보기 ↓</button>
+        </div>
         <button type="button" class="btn btn-dark btn-lg" id="hero-cta" data-go="apply" data-label="무료로 공모전 신청하기"><span class="cta-label">무료로 공모전 신청하기</span><svg class="arr"><use href="#i-arr"/></svg></button>
       </div>
       <ul class="info">
           <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><div><p class="k">접수 마감</p><p class="v">2026. 11. 7 <small>(토)</small></p><p class="v-note">10.31에서 연장</p></div></li>
-          <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4a1 1 0 0 0 1 1h3l7 4V5L8 9H5a1 1 0 0 0-1 1z"/><path d="M18.5 9.5a3.5 3.5 0 0 1 0 5"/></svg></span><div><p class="k">합격자 발표</p><p class="v">2026. 11. 12 <small>(목)</small></p><p class="v-note">홈페이지 결과 조회 및 개별 연락</p></div></li>
-          <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.6-4 4.6-6 8-6s6.4 2 8 6"/></svg></span><div><p class="k">참가 대상</p><p class="v long">자신의 가능성을 발견하고 성장하고 싶은 서울 거주 2001~2007년생</p></div></li>
+          <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4a1 1 0 0 0 1 1h3l7 4V5L8 9H5a1 1 0 0 0-1 1z"/><path d="M18.5 9.5a3.5 3.5 0 0 1 0 5"/></svg></span><div><p class="k">합격자 발표</p><p class="v">2026. 11. 9 <small>(월)</small></p><p class="v-note">홈페이지·개별 연락</p></div></li>
+          <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.6-4 4.6-6 8-6s6.4 2 8 6"/></svg></span><div><p class="k">참가 대상</p><p class="v">서울 거주<br>2001~2007년생</p></div></li>
           <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l3.6 12L12 8l4.4 10L20 6M3 11h18M3 14.5h18"/></svg></span><div><p class="k">참가비</p><p class="v">무료</p></div></li>
-          <li><span class="info-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h5"/></svg></span><div><p class="k">공모 형태</p><p class="v long">나의 경험과 성장에 대한 이야기 작성</p></div></li>
         </ul>
       <figure class="duck-hero" aria-hidden="true">
         <img src="assets/img-02.webp" alt="">
         <span class="duck-note">지금의<br>이야기가<br>내일의 나를<br>만듭니다!</span>
       </figure>
-    </div>
-  </section>
-
-  <section class="sec" id="about">
-    <div class="wrap">
-      <div class="about">
-        <div>
-          <p class="eyebrow"><span>02</span>공모 내용</p>
-          <h2>나의 미운오리 시절부터,<br>내가 꿈꾸는 백조까지</h2>
-          <p class="lead">우리는 살아오면서 다양한 경험을 합니다. 남들과 비교했던 순간도, 예상하지 못한 어려움도, 스스로 성장했다고 느끼는 순간도 있죠.</p>
-          <p class="lead">세 가지 이야기를 중심으로 자유롭게 작성해주세요.</p>
-        </div>
-        <ol class="qcards">
-          <li class="qcard"><img src="assets/img-03.webp" alt="" aria-hidden="true"><span class="qnum">01</span><h3>미운 오리였던<br>나의 시절</h3><p>스스로 부족하다고 느꼈거나, 남들과 비교했던 경험은 무엇인가요?</p></li>
-          <li class="qcard"><img src="assets/img-04.webp" alt="" aria-hidden="true"><span class="qnum">02</span><h3>지금의 나는<br>어떤 사람인가요?</h3><p>그 경험을 지나온 지금, 새롭게 알게 된 나의 모습은 무엇인가요?</p></li>
-          <li class="qcard"><img src="assets/img-05.webp" alt="" aria-hidden="true"><span class="qnum">03</span><h3>나는 어떤 백조가<br>되고 싶나요?</h3><p>아직 발견하지 못한 나의 강점과 가능성 중 무엇을 키워보고 싶나요?</p></li>
-        </ol>
-      </div>
-      <div class="okbar">
-        <img src="assets/img-06.webp" alt="" aria-hidden="true">
-        <p>특별한 실패나 극적인 성장 경험이 없어도 괜찮습니다.<br>지금의 고민이나 가능성에 대한 생각도 좋은 이야기가 될 수 있어요.<small>세 가지 질문에 차례로 답하면 나의 이야기가 완성돼요.</small></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec sec-pale" id="criteria">
-    <div class="wrap crit">
-      <div>
-        <p class="eyebrow"><span>03</span>심사 기준</p>
-        <h2>잘 쓴 글보다 나를 돌아보고, 앞으로의 가능성을 생각하는 과정을 중요하게 평가합니다.</h2>
-        <p class="lead">경험이 얼마나 극적인지, 얼마나 성공했는지는 평가 기준이 아니에요.</p>
-      </div>
-      <ul class="ccards">
-        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.4-4.5-9.4-9.2C1.2 8.4 3.4 5 6.8 5c2 0 3.5 1.1 4.3 2.5h1.8C13.7 6.1 15.2 5 17.2 5c3.4 0 5.6 3.4 4.2 6.8C19.4 16.5 12 21 12 21z"/></svg><p>경험의 진정성과<br>구체성</p><b>30<small>%</small></b></li>
-        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7.5" r="4.5"/><path d="M3.5 21c.8-5 4.4-8 8.5-8s7.7 3 8.5 8z"/></svg><p>현재의 나에 대한<br>자기이해</p><b>30<small>%</small></b></li>
-        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="13" width="5" height="8" rx="1.5"/><rect x="9.5" y="8" width="5" height="13" rx="1.5"/><rect x="16" y="3" width="5" height="18" rx="1.5"/></svg><p>앞으로의 가능성과<br>성장 방향</p><b>30<small>%</small></b></li>
-        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><circle cx="8" cy="11" r="1.4" fill="#FFFFFF"/><circle cx="12" cy="11" r="1.4" fill="#FFFFFF"/><circle cx="16" cy="11" r="1.4" fill="#FFFFFF"/></svg><p>이야기<br>전달력</p><b>10<small>%</small></b></li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="pt" id="partners">
-    <div class="wrap pt-head">
-      <p class="pt-eyebrow">협력기관</p>
-      <h2>협력기관과 함께 여는<br>청년 성장 공모전</h2>
-      <p class="lead">수상자에게는 협력기관이 제공하는 컨설팅·멘토링·첨삭·코칭 프로그램과 AI 역량 분석 리포트로 실제 성장의 기회를 드립니다.</p>
-      <ul class="sr" id="partner-list"></ul>
-    </div>
-    <div class="marquee" id="marquee" aria-hidden="true" hidden>
-      <div class="mq-row"><div class="mq-track" id="mq1"></div></div>
-      <div class="mq-row rev"><div class="mq-track" id="mq2"></div></div>
     </div>
   </section>
 
@@ -551,10 +522,82 @@ src="https://www.facebook.com/tr?id=1441218827804393&ev=PageView&noscript=1"
     </div>
   </section>
 
+  <section class="pt" id="partners">
+    <div class="wrap pt-head">
+      <p class="pt-eyebrow">협력기관</p>
+      <h2>협력기관과 함께 여는<br>청년 성장 공모전</h2>
+      <p class="lead">수상자에게 협력기관의 컨설팅·멘토링·코칭 프로그램을 드려요.</p>
+      <ul class="sr" id="partner-list"></ul>
+    </div>
+    <div class="marquee" id="marquee" aria-hidden="true" hidden>
+      <div class="mq-row"><div class="mq-track" id="mq1"></div></div>
+      <div class="mq-row rev"><div class="mq-track" id="mq2"></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="about">
+    <div class="wrap">
+      <div class="about">
+        <div>
+          <p class="eyebrow"><span>01</span>공모 내용</p>
+          <h2>나의 미운오리 시절부터,<br>내가 꿈꾸는 백조까지</h2>
+          <p class="lead">세 가지 질문에 답하면 나의 이야기가 완성돼요.</p>
+        </div>
+        <ol class="qcards">
+          <li class="qcard"><img src="assets/img-03.webp" alt="" aria-hidden="true"><span class="qnum">01</span><h3>미운 오리였던<br>나의 시절</h3><p>부족하다고 느꼈거나 남과 비교했던 경험</p></li>
+          <li class="qcard"><img src="assets/img-04.webp" alt="" aria-hidden="true"><span class="qnum">02</span><h3>지금의 나는<br>어떤 사람인가요?</h3><p>그 경험을 지나 새롭게 알게 된 나의 모습</p></li>
+          <li class="qcard"><img src="assets/img-05.webp" alt="" aria-hidden="true"><span class="qnum">03</span><h3>나는 어떤 백조가<br>되고 싶나요?</h3><p>앞으로 키워보고 싶은 나의 강점과 가능성</p></li>
+        </ol>
+      </div>
+      <div class="okbar">
+        <img src="assets/img-06.webp" alt="" aria-hidden="true">
+        <p>특별한 실패나 극적인 성장 경험이 없어도 괜찮아요.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="lab">
+    <div class="wrap">
+      <div class="labx">
+        <div>
+          <p class="eyebrow"><span>02</span>주최 연구소</p>
+          <p class="labx-name hb">LOGIN LAB</p>
+          <p class="labx-sub">랩 로그인 · Lab Log-人</p>
+        </div>
+        <div>
+          <h2>알고리즘 밖의 삶을 연구하는<br>청년 인사이트 연구소</h2>
+          <p class="labx-desc">청년 한 사람 한 사람의 일상과 실패의 기록을 모아, 정책이 놓친 사각지대를 찾습니다.</p>
+          <ul class="labx-tags">
+            <li>NO 스펙 블라인드 네트워킹</li>
+            <li>청년 정책·아이디어 공모전</li>
+            <li>FGI 심층 인터뷰</li>
+            <li>〈2026 청년 커스텀 패치노트〉 발간 예정</li>
+          </ul>
+          <a class="labx-link" href="https://theloginlab.co.kr/about/" target="_blank" rel="noopener">theloginlab.co.kr<svg class="arr"><use href="#i-arr"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-pale" id="criteria">
+    <div class="wrap crit">
+      <div>
+        <p class="eyebrow"><span>03</span>심사 기준</p>
+        <h2>잘 쓴 글보다,<br>나를 돌아본 과정을 봅니다.</h2>
+      </div>
+      <ul class="ccards">
+        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.4-4.5-9.4-9.2C1.2 8.4 3.4 5 6.8 5c2 0 3.5 1.1 4.3 2.5h1.8C13.7 6.1 15.2 5 17.2 5c3.4 0 5.6 3.4 4.2 6.8C19.4 16.5 12 21 12 21z"/></svg><p>경험의 진정성과<br>구체성</p><b>30<small>%</small></b></li>
+        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7.5" r="4.5"/><path d="M3.5 21c.8-5 4.4-8 8.5-8s7.7 3 8.5 8z"/></svg><p>현재의 나에 대한<br>자기이해</p><b>30<small>%</small></b></li>
+        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="13" width="5" height="8" rx="1.5"/><rect x="9.5" y="8" width="5" height="13" rx="1.5"/><rect x="16" y="3" width="5" height="18" rx="1.5"/></svg><p>앞으로의 가능성과<br>성장 방향</p><b>30<small>%</small></b></li>
+        <li class="ccard"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><circle cx="8" cy="11" r="1.4" fill="#FFFFFF"/><circle cx="12" cy="11" r="1.4" fill="#FFFFFF"/><circle cx="16" cy="11" r="1.4" fill="#FFFFFF"/></svg><p>이야기<br>전달력</p><b>10<small>%</small></b></li>
+      </ul>
+    </div>
+  </section>
+
   <section class="sec sec-grey" id="how">
     <div class="wrap how">
       <div>
-        <p class="eyebrow"><span>05</span>참여 방법</p>
+        <p class="eyebrow"><span>04</span>참여 방법</p>
         <h2>3단계로 간편하게 참여하세요.</h2>
       </div>
       <ol class="steps">
@@ -570,42 +613,15 @@ src="https://www.facebook.com/tr?id=1441218827804393&ev=PageView&noscript=1"
   <section class="sec" id="faq">
     <div class="wrap faq">
       <div>
-        <p class="eyebrow"><span>06</span>자주 묻는 질문</p>
+        <p class="eyebrow"><span>05</span>자주 묻는 질문</p>
         <p class="faq-big">FAQ</p>
-        <p class="lead">궁금한 점을 확인해보세요.</p>
       </div>
       <dl class="faq-list">
-        <div class="faq-row"><dt>글을 잘 쓰지 않아도 참여할 수 있나요?</dt><dd>네. 글쓰기 실력보다 자신의 경험과 생각을 표현하는 것이 중요합니다.</dd></div>
-        <div class="faq-row"><dt>AI로 문장을 다듬어도 되나요?</dt><dd>아니요. AI를 통한 작성 및 문장 수정·교정은 허용되지 않습니다.</dd></div>
-        <div class="faq-row"><dt>제출한 이야기가 외부에 공개되나요?</dt><dd>아니요. 제출된 작품은 외부에 공개되지 않으며 심사 목적으로만 활용됩니다.</dd></div>
-        <div class="faq-row"><dt>작품 제출 후 수정할 수 있나요?</dt><dd>아니요. 최종 제출 후에는 수정할 수 없습니다.</dd></div>
+        <div class="faq-row"><dt>글을 잘 쓰지 않아도 참여할 수 있나요?</dt><dd>네. 글솜씨보다 나의 경험과 생각이 중요해요.</dd></div>
+        <div class="faq-row"><dt>AI로 문장을 다듬어도 되나요?</dt><dd>아니요. AI 작성·교정은 허용되지 않아요.</dd></div>
+        <div class="faq-row"><dt>제출한 이야기가 외부에 공개되나요?</dt><dd>아니요. 심사 목적으로만 활용돼요.</dd></div>
+        <div class="faq-row"><dt>작품 제출 후 수정할 수 있나요?</dt><dd>아니요. 최종 제출 후에는 수정할 수 없어요.</dd></div>
       </dl>
-    </div>
-  </section>
-
-
-  <section class="sec sec-pale" id="lab">
-    <div class="wrap lab">
-      <div>
-        <p class="eyebrow"><span>07</span>주최 연구소</p>
-        <span class="lab-tag">랩 로그인 · Lab Log-人</span>
-        <h2>알고리즘 밖의 삶을 연구하는<br>청년 인사이트 연구소</h2>
-        <p class="lead">수많은 청년이 현실과 맞지 않는 낡은 잣대 안에서 스스로를 탓하며 지쳐가고 있습니다. 랩 로그인은 그 자책이 결코 청년의 잘못이 아님을 증명하기 위해 시작되었어요.</p>
-        <p class="lead">통계나 숫자가 아닌, 청년 한 사람 한 사람의 일상과 실패의 기록(Log-人)을 연구하고, 기존 정책이 놓치고 있는 사각지대를 찾아냅니다.</p>
-      </div>
-      <div>
-        <ul class="lab-cards">
-          <li class="lab-card"><h3>획일화된 성공 공식에서 벗어나 나를 돌아보는 환기의 시간</h3><p class="lab-proj"><b>실행 프로젝트</b>NO 스펙 블라인드 네트워킹, 오프라인 워크숍</p></li>
-          <li class="lab-card"><h3>스스로 삶을 기획하도록 돕는 인사이트와 솔루션</h3><p class="lab-proj"><b>실행 프로젝트</b>청년 정책·아이디어 공모전, FGI 심층 인터뷰</p></li>
-          <li class="lab-card"><h3>내 경험이 흩어지지 않고 실제 정책으로 이어지는 경험</h3><p class="lab-proj"><b>실행 프로젝트</b>공식 인사이트 리포트 〈2026 청년 커스텀 패치노트〉 발간<small>(예정)</small></p></li>
-          <li class="lab-card"><h3>청년이 주도적으로 세상에 접속할 수 있는 생태계</h3><p class="lab-proj"><b>실행 프로젝트</b>청년 정책 제안 및 청년 주도형 실증 프로젝트</p></li>
-        </ul>
-        <div class="lab-bridge">
-          <p>미우새 공모전은 청년의 이야기에<br>귀 기울이는 랩 로그인의 방법 중 하나예요.</p>
-          <p>당신의 치열했던 시간을 데이터로, 데이터를 정책으로. 제출한 이야기는 외부에 공개되지 않고 심사 목적으로만 활용됩니다.</p>
-        </div>
-        <p class="lab-foot"><span>랩 로그인(Lab Log-人)</span><span>사업자등록번호 293-07-03063</span><a href="https://theloginlab.co.kr/about/" target="_blank" rel="noopener">theloginlab.co.kr</a></p>
-      </div>
     </div>
   </section>
 
@@ -795,7 +811,7 @@ src="https://www.facebook.com/tr?id=1441218827804393&ev=PageView&noscript=1"
       <h1 tabindex="-1">미우새 공모전 신청이 완료되었습니다!</h1>
       <p class="done-already" id="done-already" hidden>이미 접수한 작품이에요. 제출 후에는 수정할 수 없어요.</p>
       <div class="done-text"><p>당신의 이야기를 들려주셔서 감사합니다.</p><p>여러분의 경험과 앞으로의 가능성을 응원합니다.</p></div>
-      <p class="done-notice">합격자 발표는 <b>2026년 11월 12일(목)</b>이에요. LOGIN 홈페이지(theloginlab.co.kr/contests)에서 결과를 확인할 수 있고, 수상자께는 개별 연락을 드려요.</p>
+      <p class="done-notice">합격자 발표는 <b>2026년 11월 9일(월)</b>이에요. LOGIN 홈페이지(theloginlab.co.kr/contests)에서 결과를 확인할 수 있고, 수상자께는 개별 연락을 드려요.</p>
       <section class="receipt" aria-label="접수 정보">
         <div class="receipt-no">
           <div><small>접수번호</small><strong id="r-no"></strong></div>
