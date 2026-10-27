@@ -76,18 +76,6 @@ body:not([data-view="intro"]) .menu,body:not([data-view="intro"]) .nav .btn{disp
 .hero-sub{font-size:clamp(19px,3.6vw,24px);line-height:1.45;color:var(--ink);letter-spacing:-.02em}
 .hero-desc{font-size:15px;color:#4A4430;line-height:1.7;max-width:30em}
 .hero-copy .btn{margin-top:10px}
-.hprize{width:100%;max-width:440px;background:var(--ink);color:#FFFFFF;border-radius:var(--r-lg);padding:18px 20px 16px;box-shadow:0 18px 36px -18px rgba(27,27,27,.55)}
-.hprize-top{display:flex;align-items:baseline;gap:10px}
-.hprize-k{font-size:15px;color:rgba(255,255,255,.75)}
-.hprize-v{font-size:46px;line-height:1;letter-spacing:-.02em;color:var(--yellow)}
-.hprize-v small{font-size:22px;margin-left:2px}
-.hprize-list{list-style:none;padding:0;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);display:grid;gap:9px}
-.hprize-list li{display:flex;align-items:center;gap:10px;font-size:15px;line-height:1.35;min-width:0}
-.hprize-list i{flex:none;font-style:normal;font-size:13px;width:42px;text-align:center;padding:3px 0;border-radius:999px;color:var(--ink)}
-.hprize-list .m1{background:var(--gold)}.hprize-list .m2{background:var(--silver)}.hprize-list .m3{background:var(--bronze)}
-.hprize-list em{font-style:normal;margin-left:auto;padding-left:8px;font-size:14px;color:var(--yellow);flex:none}
-.hprize .hprize-more{margin-top:12px;color:rgba(255,255,255,.8)}
-@media (max-width:380px){.hprize-list li{font-size:14px}}
 .info{grid-area:card;background:#FFFFFF;border-radius:var(--r-lg);box-shadow:0 18px 40px -18px rgba(120,90,0,.35);padding:8px 22px;min-width:0}
 .info li{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-top:1px solid var(--line)}
 .info li:first-child{border-top:0}
@@ -104,13 +92,7 @@ body:not([data-view="intro"]) .menu,body:not([data-view="intro"]) .nav .btn{disp
 .duck-note::after{content:"";display:block;width:40px;height:2px;background:var(--ink);margin:6px auto 0;transform:rotate(-8deg)}
 .spark{position:absolute;left:4%;top:4%;width:46px;height:46px;color:var(--ink)}
 @media (min-width:1000px){.duck-hero{width:100%;max-width:380px;justify-self:end}.duck-note{right:-28px;font-size:18px}}
-@media (max-width:999px){
-  .duck-hero{display:none}
-  .info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px;padding:18px 16px}
-  .info li{padding:0;border-top:0;gap:10px}
-  .info-ico{width:36px;height:36px}.info-ico svg{width:18px;height:18px}
-  .info .v{font-size:15px}
-}
+@media (max-width:999px){.duck-hero{width:min(64vw,280px)}.duck-note{right:-18%;top:2%}}
 
 /* sections */
 .sec{padding-block:clamp(56px,8vw,96px)}
@@ -490,15 +472,6 @@ src="https://www.facebook.com/tr?id=1441218827804393&ev=PageView&noscript=1"
         <p class="host"><span>주최</span>LOGIN LAB<button type="button" class="link-btn" data-scroll="lab">연구소 소개 ↓</button></p>
         <h1 tabindex="-1">미우새<br>청년 성장 공모전</h1>
         <p class="hero-sub">미운 오리였던 그때의 나,<br>지금의 나, 그리고 내가 되고 싶은 백조</p>
-        <div class="hprize" aria-label="수상 혜택 요약">
-          <p class="hprize-top"><span class="hprize-k">총 상금</span><b class="hprize-v hb">200<small>만원</small></b></p>
-          <ul class="hprize-list">
-            <li><i class="m1">1등</i>상금 50만원 + 컨설팅·멘토링</li>
-            <li><i class="m2">2등</i>상금 30만원 + 자소서 첨삭<em>5명</em></li>
-            <li><i class="m3">3등</i>코칭권 + AI 역량 리포트<em>15명</em></li>
-          </ul>
-          <button type="button" class="link-btn hprize-more" data-scroll="awards">혜택 자세히 보기 ↓</button>
-        </div>
         <button type="button" class="btn btn-dark btn-lg" id="hero-cta" data-go="apply" data-label="무료로 공모전 신청하기"><span class="cta-label">무료로 공모전 신청하기</span><svg class="arr"><use href="#i-arr"/></svg></button>
       </div>
       <ul class="info">
