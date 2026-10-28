@@ -1062,7 +1062,8 @@ function readUtm(){
   return u;
 }
 var utm = readUtm();
-function utmPayload(){ var u = {}; UTM_FIELDS.forEach(function(k){ u[k] = utm[k] || ''; }); if (!u.utm_source) u.utm_source = 'direct'; return u; }
+/* 메타가 {{campaign.name}} 같은 자리표시자를 못 바꾼 채 보낸 값은 시트에 그대로 찍히지 않게 정리 */
+function utmPayload(){ var u = {}; UTM_FIELDS.forEach(function(k){ var v = utm[k] || ''; if (/\{\{.*\}\}/.test(v)) v = (k === 'utm_source') ? 'meta' : '미확인'; u[k] = v; }); if (!u.utm_source) u.utm_source = 'direct'; return u; }
 
 /* Meta 픽셀 전환 이벤트 — 같은 브라우저에서 한 번만 (며칠 뒤 다시 와도 유지) */
 function trackOnce(event, key){
